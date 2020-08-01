@@ -12,7 +12,7 @@ public class Main extends Application {
     public static Stage mainLogicStage;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("startpage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../resources/fxml/startpage.fxml"));
         primaryStage.setTitle("DocOnDuty");
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         mainLogicStage = primaryStage;

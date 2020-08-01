@@ -41,7 +41,7 @@
          <children>
             <ImageView fx:id="userImage" fitHeight="124.0" fitWidth="125.0" layoutX="116.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/images/group+people+team+users+icon-1320196240876938595.png" />
+                  <Image url="@../images/group+people+team+users+icon-1320196240876938595.png" />
                </image>
             </ImageView>
             <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Lozinka" />
