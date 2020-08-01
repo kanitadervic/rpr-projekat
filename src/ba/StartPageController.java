@@ -5,19 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class StartPageController {
-    public Button btnDoctorLogIn;
+    public Button btnLogIn;
     public static Stage startPageStage;
-    public Button btnNewAppointment;
+    public TextField fldUsername;
+    public TextField fldPassword;
+    public ImageView userImage;
 
-    public void logInAction(ActionEvent actionEvent){
+
+    public void logInAction(ActionEvent actionEvent) {
         Main.mainLogicStage.hide();
-
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root2 = fxmlLoader.load();
             Stage stage = new Stage();
@@ -25,12 +29,9 @@ public class StartPageController {
             stage.setScene(new Scene(root2));
             startPageStage = stage;
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void dataEntryAction(ActionEvent actionEvent){
-        System.out.println("radi");
-    }
 }
