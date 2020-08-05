@@ -22,7 +22,7 @@ public class StartPageController {
     public void logInAction(ActionEvent actionEvent) {
         Main.mainLogicStage.hide();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/fxml/login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/fxml/registration.fxml"));
             Parent root2 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Korisnik: Doktor");

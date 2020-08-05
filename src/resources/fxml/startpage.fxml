@@ -36,7 +36,7 @@
             <Font size="35.0" />
          </font>
       </Text>
-      <Text fill="#686363" strokeType="OUTSIDE" strokeWidth="0.0" text="Molimo unesite vaše podatke:" textAlignment="CENTER" wrappingWidth="694.22216796875" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <Text fill="#0d0d0d" strokeType="OUTSIDE" strokeWidth="0.0" text="Molimo unesite vaše podatke:" textAlignment="CENTER" wrappingWidth="694.22216796875" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: white; -fx-opacity: 1;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="3">
          <children>
             <ImageView fx:id="userImage" fitHeight="124.0" fitWidth="125.0" layoutX="116.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
@@ -53,6 +53,13 @@
          </children>
       </AnchorPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#logInAction" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Prijava" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+    <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#logInAction" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Prijava" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Registruj se!" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
    </children>
 </GridPane>
