@@ -57,7 +57,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Registruj se!" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#registerAction" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Registruj se!" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>

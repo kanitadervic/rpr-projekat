@@ -19,7 +19,7 @@ public class StartPageController {
     public ImageView userImage;
 
 
-    public void logInAction(ActionEvent actionEvent) {
+    public void registerAction(ActionEvent actionEvent) {
         Main.mainLogicStage.hide();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/fxml/registration.fxml"));
@@ -34,4 +34,7 @@ public class StartPageController {
         }
     }
 
+    public void logInAction(ActionEvent actionEvent) {
+
+    }
 }
