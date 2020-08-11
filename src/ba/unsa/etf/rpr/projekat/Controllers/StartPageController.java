@@ -1,5 +1,6 @@
-package ba;
+package ba.unsa.etf.rpr.projekat.Controllers;
 
+import ba.unsa.etf.rpr.projekat.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,10 +23,9 @@ public class StartPageController {
     public void registerAction(ActionEvent actionEvent) {
         Main.mainLogicStage.hide();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/fxml/registration.fxml"));
-            Parent root2 = fxmlLoader.load();
+            Parent root2 = FXMLLoader.load(getClass().getResource("/fxml/registration.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("Korisnik: Doktor");
+            stage.setTitle("Registracija");
             stage.setScene(new Scene(root2));
             startPageStage = stage;
             stage.show();

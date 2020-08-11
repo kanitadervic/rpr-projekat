@@ -1,5 +1,6 @@
-package ba;
+package ba.unsa.etf.rpr.projekat.Controllers;
 
+import ba.unsa.etf.rpr.projekat.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,7 +20,6 @@ public class RegistrationController {
     public ChoiceBox hospitalChoice;
     public RadioButton rbMale;
     public RadioButton rbFemale;
-
 
     @FXML
     public void initialize() {
