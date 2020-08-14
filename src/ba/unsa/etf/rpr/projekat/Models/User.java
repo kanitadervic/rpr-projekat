@@ -1,91 +1,143 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
+
+import javafx.beans.property.SimpleStringProperty;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class User {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String userName;
-    private String password;
-    private char gender;
-    private Date dateOfBirth;
+    private SimpleStringProperty firstName, lastName, email, phoneNumber, userName, password, gender;
+    private DateOfBirth dateOfBirth;
+    private int id;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, char gender, Date dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.userName = userName;
-        this.password = password;
-        this.gender = gender;
+    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateOfBirth dateOfBirth) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.email = new SimpleStringProperty(email);
+        this.phoneNumber = new SimpleStringProperty(phoneNumber);
+        this.userName = new SimpleStringProperty(userName);
+        this.password = new SimpleStringProperty(password);
+        this.gender = new SimpleStringProperty(gender);
         this.dateOfBirth = dateOfBirth;
+    }
 
+    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, String date) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.email = new SimpleStringProperty(email);
+        this.phoneNumber = new SimpleStringProperty(phoneNumber);
+        this.userName = new SimpleStringProperty(userName);
+        this.password = new SimpleStringProperty(password);
+        this.gender = new SimpleStringProperty(gender);
+        String[] parts = date.split("\\-");
+        String day = parts[0];
+        String month = parts[1];
+        String year = parts[2];
+        dateOfBirth = new DateOfBirth(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
     public String getFirstName() {
+        return firstName.get();
+    }
+
+    public SimpleStringProperty firstNameProperty() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName.set(firstName);
     }
 
     public String getLastName() {
+        return lastName.get();
+    }
+
+    public SimpleStringProperty lastNameProperty() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName.set(lastName);
     }
 
     public String getEmail() {
+        return email.get();
+    }
+
+    public SimpleStringProperty emailProperty() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 
     public String getPhoneNumber() {
+        return phoneNumber.get();
+    }
+
+    public SimpleStringProperty phoneNumberProperty() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber.set(phoneNumber);
     }
 
     public String getUserName() {
+        return userName.get();
+    }
+
+    public SimpleStringProperty userNameProperty() {
         return userName;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName.set(userName);
     }
 
     public String getPassword() {
+        return password.get();
+    }
+
+    public SimpleStringProperty passwordProperty() {
         return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password.set(password);
     }
 
-    public char getGender() {
+    public String getGender() {
+        return gender.get();
+    }
+
+    public SimpleStringProperty genderProperty() {
         return gender;
     }
 
-    public void setGender(char gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        this.gender.set(gender);
     }
 
-    public Date getDateOfBirth() {
+    public DateOfBirth getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(DateOfBirth dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getDateOfBirthString() {
+        return dateOfBirth.getDay() + "-" + dateOfBirth.getMonth() + "-" + dateOfBirth.getYear();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

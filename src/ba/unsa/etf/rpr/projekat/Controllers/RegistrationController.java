@@ -1,9 +1,18 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
+import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Main;
+import ba.unsa.etf.rpr.projekat.Models.DateOfBirth;
+import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.registrationStage;
+import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
 
 
 public class RegistrationController {
@@ -12,6 +21,7 @@ public class RegistrationController {
     public TextField fldLastName;
     public TextField fldUsername;
     public PasswordField fldPassword;
+    public TextField fldPhoneNumber;
     public Button btnConfirmRegistration;
     public TextField fldEmail;
     public DatePicker birthdayPicker;
@@ -20,6 +30,12 @@ public class RegistrationController {
     public ChoiceBox hospitalChoice;
     public RadioButton rbMale;
     public RadioButton rbFemale;
+    private UserDAO userDAO;
+
+
+    public RegistrationController(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     @FXML
     public void initialize() {
@@ -92,7 +108,21 @@ public class RegistrationController {
     }
 
     public void registrationAction(ActionEvent actionEvent) {
+        LocalDate localDate = birthdayPicker.getValue();
+        DateOfBirth dateOfBirth = new DateOfBirth(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+        User u = new User(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                fldPassword.getText(), getGender(), dateOfBirth);
+        userDAO.addUser(u);
+        userDAO.getUsers().add(u);
+        registrationStage.close();
+        mainLogicStage.show();
+    }
 
+    private String getGender() {
+        if(rbFemale.isSelected()){
+            return "F";
+        }
+        else return  "M";
     }
 
     public void doctorCheck(ActionEvent actionEvent) {
@@ -105,6 +135,6 @@ public class RegistrationController {
 
     public void goBackAction(ActionEvent actionEvent) {
         StartPageController.startPageStage.hide();
-        Main.mainLogicStage.show();
+        mainLogicStage.show();
     }
 }

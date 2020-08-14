@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="474.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.projekat.Controllers.RegistrationController">
+<GridPane prefHeight="474.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
   <stylesheets>
       <URL value="@/css/registration.css" />
   </stylesheets>
@@ -30,6 +31,7 @@
       <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="171.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
@@ -42,18 +44,18 @@
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ime:" wrappingWidth="83.7294921875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prezime:" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Korisničko ime:" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-      <CheckBox fx:id="isDoctor" mnemonicParsing="false" onAction="#doctorCheck" text="Doktor" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Označite polje ukoliko imate titulu doktora:" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bolnica:" GridPane.columnIndex="3" GridPane.rowIndex="9" GridPane.valignment="BOTTOM" />
-      <ChoiceBox fx:id="hospitalChoice" prefHeight="26.0" prefWidth="317.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lozinka:" GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mjesto prebivališta:" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-      <PasswordField fx:id="fldPassword" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-      <TextField fx:id="fldUsername" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <TextField fx:id="fldEmail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField fx:id="fldCity" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Korisničko ime:" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <CheckBox fx:id="isDoctor" mnemonicParsing="false" onAction="#doctorCheck" text="Doktor" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Označite polje ukoliko imate titulu doktora:" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bolnica:" GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <ChoiceBox fx:id="hospitalChoice" prefHeight="26.0" prefWidth="317.0" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lozinka:" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mjesto prebivališta:" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <PasswordField fx:id="fldPassword" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <TextField fx:id="fldUsername" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="fldEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="fldCity" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <TextField fx:id="fldName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="fldLastName" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datum rođenja:" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
@@ -61,7 +63,9 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Spol:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <RadioButton fx:id="rbMale" mnemonicParsing="false" text="M" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <RadioButton fx:id="rbFemale" mnemonicParsing="false" text="Ž" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <Button fx:id="btnConfirmRegistration" mnemonicParsing="false" onAction="#registrationAction" text="Potvrdi podatke" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-      <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#goBackAction" prefWidth="121.0" text="Idi nazad" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
+      <Button fx:id="btnConfirmRegistration" mnemonicParsing="false" onAction="#registrationAction" text="Potvrdi podatke" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+      <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#goBackAction" prefWidth="121.0" text="Idi nazad" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+      <Label text="Broj telefona: " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="fldPhoneNumber" promptText="NNN/NNN-NNN" GridPane.columnIndex="3" GridPane.rowIndex="4" />
    </children>
 </GridPane>

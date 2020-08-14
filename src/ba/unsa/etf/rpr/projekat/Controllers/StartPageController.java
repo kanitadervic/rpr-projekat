@@ -12,22 +12,28 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+
 public class StartPageController {
     public Button btnLogIn;
     public static Stage startPageStage;
     public TextField fldUsername;
     public TextField fldPassword;
     public ImageView userImage;
+    public static Stage registrationStage;
 
 
     public void registerAction(ActionEvent actionEvent) {
         Main.mainLogicStage.hide();
         try {
-            Parent root2 = FXMLLoader.load(getClass().getResource("/fxml/registration.fxml"));
+            RegistrationController ctrl = new RegistrationController(userDAO);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registration.fxml"));
+            loader.setController(ctrl);
+            Parent root2 = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Registracija");
             stage.setScene(new Scene(root2));
-            startPageStage = stage;
+            registrationStage = stage;
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
