@@ -10,9 +10,12 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.registrationStage;
 import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
+import static java.lang.Character.*;
 
 
 public class RegistrationController {
@@ -33,7 +36,7 @@ public class RegistrationController {
     private UserDAO userDAO;
 
 
-    public RegistrationController(UserDAO userDAO){
+    public RegistrationController(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
@@ -44,8 +47,8 @@ public class RegistrationController {
         rbFemale.setToggleGroup(group);
         hospitalChoice.setDisable(true);
 
-        fldUsername.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldUsername.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkUserName(newVal)) {
                 fldUsername.getStyleClass().removeAll("poljeNijeIspravno");
                 fldUsername.getStyleClass().add("poljeIspravno");
             } else {
@@ -54,8 +57,8 @@ public class RegistrationController {
             }
         });
 
-        fldEmail.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldEmail.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkEmail(newVal)) {
                 fldEmail.getStyleClass().removeAll("poljeNijeIspravno");
                 fldEmail.getStyleClass().add("poljeIspravno");
             } else {
@@ -64,8 +67,8 @@ public class RegistrationController {
             }
         });
 
-        fldPassword.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldPassword.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkPassword(newVal)) {
                 fldPassword.getStyleClass().removeAll("poljeNijeIspravno");
                 fldPassword.getStyleClass().add("poljeIspravno");
             } else {
@@ -74,8 +77,8 @@ public class RegistrationController {
             }
         });
 
-        fldCity.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldCity.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty()) {
                 fldCity.getStyleClass().removeAll("poljeNijeIspravno");
                 fldCity.getStyleClass().add("poljeIspravno");
             } else {
@@ -84,8 +87,8 @@ public class RegistrationController {
             }
         });
 
-        fldName.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldName.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkName(newVal)) {
                 fldName.getStyleClass().removeAll("poljeNijeIspravno");
                 fldName.getStyleClass().add("poljeIspravno");
             } else {
@@ -94,8 +97,8 @@ public class RegistrationController {
             }
         });
 
-        fldLastName.textProperty().addListener((obs, oldIme, newIme) -> {
-            if (!newIme.isEmpty()) {
+        fldLastName.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkName(newVal)) {
                 fldLastName.getStyleClass().removeAll("poljeNijeIspravno");
                 fldLastName.getStyleClass().add("poljeIspravno");
             } else {
@@ -104,25 +107,109 @@ public class RegistrationController {
             }
         });
 
+        birthdayPicker.valueProperty().addListener((obs, oldVal, newVal) ->{
+            if(checkBirthDate(newVal)){
+                birthdayPicker.getStyleClass().removeAll("poljeNijeIspravno");
+                birthdayPicker.getStyleClass().add("poljeIspravno");
+            } else {
+                birthdayPicker.getStyleClass().removeAll("poljeIspravno");
+                birthdayPicker.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
 
     }
 
     public void registrationAction(ActionEvent actionEvent) {
-        LocalDate localDate = birthdayPicker.getValue();
-        DateOfBirth dateOfBirth = new DateOfBirth(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-        User u = new User(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
-                fldPassword.getText(), getGender(), dateOfBirth);
-        userDAO.addUser(u);
-        userDAO.getUsers().add(u);
-        registrationStage.close();
-        mainLogicStage.show();
+        if (checkData()) {
+            LocalDate localDate = birthdayPicker.getValue();
+            DateOfBirth dateOfBirth = new DateOfBirth(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+            User u = new User(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                    fldPassword.getText(), getGender(), dateOfBirth);
+            userDAO.addUser(u);
+            userDAO.getUsers().add(u);
+            registrationStage.close();
+            mainLogicStage.show();
+        }
+    }
+
+    private boolean checkData() {
+        return (checkName(fldName.getText()) && checkName(fldLastName.getText()) && checkEmail(fldEmail.getText()) && checkPassword(fldPassword.getText()) && checkUserName(fldUsername.getText()) && checkBirthDate(birthdayPicker.getValue()));
+    }
+
+    private boolean checkBirthDate(LocalDate value) {
+        LocalDate localDate = LocalDate.of(2010, 1, 1);
+        return (value.isBefore(localDate));
+    }
+
+    private boolean checkUserName(String username) {
+        Pattern p = Pattern.compile("[!@#$%&*()+=|<>?{}\\[\\]~.,-]");
+        if (username.length() > 16 || username.isEmpty()) return false;
+        if (username.startsWith("_") || username.startsWith("$")) return false;
+        Matcher m = p.matcher(username);
+        if (m.find()) return false;
+        if (hasSpace(username)) return false;
+        else return true;
+    }
+
+    private boolean hasSpace(String text) {
+        return text.indexOf(' ') >= 0;
+    }
+
+    private boolean checkPassword(String password) {
+        boolean valid = false;
+        for (int i = 0; i < password.length(); i++) {
+            if (isUpperCase(password.charAt(i))) {
+                valid = true;
+                break;
+            }
+        }
+        if (!valid) return false;
+        valid = false;
+
+        for (int i = 0; i < password.length(); i++) {
+            if (isLowerCase(password.charAt(i))) {
+                valid = true;
+                break;
+            }
+        }
+        if (!valid) return false;
+        valid = false;
+
+        for (int i = 0; i < password.length(); i++) {
+            if (isDigit(password.charAt(i))) {
+                valid = true;
+                break;
+            }
+        }
+        return valid;
+    }
+
+    private boolean checkEmail(String email) {
+        if (email.isEmpty()) return false;
+        Pattern p = Pattern.compile("[!#$%&*()+=|<>?{}\\[\\]~,]");
+        Matcher m = p.matcher(email);
+        if (m.find()) return false;
+        int indeks = email.indexOf('@');
+        if (!(indeks > 0) || indeks == email.length() - 1) return false;
+        return true;
+    }
+
+    private boolean checkName(String name) {
+        Pattern p = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~.,]");
+        if (name.length() < 3) return false;
+        Matcher m = p.matcher(name);
+        if (m.find()) return false;
+        p = Pattern.compile("[0-9]");
+        m = p.matcher(name);
+        if (m.find()) return false;
+        else return true;
     }
 
     private String getGender() {
-        if(rbFemale.isSelected()){
+        if (rbFemale.isSelected()) {
             return "F";
-        }
-        else return  "M";
+        } else return "M";
     }
 
     public void doctorCheck(ActionEvent actionEvent) {
