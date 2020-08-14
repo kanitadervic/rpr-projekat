@@ -112,4 +112,20 @@ public class UserDAO {
     public ObservableList<User> getUsers() {
         return users;
     }
+
+    public String findUserReturnPassword(String userName) {
+        String password = "";
+        try{
+            preparedStatement = connection.prepareStatement("SELECT password FROM user WHERE username = ?");
+            preparedStatement.setString(1, userName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                password = resultSet.getString(1);
+            }
+
+        } catch (SQLException throwables) {
+            return null;
+        }
+        return password;
+    }
 }

@@ -37,6 +37,10 @@ public class User {
         dateOfBirth = new DateOfBirth(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
+    public User() {
+
+    }
+
     public String getFirstName() {
         return firstName.get();
     }
