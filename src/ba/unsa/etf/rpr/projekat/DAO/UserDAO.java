@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.beans.property.SimpleObjectProperty;
@@ -157,4 +158,6 @@ public class UserDAO {
         }
         return isDoctor;
     }
+
+
 }

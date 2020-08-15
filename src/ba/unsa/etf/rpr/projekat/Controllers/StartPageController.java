@@ -62,7 +62,7 @@ public class StartPageController {
         }
         if(found && doctor) {
             mainLogicStage.hide();
-            DoctorController ctrl = new DoctorController(user);
+            DoctorController ctrl = new DoctorController(user, userDAO);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor.fxml"));
             loader.setController(ctrl);
             Parent root2 = loader.load();
