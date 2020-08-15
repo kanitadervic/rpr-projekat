@@ -44,8 +44,11 @@ public class UserDAO {
                     "\t\"admin\"\tTEXT,\n" +
                     "\tPRIMARY KEY(\"id\")\n" +
                     ");");
-            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic', '32343', 'kdervic', 'test', 'F', '23-1-1999', 'admin');");
-            currentId = 2;
+            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic@faks.com', '062/062-062', 'kdervic', 'test', 'F', '23-1-1999', 'admin');");
+            statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'ssaric', 'test', 'F', '10-10-2003', null);");
+            statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'ttestic', 'test', 'M', '21-11-1998', null);");
+
+            currentId = 4;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
