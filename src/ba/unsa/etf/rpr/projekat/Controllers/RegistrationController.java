@@ -107,13 +107,23 @@ public class RegistrationController {
             }
         });
 
-        birthdayPicker.valueProperty().addListener((obs, oldVal, newVal) ->{
-            if(checkBirthDate(newVal)){
+        birthdayPicker.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (checkBirthDate(newVal)) {
                 birthdayPicker.getStyleClass().removeAll("poljeNijeIspravno");
                 birthdayPicker.getStyleClass().add("poljeIspravno");
             } else {
                 birthdayPicker.getStyleClass().removeAll("poljeIspravno");
                 birthdayPicker.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+        fldPhoneNumber.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (checkPhoneNumber(newVal)) {
+                fldPhoneNumber.getStyleClass().removeAll("poljeNijeIspravno");
+                fldPhoneNumber.getStyleClass().add("poljeIspravno");
+            } else {
+                fldPhoneNumber.getStyleClass().removeAll("poljeIspravno");
+                fldPhoneNumber.getStyleClass().add("poljeNijeIspravno");
             }
         });
 
@@ -134,7 +144,30 @@ public class RegistrationController {
     }
 
     private boolean checkData() {
-        return (checkName(fldName.getText()) && checkName(fldLastName.getText()) && checkEmail(fldEmail.getText()) && checkPassword(fldPassword.getText()) && checkUserName(fldUsername.getText()) && checkBirthDate(birthdayPicker.getValue()));
+        return (checkName(fldName.getText()) && checkName(fldLastName.getText()) && checkEmail(fldEmail.getText()) && checkPassword(fldPassword.getText()) && checkUserName(fldUsername.getText()) && checkBirthDate(birthdayPicker.getValue()) && checkPhoneNumber(fldPhoneNumber.getText()));
+    }
+
+    private boolean checkPhoneNumber(String phoneNumber) {
+        boolean check = false;
+        if (phoneNumber.length() == 11 || phoneNumber.length() == 12) {
+            if (phoneNumber.charAt(3) == '/' && phoneNumber.charAt(7) == '-') {
+                check = true;
+            }
+        }
+        if (!check) return false;
+        for (int i = 0; i < 3; i++) {
+            if (!isDigit(phoneNumber.charAt(i))) return false;
+        }
+        for (int i = 4; i < 7; i++) {
+            if (!isDigit(phoneNumber.charAt(i))) return false;
+        }
+        for (int i = 8; i < 11; i++) {
+            if (!isDigit(phoneNumber.charAt(i))) return false;
+        }
+        if (phoneNumber.length() == 12) {
+            if (!isDigit(phoneNumber.charAt(11)) || phoneNumber.charAt(2) != '0') return false;
+        }
+        return true;
     }
 
     private boolean checkBirthDate(LocalDate value) {
@@ -221,7 +254,7 @@ public class RegistrationController {
     }
 
     public void goBackAction(ActionEvent actionEvent) {
-        StartPageController.startPageStage.hide();
+        registrationStage.hide();
         mainLogicStage.show();
     }
 }
