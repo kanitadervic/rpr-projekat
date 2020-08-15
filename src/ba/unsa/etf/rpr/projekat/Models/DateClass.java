@@ -2,18 +2,18 @@ package ba.unsa.etf.rpr.projekat.Models;
 
 import java.time.LocalDate;
 
-public class DateOfBirth {
+public class DateClass {
     private String year;
     private String month;
     private String day;
 
-    public DateOfBirth(String year, String month, String day) {
+    public DateClass(String year, String month, String day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
-    public DateOfBirth(int day, int month, int year) {
+    public DateClass(int day, int month, int year) {
         this.day = String.valueOf(day);
         this.month = String.valueOf(month);
         this.year = String.valueOf(year);

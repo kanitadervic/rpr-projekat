@@ -1,15 +1,12 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
-import ba.unsa.etf.rpr.projekat.Main;
 import ba.unsa.etf.rpr.projekat.Models.*;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,7 +142,7 @@ public class RegistrationController {
     public void registrationAction(ActionEvent actionEvent) {
         if (checkData()) {
             LocalDate localDate = birthdayPicker.getValue();
-            DateOfBirth dateOfBirth = new DateOfBirth(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+            DateClass dateOfBirth = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             if(!isDoctor.isSelected()) {
                 Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);

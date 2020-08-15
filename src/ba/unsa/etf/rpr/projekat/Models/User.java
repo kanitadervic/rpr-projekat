@@ -3,16 +3,14 @@ package ba.unsa.etf.rpr.projekat.Models;
 
 import javafx.beans.property.SimpleStringProperty;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class User {
     private SimpleStringProperty firstName, lastName, email, phoneNumber, userName, password, gender;
-    private DateOfBirth dateOfBirth;
+    private DateClass dateOfBirth;
     private int id;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateOfBirth dateOfBirth) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateClass dateOfBirth) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -35,7 +33,7 @@ public class User {
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
-        dateOfBirth = new DateOfBirth(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        dateOfBirth = new DateClass(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
     public User() {
@@ -126,11 +124,11 @@ public class User {
         this.gender.set(gender);
     }
 
-    public DateOfBirth getDateOfBirth() {
+    public DateClass getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(DateOfBirth dateOfBirth) {
+    public void setDateOfBirth(DateClass dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

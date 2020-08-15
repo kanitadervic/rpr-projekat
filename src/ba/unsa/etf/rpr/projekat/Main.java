@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.Controllers.RegistrationController;
+import ba.unsa.etf.rpr.projekat.DAO.AppointmentDAO;
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 public class Main extends Application{
     public static Stage mainLogicStage;
     public static UserDAO userDAO = new UserDAO();
+    public static AppointmentDAO appointmentDAO = new AppointmentDAO();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
