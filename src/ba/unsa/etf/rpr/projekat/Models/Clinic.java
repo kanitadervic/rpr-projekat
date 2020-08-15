@@ -5,12 +5,16 @@ import java.util.ArrayList;
 public class Clinic {
     private String name;
     private Location location;
-    private ArrayList<User> doctors = new ArrayList<>();
+    private ArrayList<Doctor> doctors = new ArrayList<>();
 
-    public Clinic(String name, Location location, ArrayList<User> doctors) {
+    public Clinic(String name, Location location, ArrayList<Doctor> doctors) {
         this.name = name;
         this.location = location;
         this.doctors = doctors;
+    }
+
+    public void addDoctor(Doctor d){
+        doctors.add(d);
     }
 
     public String getName() {
@@ -29,11 +33,11 @@ public class Clinic {
         this.location = location;
     }
 
-    public ArrayList<User> getDoctors() {
+    public ArrayList<Doctor> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(ArrayList<User> doctors) {
+    public void setDoctors(ArrayList<Doctor> doctors) {
         this.doctors = doctors;
     }
 }

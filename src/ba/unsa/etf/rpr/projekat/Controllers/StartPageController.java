@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
@@ -45,13 +46,18 @@ public class StartPageController {
 
     public void logInAction(ActionEvent actionEvent) {
         boolean found = false;
+        Boolean doctor = false;
         ObservableList<User> users = userDAO.getUsers();
         for(User u: users){
             if(u.getUserName().equals(fldUsername.getText()) && u.getPassword().equals(fldPassword.getText())){
+                doctor = userDAO.checkIfAdmin(u);
                 found = true;
             }
         }
-        if(found) System.out.println("radi");
+        if(found) {
+            System.out.println("radi");
+            if(doctor) System.out.println("i admin");
+        }
         else System.out.println("ne radi");
     }
 }

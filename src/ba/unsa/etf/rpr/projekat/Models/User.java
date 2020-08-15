@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private SimpleStringProperty firstName, lastName, email, phoneNumber, userName, password, gender;
@@ -143,5 +144,26 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(userName, user.userName) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(gender, user.gender) &&
+                Objects.equals(dateOfBirth, user.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, phoneNumber, userName, password, gender, dateOfBirth, id);
     }
 }

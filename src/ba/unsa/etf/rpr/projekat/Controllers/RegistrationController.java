@@ -2,8 +2,8 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Main;
-import ba.unsa.etf.rpr.projekat.Models.DateOfBirth;
-import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Models.*;
+import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,6 +33,7 @@ public class RegistrationController {
     public ChoiceBox hospitalChoice;
     public RadioButton rbMale;
     public RadioButton rbFemale;
+    public PasswordField fldClinicPassword;
     private UserDAO userDAO;
 
 
@@ -45,7 +46,8 @@ public class RegistrationController {
         ToggleGroup group = new ToggleGroup();
         rbMale.setToggleGroup(group);
         rbFemale.setToggleGroup(group);
-        hospitalChoice.setDisable(true);
+        fldClinicPassword.setDisable(true);
+
 
         fldUsername.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkUserName(newVal)) {
@@ -127,6 +129,16 @@ public class RegistrationController {
             }
         });
 
+        fldClinicPassword.textProperty().addListener((obs, oldVal, newVal) -> {
+            if(newVal.equals("secretAdmin")){
+                fldClinicPassword.getStyleClass().removeAll("poljeNijeIspravno");
+                fldClinicPassword.getStyleClass().add("poljeIspravno");
+            } else {
+                fldClinicPassword.getStyleClass().removeAll("poljeIspravno");
+                fldClinicPassword.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
 
     }
 
@@ -134,10 +146,18 @@ public class RegistrationController {
         if (checkData()) {
             LocalDate localDate = birthdayPicker.getValue();
             DateOfBirth dateOfBirth = new DateOfBirth(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-            User u = new User(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
-                    fldPassword.getText(), getGender(), dateOfBirth);
-            userDAO.addUser(u);
-            userDAO.getUsers().add(u);
+            if(!isDoctor.isSelected()) {
+                Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                        fldPassword.getText(), getGender(), dateOfBirth);
+                userDAO.addUser(p);
+                userDAO.getUsers().add(p);
+            }
+            else{
+                Doctor d = new Doctor(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                        fldPassword.getText(), getGender(), dateOfBirth);
+                userDAO.addUser(d);
+                userDAO.getUsers().add(d);
+            }
             registrationStage.close();
             mainLogicStage.show();
         }
@@ -247,9 +267,9 @@ public class RegistrationController {
 
     public void doctorCheck(ActionEvent actionEvent) {
         if (isDoctor.isSelected()) {
-            hospitalChoice.setDisable(false);
+            fldClinicPassword.setDisable(false);
         } else {
-            hospitalChoice.setDisable(true);
+            fldClinicPassword.setDisable(true);
         }
     }
 

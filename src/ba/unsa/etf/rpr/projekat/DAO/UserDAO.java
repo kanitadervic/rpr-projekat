@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -9,6 +10,9 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.stream.Stream;
+
+import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
 public class UserDAO {
     private Connection connection;
@@ -37,9 +41,10 @@ public class UserDAO {
                     "\t\"password\"\tTEXT NOT NULL,\n" +
                     "\t\"gender\"\tTEXT NOT NULL,\n" +
                     "\t\"birthdate\"\tTEXT NOT NULL,\n" +
+                    "\t\"admin\"\tTEXT,\n" +
                     "\tPRIMARY KEY(\"id\")\n" +
                     ");");
-            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic', '32343', 'kdervic', 'test', 'F', '23-1-1999');");
+            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic', '32343', 'kdervic', 'test', 'F', '23-1-1999', 'admin');");
             currentId = 2;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -89,7 +94,7 @@ public class UserDAO {
     public void addUser(User u) {
         try{
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement =connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            preparedStatement =connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             u.setId(currentId);
             preparedStatement.setInt(1,currentId++);
             preparedStatement.setString(2,u.getFirstName());
@@ -100,6 +105,13 @@ public class UserDAO {
             preparedStatement.setString(7,u.getPassword());
             preparedStatement.setString(8,u.getGender());
             preparedStatement.setString(9,u.getDateOfBirthString());
+
+            if(u instanceof Doctor){
+                preparedStatement.setString(10, "admin");
+            }
+            else {
+                preparedStatement.setString(10, null);
+            }
 
             preparedStatement.executeUpdate();
             connection.close();
@@ -113,19 +125,33 @@ public class UserDAO {
         return users;
     }
 
-    public String findUserReturnPassword(String userName) {
-        String password = "";
+    public ObservableList<User> getAdminUsers() {
+        ObservableList<User> admins = FXCollections.observableArrayList();
         try{
-            preparedStatement = connection.prepareStatement("SELECT password FROM user WHERE username = ?");
-            preparedStatement.setString(1, userName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                password = resultSet.getString(1);
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE admin= ?");
+            preparedStatement.setString(1, "admin");
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                User u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                u.setId(rs.getInt(9));
+                admins.add(u);
             }
-
         } catch (SQLException throwables) {
-            return null;
+            throwables.printStackTrace();
         }
-        return password;
+        return admins;
+    }
+
+    public boolean checkIfAdmin(User u) {
+        boolean isDoctor = false;
+        ObservableList<User> doctors = getAdminUsers();
+        for(User d: doctors){
+            if(u.getUserName().equals(d.getUserName())){
+                isDoctor = true;
+            }
+        }
+        return isDoctor;
     }
 }

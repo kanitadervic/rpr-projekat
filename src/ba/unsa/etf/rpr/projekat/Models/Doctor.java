@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Doctor extends User {
-    private Clinic clinic;
-
 
     public Doctor(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateOfBirth dateOfBirth) {
         super(firstName, lastName, email, phoneNumber, userName, password, gender, dateOfBirth);
