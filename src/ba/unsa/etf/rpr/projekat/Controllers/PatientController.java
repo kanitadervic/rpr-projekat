@@ -8,14 +8,17 @@ import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class PatientController {
     private final UserDAO userDAO;
@@ -63,8 +66,24 @@ public class PatientController {
         else txtPassword.setVisible(false);
     }
 
-    public void changeAppointmentAction(ActionEvent actionEvent){
-        System.out.println("change appointment goes here");
+    public void changeAppointmentAction(ActionEvent actionEvent) throws IOException {
+        if (appointmentListView.getSelectionModel().getSelectedItem() == null) return; //daje dateclass
+        Appointment forModification = new Appointment();
+        ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
+        for(Appointment a: appointments){
+            if(appointmentListView.getSelectionModel().getSelectedItem().equals(a.getAppointmentDate()) && this.patient.equals(a.getPatient())){
+                forModification = a;
+                break;
+            }
+        }
+        AppointmentModificationController ctrl = new AppointmentModificationController(forModification);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointmentmodification.fxml"));
+        loader.setController(ctrl);
+        Parent root2 = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Modifikacija");
+        stage.setScene(new Scene(root2));
+        stage.show();
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent){
