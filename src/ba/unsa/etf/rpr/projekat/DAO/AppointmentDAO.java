@@ -20,7 +20,7 @@ public class AppointmentDAO {
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private int currentId = 1;
 
-    public AppointmentDAO(){
+    public AppointmentDAO() {
 //        File dbFile = new File("users.db");
 //        if(!dbFile.exists()) createBase();
         createBase();
@@ -37,14 +37,14 @@ public class AppointmentDAO {
         appointmentDAO = null;
     }
 
-    public static AppointmentDAO getInstance(){
-        if(appointmentDAO==null)appointmentDAO=new AppointmentDAO();
+    public static AppointmentDAO getInstance() {
+        if (appointmentDAO == null) appointmentDAO = new AppointmentDAO();
         return appointmentDAO;
     }
 
     private void createBase() {
         Statement statement = null;
-        try{
+        try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"appointment\" (\n" +
@@ -61,19 +61,19 @@ public class AppointmentDAO {
             throwables.printStackTrace();
         }
     }
+
     public void importData() {
-        File dbFile  =new File("users.db");
-        if(!dbFile.exists()) createBase();
-        else{
+        File dbFile = new File("users.db");
+        if (!dbFile.exists()) createBase();
+        else {
             try {
                 connection = DriverManager.getConnection("jdbc:sqlite:users.db");
                 preparedStatement = connection.prepareStatement("SELECT max(appointmentId) FROM appointment");
                 ResultSet rs = preparedStatement.executeQuery();
                 rs.next();
-                currentId = rs.getInt(1) +1;
+                currentId = rs.getInt(1) + 1;
                 connection.close();
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -109,13 +109,13 @@ public class AppointmentDAO {
         return appointments;
     }
 
-    public void addAppointment(Appointment appointment){
-        try{
+    public void addAppointment(Appointment appointment) {
+        try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement =connection.prepareStatement("INSERT INTO appointment VALUES (?, ?, ?, ?);");
+            preparedStatement = connection.prepareStatement("INSERT INTO appointment VALUES (?, ?, ?, ?);");
             appointment.setId(currentId);
             preparedStatement.setInt(1, currentId++);
-            preparedStatement.setInt(2,appointment.getDoctor().getId());
+            preparedStatement.setInt(2, appointment.getDoctor().getId());
             preparedStatement.setInt(3, appointment.getPatient().getId());
             preparedStatement.setString(4, appointment.getAppointmentDateString());
 
@@ -127,9 +127,9 @@ public class AppointmentDAO {
     }
 
     public void removeAppointment(int id) {
-        try{
+        try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement =connection.prepareStatement("DELETE FROM appointment WHERE appointmentId = ?;");
+            preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointmentId = ?;");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -139,13 +139,13 @@ public class AppointmentDAO {
 
     public void writeFileForDoctor(File selectedFile, int doctorId) {
         try {
-            if(selectedFile == null){
+            if (selectedFile == null) {
                 return;
             }
             FileWriter fileWriter = new FileWriter(selectedFile);
             String result = "";
-            for(Appointment appointment: userDAO.getAppointmentsForDoctor(doctorId)){
-                result += appointment.getPatientFirstName() + " " + appointment.getPatientLastName() + ", " +appointment.getAppointmentDateString() + "\n";
+            for (Appointment appointment : userDAO.getAppointmentsForDoctor(doctorId)) {
+                result += appointment.getPatientFirstName() + " " + appointment.getPatientLastName() + ", " + appointment.getAppointmentDateString() + "\n";
             }
             fileWriter.write(result);
             fileWriter.close();
