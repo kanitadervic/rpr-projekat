@@ -175,4 +175,9 @@ public class User {
     public int hashCode() {
         return Objects.hash(firstName, lastName, email, phoneNumber, userName, password, gender, dateOfBirth, id);
     }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getLastName();
+    }
 }
