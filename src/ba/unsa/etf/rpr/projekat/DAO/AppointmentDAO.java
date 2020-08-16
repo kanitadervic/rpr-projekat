@@ -152,27 +152,4 @@ public class AppointmentDAO {
             e.printStackTrace();
         }
     }
-
-    public Appointment getAppointmentByDate(DateClass removeDate) {
-        Appointment appointment = new Appointment();
-        try{
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("SELECT * FROM appointment WHERE appointmentDate=?");
-            preparedStatement.setString(1, removeDate.getAppointmentDateOutput());
-            ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()){
-                appointment.setId(rs.getInt(1));
-                Patient patient = (Patient) userDAO.findUserById(rs.getInt(3));
-                patient.setId(rs.getInt(3));
-                appointment.setPatient(patient);
-                Doctor doctor = (Doctor) userDAO.findUserById(rs.getInt(2));
-                doctor.setId(rs.getInt(2));
-                appointment.setDoctor(doctor);
-                appointment.setAppointmentDate(removeDate);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return appointment;
-    }
 }
