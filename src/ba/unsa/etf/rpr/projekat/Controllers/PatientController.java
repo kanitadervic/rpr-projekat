@@ -30,7 +30,6 @@ public class PatientController {
     public ListView appointmentListView;
     public Button btnChangeAppointment;
     public Button btnDeleteAppointment;
-    public Button btnSaveAppointment;
 
 
     public PatientController(User user, UserDAO userDAO) {
