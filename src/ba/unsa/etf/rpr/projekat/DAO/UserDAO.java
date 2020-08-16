@@ -32,6 +32,13 @@ public class UserDAO {
         Statement statement = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            //to erase table user completely, i think this will be useful
+            try{
+                statement = connection.createStatement();
+                statement.execute("DROP TABLE user");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"user\" (\n" +
                     "\t\"id\"\tINTEGER NOT NULL,\n" +

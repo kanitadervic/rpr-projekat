@@ -46,6 +46,13 @@ public class AppointmentDAO {
         Statement statement = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            //to erase table appointment completely, i think this will be useful
+            try{
+                statement = connection.createStatement();
+                statement.execute("DROP TABLE appointment");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"appointment\" (\n" +
                     "\t\"appointmentId\"\tINTEGER NOT NULL,\n" +

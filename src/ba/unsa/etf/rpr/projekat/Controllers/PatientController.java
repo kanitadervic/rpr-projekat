@@ -35,7 +35,6 @@ public class PatientController {
     public PatientController(User user, UserDAO userDAO) {
         patient = new Patient(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getUserName(), user.getPassword(), user.getGender(), user.getDateOfBirth());
         patient.setId(user.getId());
-        System.out.println(patient.getId());
         this.userDAO = userDAO;
     }
 
@@ -65,7 +64,7 @@ public class PatientController {
     }
 
     public void changeAppointmentAction(ActionEvent actionEvent){
-
+        System.out.println("change appointment goes here");
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent){
