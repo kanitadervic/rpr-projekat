@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
@@ -21,6 +22,10 @@ public class PatientController {
     public Text txtPassword;
     public CheckBox cbShowPassword;
     public ListView appointmentListView;
+    public Button btnChangeAppointment;
+    public Button btnDeleteAppointment;
+    public Button btnSaveAppointment;
+
 
     public PatientController(User user, UserDAO userDAO) {
         patient = new Patient(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getUserName(), user.getPassword(), user.getGender(), user.getDateOfBirth());
@@ -52,5 +57,17 @@ public class PatientController {
             txtPassword.setVisible(true);
         }
         else txtPassword.setVisible(false);
+    }
+
+    public void changeAppointmentAction(ActionEvent actionEvent){
+
+    }
+
+    public void deleteAppointmentAction(ActionEvent actionEvent){
+
+    }
+
+    public void saveAppointmentAction(ActionEvent actionEvent){
+
     }
 }
