@@ -40,6 +40,17 @@ public class User {
 
     }
 
+    public User(User copyUser) {
+        this.firstName = new SimpleStringProperty(copyUser.firstName.toString());
+        this.lastName = new SimpleStringProperty(copyUser.lastName.toString());
+        this.email = new SimpleStringProperty(copyUser.email.toString());
+        this.phoneNumber = new SimpleStringProperty(copyUser.phoneNumber.toString());
+        this.userName = new SimpleStringProperty(copyUser.userName.toString());
+        this.password = new SimpleStringProperty(copyUser.password.toString());
+        this.gender = new SimpleStringProperty(copyUser.gender.toString());
+        this.dateOfBirth = copyUser.getDateOfBirth();
+    }
+
     public String getFirstName() {
         return firstName.get();
     }

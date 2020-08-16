@@ -10,8 +10,6 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.stream.Stream;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
@@ -34,7 +32,7 @@ public class UserDAO {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE \"user\" (\n" +
+            statement.execute("CREATE TABLE IF NOT EXISTS \"user\" (\n" +
                     "\t\"id\"\tINTEGER NOT NULL,\n" +
                     "\t\"firstName\"\tTEXT NOT NULL,\n" +
                     "\t\"lastName\"\tTEXT NOT NULL,\n" +
@@ -159,12 +157,12 @@ public class UserDAO {
     }
 
 
-    public User findUserById(int doctorId) {
-        User u = null;
+    public User findUserById(int userId) {
+        User u = new User();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE id= ?");
-            preparedStatement.setInt(1, doctorId);
+            preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
@@ -178,15 +176,41 @@ public class UserDAO {
     }
 
     public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
-        appDAO = appointmentDAO;
-        ObservableList<Appointment> appointmentsForDoctor = null;
-        ObservableList<Appointment> appointments = appointmentDAO.getAppointments();
+        this.appDAO = appointmentDAO;
+        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
+        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
         for (Appointment appointment : appointments) {
             if (appointment.getDoctor().getId() == id) {
                 appointmentsForDoctor.add(appointment);
-                System.out.println("dodao");
             }
         }
+
         return appointmentsForDoctor;
+    }
+
+    public void removeUser(int id) {
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void removeInstance() {
+        if (userDAO != null) {
+            try {
+                userDAO.connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        userDAO = null;
+    }
+
+    public static UserDAO getInstance(){
+        if(userDAO==null)userDAO=new UserDAO();
+        return userDAO;
     }
 }

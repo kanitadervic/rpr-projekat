@@ -42,4 +42,13 @@ public class DateClass {
     public void setDay(String day) {
         this.day = day;
     }
+
+    public String getAppointmentDateOutput() {
+        return getDay() + "/" + getMonth() + "/" + getYear();
+    }
+
+    @Override
+    public String toString() {
+        return getAppointmentDateOutput();
+    }
 }

@@ -1,28 +1,41 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
-import java.util.Date;
-
 public class Appointment {
-    private Doctor doctor;
-    private Patient patient;
+    private User doctor;
+    private User patient;
     private DateClass appointmentDate;
     private int id;
+    public String patientFirstName;
+    public String patientLastName;
+
 
     public Appointment(Doctor doctor, Patient patient, DateClass appointmentDate) {
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
+        this.patientFirstName = patient.getFirstName();
+        this.patientLastName = patient.getLastName();
     }
 
+
+
     public Appointment(User doctor, User patient, String appointmentDate) {
+        this.doctor = doctor;
+        this.patient = patient;
         String[] parts = appointmentDate.split("\\-");
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
-        this.appointmentDate = new DateClass(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        this.appointmentDate = new DateClass(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
+        this.patientFirstName = patient.getFirstName();
+        this.patientLastName = patient.getLastName();
     }
 
-    public Doctor getDoctor() {
+    public Appointment() {
+
+    }
+
+    public User getDoctor() {
         return doctor;
     }
 
@@ -30,7 +43,7 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public Patient getPatient() {
+    public User getPatient() {
         return patient;
     }
 
@@ -56,5 +69,26 @@ public class Appointment {
 
     public String getAppointmentDateString(){
         return appointmentDate.getDay() + "-" + appointmentDate.getMonth() + "-" + appointmentDate.getYear();
+    }
+
+    public String getPatientFirstName() {
+        return patientFirstName;
+    }
+
+    public void setPatientFirstName(String patientFirstName) {
+        this.patientFirstName = patientFirstName;
+    }
+
+    public String getPatientLastName() {
+        return patientLastName;
+    }
+
+    public void setPatientLastName(String patientLastName) {
+        this.patientLastName = patientLastName;
+    }
+
+    @Override
+    public String toString() {
+        return (patient.getFirstName() + " " + patient.getLastName() + " " + getAppointmentDateString());
     }
 }

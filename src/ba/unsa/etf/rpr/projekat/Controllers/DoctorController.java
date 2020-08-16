@@ -3,39 +3,84 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.doctorStage;
+import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
 
 public class DoctorController {
     public Text txtWelcome;
     public Doctor doctor = new Doctor();
-    public ListView appointmentListView;
+    public TableView tableViewPatients;
+    public Button btnPatient;
+    public Button btnAppointmentDelete;
+    public Button btnLogOut;
     public UserDAO userDAO;
+    public TableColumn columnLastName;
+    public TableColumn columnDate;
+    public TableColumn columnName;
     public ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-    public DoctorController(User u, UserDAO userDAO){
+
+    public DoctorController(User u, UserDAO userDAO) {
         doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
         doctor.setId(1);
         this.userDAO = userDAO;
     }
 
+    private void refresh() {
+        tableViewPatients.setItems(appointments);
+    }
+
     @FXML
-    public void initialize(){
-        if(doctor.getGender().equals("F")) {
+    public void initialize() {
+        if (doctor.getGender().equals("F")) {
             txtWelcome.setText("Dobrodošla, " + doctor.getFirstName());
-        }
-        else{
-            txtWelcome.setText("Dobrodošao, "+ doctor.getFirstName());
+        } else {
+            txtWelcome.setText("Dobrodošao, " + doctor.getFirstName());
         }
         appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-        appointmentListView.setItems(appointments);
+        columnName.setCellValueFactory(new PropertyValueFactory<>("patientFirstName"));
+        columnLastName.setCellValueFactory(new PropertyValueFactory<>("patientLastName"));
+        columnDate.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
+        refresh();
 
+
+    }
+
+    public void logOutAction(ActionEvent actionEvent) {
+        doctorStage.hide();
+        mainLogicStage.show();
+    }
+
+    public void showPatientAction(ActionEvent actionEvent) {
+
+    }
+
+    public void deleteAppointmentAction(ActionEvent actionEvent) {
+        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) return;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Da li želite izbrisati termin?");
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            Appointment appointment = (Appointment) tableViewPatients.getSelectionModel().getSelectedItem();
+            appointmentDAO.removeAppointment(appointment.getId());
+            tableViewPatients.getItems().remove(appointment);
+        }
     }
 }
