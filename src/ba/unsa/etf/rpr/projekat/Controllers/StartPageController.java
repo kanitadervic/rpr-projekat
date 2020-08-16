@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.Main;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +29,7 @@ public class StartPageController {
     public ImageView userImage;
     public static Stage registrationStage;
     public static Stage doctorStage;
+    public static Stage patientStage;
 
 
     public void registerAction(ActionEvent actionEvent) {
@@ -73,7 +75,18 @@ public class StartPageController {
             stage.show();
         }
 
-        else if(found) System.out.println("samo korisnik");
+        else if(found)  {
+            mainLogicStage.hide();
+            PatientController ctrl = new PatientController(user, userDAO);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient.fxml"));
+            loader.setController(ctrl);
+            Parent root2 = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Pacijent");
+            stage.setScene(new Scene(root2));
+            patientStage = stage;
+            stage.show();
+        }
         else System.out.println("ne radi");
     }
 }

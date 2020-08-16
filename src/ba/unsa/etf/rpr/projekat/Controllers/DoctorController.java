@@ -35,7 +35,7 @@ public class DoctorController {
 
     public DoctorController(User u, UserDAO userDAO) {
         doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
-        doctor.setId(1);
+        doctor.setId(u.getId());
         this.userDAO = userDAO;
     }
 
