@@ -3,21 +3,17 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
-import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
+import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.doctorStage;
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
@@ -94,6 +90,18 @@ public class DoctorController {
             Appointment appointment = (Appointment) tableViewPatients.getSelectionModel().getSelectedItem();
             appointmentDAO.removeAppointment(appointment.getId());
             tableViewPatients.getItems().remove(appointment);
+        }
+    }
+
+    public void saveAppointmentsAction(ActionEvent actionEvent){
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null) {
+            appointmentDAO.writeFile(selectedFile, doctor.getId());
+        } else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Invalid file");
+            alert.showAndWait();
         }
     }
 }

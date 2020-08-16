@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -131,6 +133,23 @@ public class AppointmentDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void writeFile(File selectedFile, int doctorId) {
+        try {
+            if(selectedFile == null){
+                return;
+            }
+            FileWriter fileWriter = new FileWriter(selectedFile);
+            String result = "";
+            for(Appointment appointment: userDAO.getAppointmentsForDoctor(doctorId)){
+                result += appointment.getPatientFirstName() + " " + appointment.getPatientLastName() + ", " +appointment.getAppointmentDateString() + "\n";
+            }
+            fileWriter.write(result);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
