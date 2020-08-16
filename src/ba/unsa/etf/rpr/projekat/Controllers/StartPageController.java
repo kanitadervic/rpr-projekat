@@ -59,6 +59,7 @@ public class StartPageController {
                 doctor = userDAO.checkIfAdmin(u);
                 found = true;
                 user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
+                user.setId(u.getId());
                 break;
             }
         }

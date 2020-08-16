@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.DateClass;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.beans.property.SimpleObjectProperty;
@@ -212,5 +213,17 @@ public class UserDAO {
     public static UserDAO getInstance(){
         if(userDAO==null)userDAO=new UserDAO();
         return userDAO;
+    }
+
+    public ObservableList getAppointmentsForPatient(int id) {
+        this.appDAO = appointmentDAO;
+        ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
+        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatient().getId() == id) {
+                appointmentsForPatient.add(appointment.getAppointmentDate());
+            }
+        }
+        return appointmentsForPatient;
     }
 }

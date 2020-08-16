@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -86,5 +87,11 @@
             <Insets right="10.0" />
          </GridPane.margin>
       </CheckBox>
+      <ListView fx:id="appointmentListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="3">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </ListView>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezervisani termini:" textAlignment="CENTER" wrappingWidth="349.17138671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
