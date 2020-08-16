@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
-import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ public class PatientController {
         patient.setId(user.getId());
         this.userDAO = userDAO;
     }
+
     @FXML
     public void initialize(){
         if (patient.getGender().equals("F")) {
