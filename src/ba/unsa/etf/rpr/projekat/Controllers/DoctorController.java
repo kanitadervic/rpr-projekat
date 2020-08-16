@@ -98,7 +98,7 @@ public class DoctorController {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
         if(selectedFile != null) {
-            appointmentDAO.writeFile(selectedFile, doctor.getId());
+            appointmentDAO.writeFileForDoctor(selectedFile, doctor.getId());
         } else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Invalid file");

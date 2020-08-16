@@ -10,7 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
@@ -88,9 +90,5 @@ public class PatientController {
             appointmentDAO.removeAppointment(removing.getId());
             appointmentListView.getItems().remove(removeDate);
         }
-    }
-
-    public void saveAppointmentAction(ActionEvent actionEvent){
-
     }
 }

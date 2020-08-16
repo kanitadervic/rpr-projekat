@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.print.Doc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class AppointmentDAO {
 
     public ArrayList<Appointment> getAllAppointments() {
         ArrayList<Appointment> list = new ArrayList<>();
-        ObservableList<User> doctors = userDAO.getAdminUsers();
+        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select * from appointment");
@@ -136,7 +137,7 @@ public class AppointmentDAO {
         }
     }
 
-    public void writeFile(File selectedFile, int doctorId) {
+    public void writeFileForDoctor(File selectedFile, int doctorId) {
         try {
             if(selectedFile == null){
                 return;
@@ -152,4 +153,5 @@ public class AppointmentDAO {
             e.printStackTrace();
         }
     }
+
 }

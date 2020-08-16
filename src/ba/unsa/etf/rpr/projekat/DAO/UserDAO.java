@@ -127,30 +127,30 @@ public class UserDAO {
         return users;
     }
 
-    public ObservableList<User> getAdminUsers() {
-        ObservableList<User> admins = FXCollections.observableArrayList();
+    public ObservableList<Doctor> getDoctorUsers() {
+        ObservableList<Doctor> doctors = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE admin= ?");
             preparedStatement.setString(1, "admin");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                User u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
+                Doctor d = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-                u.setId(rs.getInt(9));
-                admins.add(u);
+                d.setId(rs.getInt(9));
+                doctors.add(d);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return admins;
+        return doctors;
     }
 
-    public boolean checkIfAdmin(User u) {
+    public boolean checkIfAdmin(Doctor doc) {
         boolean isDoctor = false;
-        ObservableList<User> doctors = getAdminUsers();
-        for (User d : doctors) {
-            if (u.getUserName().equals(d.getUserName())) {
+        ObservableList<Doctor> doctors = getDoctorUsers();
+        for (Doctor d : doctors) {
+            if (d.getUserName().equals(doc.getUserName())) {
                 isDoctor = true;
             }
         }
@@ -210,12 +210,12 @@ public class UserDAO {
         userDAO = null;
     }
 
-    public static UserDAO getInstance(){
-        if(userDAO==null)userDAO=new UserDAO();
+    public static UserDAO getInstance() {
+        if (userDAO == null) userDAO = new UserDAO();
         return userDAO;
     }
 
-    public ObservableList getAppointmentsForPatient(int id) {
+    public ObservableList<DateClass> getAppointmentsForPatient(int id) {
         this.appDAO = appointmentDAO;
         ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
         ArrayList<Appointment> appointments = appDAO.getAllAppointments();
@@ -226,4 +226,5 @@ public class UserDAO {
         }
         return appointmentsForPatient;
     }
+
 }
