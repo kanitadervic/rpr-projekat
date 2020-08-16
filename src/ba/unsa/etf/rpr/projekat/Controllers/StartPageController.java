@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -56,7 +57,7 @@ public class StartPageController {
         ObservableList<User> users = userDAO.getUsers();
         for(User u: users){
             if(u.getUserName().equals(fldUsername.getText()) && u.getPassword().equals(fldPassword.getText())){
-                doctor = userDAO.checkIfAdmin(u);
+                doctor = userDAO.checkIfDoctor(u);
                 found = true;
                 user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
                 user.setId(u.getId());

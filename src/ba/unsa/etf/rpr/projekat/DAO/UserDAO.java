@@ -127,8 +127,8 @@ public class UserDAO {
         return users;
     }
 
-    public ObservableList<Doctor> getDoctorUsers() {
-        ObservableList<Doctor> doctors = FXCollections.observableArrayList();
+    public ObservableList<User> getDoctorUsers() {
+        ObservableList<User> doctors = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE admin= ?");
@@ -146,11 +146,11 @@ public class UserDAO {
         return doctors;
     }
 
-    public boolean checkIfAdmin(Doctor doc) {
+    public boolean checkIfDoctor(User u) {
         boolean isDoctor = false;
-        ObservableList<Doctor> doctors = getDoctorUsers();
-        for (Doctor d : doctors) {
-            if (d.getUserName().equals(doc.getUserName())) {
+        ObservableList<User> doctors = getDoctorUsers();
+        for (User doc : doctors) {
+            if (u.getUserName().equals(doc.getUserName())) {
                 isDoctor = true;
             }
         }

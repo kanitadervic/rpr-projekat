@@ -82,7 +82,7 @@ public class AppointmentDAO {
 
     public ArrayList<Appointment> getAllAppointments() {
         ArrayList<Appointment> list = new ArrayList<>();
-        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
+        ObservableList<User> doctors = userDAO.getDoctorUsers();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select * from appointment");
