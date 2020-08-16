@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -68,12 +69,24 @@ public class DoctorController {
     }
 
     public void showPatientAction(ActionEvent actionEvent) {
-
+        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) return;
+        Appointment appointment = (Appointment) tableViewPatients.getSelectionModel().getSelectedItem();
+        User patient = appointment.getPatient();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Informacije o pacijentu");
+        String gender = patient.getGender().equals("F")? "Žensko" : "Muško";
+        alert.setContentText("Ime: " + patient.getFirstName() + "\n" +
+                "Prezime: " + patient.getLastName() + "\n" +
+                "Email: " + patient.getEmail() + "\n" +
+                "Broj telefona: " + patient.getPhoneNumber() + "\n" +
+                "Spol: " + gender);
+        alert.showAndWait();
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent) {
         if (tableViewPatients.getSelectionModel().getSelectedItem() == null) return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Brisanje termina");
         alert.setContentText("Da li želite izbrisati termin?");
         alert.showAndWait();
 

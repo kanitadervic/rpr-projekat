@@ -128,7 +128,6 @@ public class AppointmentDAO {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement =connection.prepareStatement("DELETE FROM appointment WHERE appointmentId = ?;");
             preparedStatement.setInt(1, id);
-            System.out.println("usao?");
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
