@@ -1,15 +1,19 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.DateClass;
 import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+
+import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 
 public class PatientController {
     private final UserDAO userDAO;
@@ -64,7 +68,26 @@ public class PatientController {
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent){
+        if (appointmentListView.getSelectionModel().getSelectedItem() == null) return;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Brisanje termina");
+        alert.setContentText("Da li želite otkazati termin?");
+        alert.showAndWait();
 
+        if (alert.getResult() == ButtonType.OK) {
+            DateClass removeDate = (DateClass) appointmentListView.getSelectionModel().getSelectedItem();
+            ArrayList<Appointment> appointmentList = appointmentDAO.getAllAppointments();
+            Appointment removing = new Appointment();
+            for(Appointment a: appointmentList){
+                if(removeDate.equals(a.getAppointmentDate())){
+                    removing = a;
+                    removing.setId(a.getId());
+                    break;
+                }
+            }
+            appointmentDAO.removeAppointment(removing.getId());
+            appointmentListView.getItems().remove(removeDate);
+        }
     }
 
     public void saveAppointmentAction(ActionEvent actionEvent){

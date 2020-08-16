@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class DateClass {
     private String year;
@@ -50,5 +51,20 @@ public class DateClass {
     @Override
     public String toString() {
         return getAppointmentDateOutput();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateClass dateClass = (DateClass) o;
+        return Objects.equals(year, dateClass.year) &&
+                Objects.equals(month, dateClass.month) &&
+                Objects.equals(day, dateClass.day);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, month, day);
     }
 }
