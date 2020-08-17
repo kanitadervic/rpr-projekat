@@ -47,91 +47,91 @@ public class RegistrationController {
 
         fldUsername.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkUserName(newVal)) {
-                fldUsername.getStyleClass().removeAll("poljeNijeIspravno");
-                fldUsername.getStyleClass().add("poljeIspravno");
+                fldUsername.getStyleClass().removeAll("incorrectField");
+                fldUsername.getStyleClass().add("correctField");
             } else {
-                fldUsername.getStyleClass().removeAll("poljeIspravno");
-                fldUsername.getStyleClass().add("poljeNijeIspravno");
+                fldUsername.getStyleClass().removeAll("correctField");
+                fldUsername.getStyleClass().add("incorrectField");
             }
         });
 
         fldEmail.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkEmail(newVal)) {
-                fldEmail.getStyleClass().removeAll("poljeNijeIspravno");
-                fldEmail.getStyleClass().add("poljeIspravno");
+                fldEmail.getStyleClass().removeAll("incorrectField");
+                fldEmail.getStyleClass().add("correctField");
             } else {
-                fldEmail.getStyleClass().removeAll("poljeIspravno");
-                fldEmail.getStyleClass().add("poljeNijeIspravno");
+                fldEmail.getStyleClass().removeAll("correctField");
+                fldEmail.getStyleClass().add("incorrectField");
             }
         });
 
         fldPassword.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkPassword(newVal)) {
-                fldPassword.getStyleClass().removeAll("poljeNijeIspravno");
-                fldPassword.getStyleClass().add("poljeIspravno");
+                fldPassword.getStyleClass().removeAll("incorrectField");
+                fldPassword.getStyleClass().add("correctField");
             } else {
-                fldPassword.getStyleClass().removeAll("poljeIspravno");
-                fldPassword.getStyleClass().add("poljeNijeIspravno");
+                fldPassword.getStyleClass().removeAll("correctField");
+                fldPassword.getStyleClass().add("incorrectField");
             }
         });
 
         fldCity.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty()) {
-                fldCity.getStyleClass().removeAll("poljeNijeIspravno");
-                fldCity.getStyleClass().add("poljeIspravno");
+                fldCity.getStyleClass().removeAll("incorrectField");
+                fldCity.getStyleClass().add("correctField");
             } else {
-                fldCity.getStyleClass().removeAll("poljeIspravno");
-                fldCity.getStyleClass().add("poljeNijeIspravno");
+                fldCity.getStyleClass().removeAll("correctField");
+                fldCity.getStyleClass().add("incorrectField");
             }
         });
 
         fldName.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkName(newVal)) {
-                fldName.getStyleClass().removeAll("poljeNijeIspravno");
-                fldName.getStyleClass().add("poljeIspravno");
+                fldName.getStyleClass().removeAll("incorrectField");
+                fldName.getStyleClass().add("correctField");
             } else {
-                fldName.getStyleClass().removeAll("poljeIspravno");
-                fldName.getStyleClass().add("poljeNijeIspravno");
+                fldName.getStyleClass().removeAll("correctField");
+                fldName.getStyleClass().add("incorrectField");
             }
         });
 
         fldLastName.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkName(newVal)) {
-                fldLastName.getStyleClass().removeAll("poljeNijeIspravno");
-                fldLastName.getStyleClass().add("poljeIspravno");
+                fldLastName.getStyleClass().removeAll("incorrectField");
+                fldLastName.getStyleClass().add("correctField");
             } else {
-                fldLastName.getStyleClass().removeAll("poljeIspravno");
-                fldLastName.getStyleClass().add("poljeNijeIspravno");
+                fldLastName.getStyleClass().removeAll("correctField");
+                fldLastName.getStyleClass().add("incorrectField");
             }
         });
 
         birthdayPicker.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (checkBirthDate(newVal)) {
-                birthdayPicker.getStyleClass().removeAll("poljeNijeIspravno");
-                birthdayPicker.getStyleClass().add("poljeIspravno");
+                birthdayPicker.getStyleClass().removeAll("incorrectField");
+                birthdayPicker.getStyleClass().add("correctField");
             } else {
-                birthdayPicker.getStyleClass().removeAll("poljeIspravno");
-                birthdayPicker.getStyleClass().add("poljeNijeIspravno");
+                birthdayPicker.getStyleClass().removeAll("correctField");
+                birthdayPicker.getStyleClass().add("incorrectField");
             }
         });
 
         fldPhoneNumber.textProperty().addListener((obs, oldVal, newVal) -> {
             if (checkPhoneNumber(newVal)) {
-                fldPhoneNumber.getStyleClass().removeAll("poljeNijeIspravno");
-                fldPhoneNumber.getStyleClass().add("poljeIspravno");
+                fldPhoneNumber.getStyleClass().removeAll("incorrectField");
+                fldPhoneNumber.getStyleClass().add("correctField");
             } else {
-                fldPhoneNumber.getStyleClass().removeAll("poljeIspravno");
-                fldPhoneNumber.getStyleClass().add("poljeNijeIspravno");
+                fldPhoneNumber.getStyleClass().removeAll("correctField");
+                fldPhoneNumber.getStyleClass().add("incorrectField");
             }
         });
 
         fldClinicPassword.textProperty().addListener((obs, oldVal, newVal) -> {
             if(newVal.equals("secretAdmin")){
-                fldClinicPassword.getStyleClass().removeAll("poljeNijeIspravno");
-                fldClinicPassword.getStyleClass().add("poljeIspravno");
+                fldClinicPassword.getStyleClass().removeAll("incorrectField");
+                fldClinicPassword.getStyleClass().add("correctField");
             } else {
-                fldClinicPassword.getStyleClass().removeAll("poljeIspravno");
-                fldClinicPassword.getStyleClass().add("poljeNijeIspravno");
+                fldClinicPassword.getStyleClass().removeAll("correctField");
+                fldClinicPassword.getStyleClass().add("incorrectField");
             }
         });
 

@@ -160,5 +160,16 @@ public class AppointmentDAO {
             e.printStackTrace();
         }
     }
-
+    public void updateAppointmentDate(int appointmentId, String toString, int doctorId) {
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("UPDATE appointment SET doctorId = ?, appointmentDate = ? WHERE appointmentId = ?");
+            preparedStatement.setInt(1, doctorId);
+            preparedStatement.setString(2, toString);
+            preparedStatement.setInt(3, appointmentId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

@@ -45,7 +45,7 @@ public class DateClass {
     }
 
     public String getAppointmentDateOutput() {
-        return getDay() + "/" + getMonth() + "/" + getYear();
+        return getDay() + "-" + getMonth() + "-" + getYear();
     }
 
     @Override

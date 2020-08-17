@@ -71,8 +71,9 @@ public class PatientController {
         Appointment forModification = new Appointment();
         ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
         for(Appointment a: appointments){
-            if(appointmentListView.getSelectionModel().getSelectedItem().equals(a.getAppointmentDate()) && this.patient.equals(a.getPatient())){
+            if(appointmentListView.getSelectionModel().getSelectedItem().toString().equals(a.getAppointmentDate().toString()) && this.patient.getId() == a.getPatient().getId()){
                 forModification = a;
+                forModification.setId(a.getId());
                 break;
             }
         }
