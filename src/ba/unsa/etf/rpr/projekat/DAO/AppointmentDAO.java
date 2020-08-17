@@ -172,4 +172,27 @@ public class AppointmentDAO {
             throwables.printStackTrace();
         }
     }
+
+    public Appointment getAppointment(int aId) {
+        Appointment appointment = new Appointment();
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT * FROM appointment WHERE appointmentId = ?");
+            preparedStatement.setInt(1, aId);
+            ResultSet rs = preparedStatement.executeQuery();
+            rs.next();
+            User doctor = userDAO.findUserById(rs.getInt(2));
+            User patient = userDAO.findUserById(rs.getInt(3));
+            String dateString = rs.getString(4);
+            DateClass date = new DateClass(dateString);
+            appointment.setDoctor(doctor);
+            appointment.setPatient(patient);
+            appointment.setAppointmentDate(date);
+            appointment = new Appointment(doctor, patient, dateString);
+            appointment.setId(rs.getInt(1));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return appointment;
+    }
 }

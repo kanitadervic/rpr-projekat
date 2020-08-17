@@ -20,6 +20,13 @@ public class DateClass {
         this.year = String.valueOf(year);
     }
 
+    public DateClass(String dateString) {
+        String[] parts = dateString.split("\\-");
+        this.day = parts[0];
+        this.month = parts[1];
+        this.year = parts[2];
+    }
+
     public String getYear() {
         return year;
     }

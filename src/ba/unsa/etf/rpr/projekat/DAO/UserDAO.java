@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
@@ -222,14 +223,20 @@ public class UserDAO {
         return userDAO;
     }
 
-    public ObservableList<DateClass> getAppointmentsForPatient(int id) {
-        this.appDAO = appointmentDAO;
+    public ObservableList<DateClass> getAppointmentsForPatient(int id){
         ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
-        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
-        for (Appointment appointment : appointments) {
-            if (appointment.getPatient().getId() == id) {
-                appointmentsForPatient.add(appointment.getAppointmentDate());
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE patientId = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                int aId = rs.getInt(1);
+                DateClass a = appointmentDAO.getAppointment(aId).getAppointmentDate();
+                appointmentsForPatient.add(a);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return appointmentsForPatient;
     }
