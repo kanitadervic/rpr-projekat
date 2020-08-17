@@ -156,11 +156,17 @@ public class UserDAO {
 
     public boolean checkIfDoctor(User u) {
         boolean isDoctor = false;
-        ObservableList<User> doctors = getDoctorUsers();
-        for (User doc : doctors) {
-            if (u.getUserName().equals(doc.getUserName())) {
-                isDoctor = true;
-            }
+        int id = u.getId();
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT admin FROM user WHERE id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if(resultSet.getString(1) == null) return false;
+            isDoctor = resultSet.getString(1).equals("admin");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return isDoctor;
     }
@@ -183,19 +189,6 @@ public class UserDAO {
         }
         return u;
     }
-
-//    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
-//        this.appDAO = appointmentDAO;
-//        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
-//        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
-//        for (Appointment appointment : appointments) {
-//            if (appointment.getDoctor().getId() == id) {
-//                appointmentsForDoctor.add(appointment);
-//            }
-//        }
-//
-//        return appointmentsForDoctor;
-//    }
 
     public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
         ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
