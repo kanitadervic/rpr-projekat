@@ -125,7 +125,6 @@ public class AppointmentDAO {
             preparedStatement.setInt(2, appointment.getDoctor().getId());
             preparedStatement.setInt(3, appointment.getPatient().getId());
             preparedStatement.setString(4, appointment.getAppointmentDateString());
-
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException throwables) {

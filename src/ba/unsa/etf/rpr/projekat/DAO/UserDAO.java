@@ -184,16 +184,34 @@ public class UserDAO {
         return u;
     }
 
-    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
-        this.appDAO = appointmentDAO;
-        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
-        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
-        for (Appointment appointment : appointments) {
-            if (appointment.getDoctor().getId() == id) {
-                appointmentsForDoctor.add(appointment);
-            }
-        }
+//    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
+//        this.appDAO = appointmentDAO;
+//        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
+//        ArrayList<Appointment> appointments = appDAO.getAllAppointments();
+//        for (Appointment appointment : appointments) {
+//            if (appointment.getDoctor().getId() == id) {
+//                appointmentsForDoctor.add(appointment);
+//            }
+//        }
+//
+//        return appointmentsForDoctor;
+//    }
 
+    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
+        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE doctorId = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                int aId = rs.getInt(1);
+                Appointment a = appointmentDAO.getAppointment(aId);
+                appointmentsForDoctor.add(a);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return appointmentsForDoctor;
     }
 
