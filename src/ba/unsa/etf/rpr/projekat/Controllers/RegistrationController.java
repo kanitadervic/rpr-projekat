@@ -27,7 +27,6 @@ public class RegistrationController {
     public DatePicker birthdayPicker;
     public CheckBox isDoctor;
     public TextField fldCity;
-    public ChoiceBox hospitalChoice;
     public RadioButton rbMale;
     public RadioButton rbFemale;
     public PasswordField fldClinicPassword;

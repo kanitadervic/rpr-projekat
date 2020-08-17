@@ -11,7 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import java.time.LocalDate;
+
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
 public class AppointmentModificationController {
@@ -28,15 +29,43 @@ public class AppointmentModificationController {
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         ObservableList<User> doctors = userDAO.getDoctorUsers();
         doctorChoice.setItems(doctors);
+
+        doctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                doctorChoice.getStyleClass().removeAll("poljeNijeIspravno");
+                doctorChoice.getStyleClass().add("poljeIspravno");
+            } else {
+                doctorChoice.getStyleClass().removeAll("poljeIspravno");
+                doctorChoice.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+        newAppointmentDate.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (checkAppointmentDate(newVal)) {
+                newAppointmentDate.getStyleClass().removeAll("poljeNijeIspravno");
+                newAppointmentDate.getStyleClass().add("poljeIspravno");
+            } else {
+                newAppointmentDate.getStyleClass().removeAll("poljeIspravno");
+                newAppointmentDate.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
     }
-    public void okClickedAction(ActionEvent actionEvent){
+
+    private boolean checkAppointmentDate(LocalDate value) {
+        LocalDate localDate = LocalDate.of(2010, 1, 1);
+        return (value.isBefore(localDate));
+    }
+
+    public void okClickedAction(ActionEvent actionEvent) {
         System.out.println("ok clicked");
     }
 
-    public void cancelAction(ActionEvent actionEvent){
+    public void cancelAction(ActionEvent actionEvent) {
         System.out.println("cancel clicked");
     }
+
+
 }
