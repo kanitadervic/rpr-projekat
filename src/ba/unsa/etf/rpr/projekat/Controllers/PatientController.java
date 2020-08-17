@@ -42,7 +42,7 @@ public class PatientController {
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         if (patient.getGender().equals("F")) {
             txtWelcome.setText("Dobrodošla, " + patient.getFirstName());
         } else {
@@ -59,19 +59,18 @@ public class PatientController {
         cbShowPassword.setSelected(false);
     }
 
-    public void showPasswordAction(ActionEvent actionEvent){
-        if(cbShowPassword.isSelected()){
+    public void showPasswordAction(ActionEvent actionEvent) {
+        if (cbShowPassword.isSelected()) {
             txtPassword.setVisible(true);
-        }
-        else txtPassword.setVisible(false);
+        } else txtPassword.setVisible(false);
     }
 
     public void changeAppointmentAction(ActionEvent actionEvent) throws IOException {
         if (appointmentListView.getSelectionModel().getSelectedItem() == null) return; //daje dateclass
         Appointment forModification = new Appointment();
         ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
-        for(Appointment a: appointments){
-            if(appointmentListView.getSelectionModel().getSelectedItem().toString().equals(a.getAppointmentDate().toString()) && this.patient.getId() == a.getPatient().getId()){
+        for (Appointment a : appointments) {
+            if (appointmentListView.getSelectionModel().getSelectedItem().toString().equals(a.getAppointmentDate().toString()) && this.patient.getId() == a.getPatient().getId()) {
                 forModification = a;
                 forModification.setId(a.getId());
                 break;
@@ -87,7 +86,7 @@ public class PatientController {
         stage.show();
     }
 
-    public void deleteAppointmentAction(ActionEvent actionEvent){
+    public void deleteAppointmentAction(ActionEvent actionEvent) {
         if (appointmentListView.getSelectionModel().getSelectedItem() == null) return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Brisanje termina");
@@ -98,8 +97,8 @@ public class PatientController {
             DateClass removeDate = (DateClass) appointmentListView.getSelectionModel().getSelectedItem();
             ArrayList<Appointment> appointmentList = appointmentDAO.getAllAppointments();
             Appointment removing = new Appointment();
-            for(Appointment a: appointmentList){
-                if(removeDate.equals(a.getAppointmentDate())){
+            for (Appointment a : appointmentList) {
+                if (removeDate.equals(a.getAppointmentDate())) {
                     removing = a;
                     removing.setId(a.getId());
                     break;

@@ -18,7 +18,6 @@ public class Appointment {
     }
 
 
-
     public Appointment(User doctor, User patient, String appointmentDate) {
         this.doctor = doctor;
         this.patient = patient;
@@ -67,7 +66,7 @@ public class Appointment {
         return id;
     }
 
-    public String getAppointmentDateString(){
+    public String getAppointmentDateString() {
         return appointmentDate.getDay() + "-" + appointmentDate.getMonth() + "-" + appointmentDate.getYear();
     }
 

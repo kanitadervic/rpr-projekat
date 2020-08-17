@@ -20,6 +20,7 @@ public class Main extends Application{
 
     public void resetBase() {
         userDAO.removeInstance();
+        appointmentDAO.removeInstance();
         File dbfile = new File("users.db");
         dbfile.delete();
         userDAO = UserDAO.getInstance();

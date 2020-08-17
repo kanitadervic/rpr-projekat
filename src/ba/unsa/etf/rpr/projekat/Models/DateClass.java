@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class DateClass {

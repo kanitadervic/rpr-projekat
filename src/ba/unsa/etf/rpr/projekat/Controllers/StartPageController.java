@@ -7,6 +7,7 @@ import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,26 +25,23 @@ import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
 public class StartPageController {
     public Button btnLogIn;
-    public static Stage startPageStage;
     public TextField fldUsername;
     public TextField fldPassword;
     public ImageView userImage;
     public static Stage registrationStage;
-    public static Stage doctorStage;
-    public static Stage patientStage;
-
 
     public void registerAction(ActionEvent actionEvent) {
-        Main.mainLogicStage.hide();
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
         try {
             RegistrationController ctrl = new RegistrationController(userDAO);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registration.fxml"));
             loader.setController(ctrl);
             Parent root2 = loader.load();
-            Stage stage = new Stage();
+            stage = new Stage();
             stage.setTitle("Registracija");
             stage.setScene(new Scene(root2));
-            registrationStage = stage;
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,8 +53,8 @@ public class StartPageController {
         Boolean doctor = false;
         User user = new User();
         ObservableList<User> users = userDAO.getUsers();
-        for(User u: users){
-            if(u.getUserName().equals(fldUsername.getText()) && u.getPassword().equals(fldPassword.getText())){
+        for (User u : users) {
+            if (u.getUserName().equals(fldUsername.getText()) && u.getPassword().equals(fldPassword.getText())) {
                 doctor = userDAO.checkIfDoctor(u);
                 found = true;
                 user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
@@ -64,31 +62,30 @@ public class StartPageController {
                 break;
             }
         }
-        if(found && doctor) {
-            mainLogicStage.hide();
+        if (found && doctor) {
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
             DoctorController ctrl = new DoctorController(user, userDAO);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor.fxml"));
             loader.setController(ctrl);
             Parent root2 = loader.load();
-            Stage stage = new Stage();
+            stage = new Stage();
             stage.setTitle("Doktor");
             stage.setScene(new Scene(root2));
-            doctorStage = stage;
             stage.show();
-        }
-
-        else if(found)  {
-            mainLogicStage.hide();
+        } else if (found) {
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
             PatientController ctrl = new PatientController(user, userDAO);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient.fxml"));
             loader.setController(ctrl);
             Parent root2 = loader.load();
-            Stage stage = new Stage();
+            stage = new Stage();
             stage.setTitle("Pacijent");
             stage.setScene(new Scene(root2));
-            patientStage = stage;
             stage.show();
-        }
-        else System.out.println("ne radi");
+        } else System.out.println("ne radi");
     }
 }

@@ -126,7 +126,7 @@ public class RegistrationController {
         });
 
         fldClinicPassword.textProperty().addListener((obs, oldVal, newVal) -> {
-            if(newVal.equals("secretAdmin")){
+            if (newVal.equals("secretAdmin")) {
                 fldClinicPassword.getStyleClass().removeAll("incorrectField");
                 fldClinicPassword.getStyleClass().add("correctField");
             } else {
@@ -142,13 +142,12 @@ public class RegistrationController {
         if (checkData()) {
             LocalDate localDate = birthdayPicker.getValue();
             DateClass dateOfBirth = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-            if(!isDoctor.isSelected()) {
+            if (!isDoctor.isSelected()) {
                 Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(p);
                 userDAO.getUsers().add(p);
-            }
-            else{
+            } else {
                 Doctor d = new Doctor(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(d);

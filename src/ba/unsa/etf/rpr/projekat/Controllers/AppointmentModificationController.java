@@ -28,7 +28,6 @@ public class AppointmentModificationController {
 
     public AppointmentModificationController(Appointment forModification) {
         this.appointmentModification = forModification;
-        System.out.println(forModification.getId());
         this.appointmentModification.setId(forModification.getId());
     }
 

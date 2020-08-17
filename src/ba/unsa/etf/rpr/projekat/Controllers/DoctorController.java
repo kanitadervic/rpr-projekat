@@ -8,14 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 
-import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.doctorStage;
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
 
@@ -60,7 +61,9 @@ public class DoctorController {
     }
 
     public void logOutAction(ActionEvent actionEvent) {
-        doctorStage.hide();
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
         mainLogicStage.show();
     }
 

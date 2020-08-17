@@ -7,11 +7,9 @@ import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
@@ -27,14 +25,20 @@ public class UserDAO {
     public UserDAO() {
         File dbFile = new File("users.db");
         if (!dbFile.exists()) createBase();
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     private void createBase() {
         Statement statement = null;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+//            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             //to erase table user completely, i think this will be useful
-            try{
+            try {
                 statement = connection.createStatement();
                 statement.execute("DROP TABLE user");
             } catch (SQLException throwables) {
@@ -57,7 +61,6 @@ public class UserDAO {
             statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic@faks.com', '062/062-062', 'kdervic', 'test', 'F', '23-1-1999', 'admin');");
             statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'ssaric', 'test', 'F', '10-10-2003', null);");
             statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'ttestic', 'test', 'M', '21-11-1998', null);");
-
             currentId = 4;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -70,12 +73,10 @@ public class UserDAO {
         if (!dbFile.exists()) createBase();
         else {
             try {
-                connection = DriverManager.getConnection("jdbc:sqlite:users.db");
                 preparedStatement = connection.prepareStatement("SELECT max(id) FROM user");
                 ResultSet rs = preparedStatement.executeQuery();
                 rs.next();
                 currentId = rs.getInt(1) + 1;
-                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -87,7 +88,6 @@ public class UserDAO {
     private ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -96,7 +96,6 @@ public class UserDAO {
                 u.setId(rs.getInt(9));
                 list.add(u);
             }
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,7 +104,6 @@ public class UserDAO {
 
     public void addUser(User u) {
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             u.setId(currentId);
             preparedStatement.setInt(1, currentId++);
@@ -125,7 +123,6 @@ public class UserDAO {
             }
 
             preparedStatement.executeUpdate();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -138,7 +135,6 @@ public class UserDAO {
     public ObservableList<User> getDoctorUsers() {
         ObservableList<User> doctors = FXCollections.observableArrayList();
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE admin= ?");
             preparedStatement.setString(1, "admin");
             ResultSet rs = preparedStatement.executeQuery();
@@ -157,13 +153,12 @@ public class UserDAO {
     public boolean checkIfDoctor(User u) {
         boolean isDoctor = false;
         int id = u.getId();
-        try{
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+        try {
             preparedStatement = connection.prepareStatement("SELECT admin FROM user WHERE id=?");
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            if(resultSet.getString(1) == null) return false;
+            if (resultSet.getString(1) == null) return false;
             isDoctor = resultSet.getString(1).equals("admin");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -175,7 +170,6 @@ public class UserDAO {
     public User findUserById(int userId) {
         User u = new User();
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE id= ?");
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -184,6 +178,7 @@ public class UserDAO {
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
                 u.setId(rs.getInt(9));
             }
+
         } catch (SQLException throwables) {
             return null;
         }
@@ -192,16 +187,16 @@ public class UserDAO {
 
     public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
         ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
-        try{
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+        try {
             preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE doctorId = ?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int aId = rs.getInt(1);
                 Appointment a = appointmentDAO.getAppointment(aId);
                 appointmentsForDoctor.add(a);
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -230,18 +225,19 @@ public class UserDAO {
     }
 
     public static UserDAO getInstance() {
-        if (userDAO == null) userDAO = new UserDAO();
+        if (userDAO == null) {
+            userDAO = new UserDAO();
+        }
         return userDAO;
     }
 
-    public ObservableList<DateClass> getAppointmentsForPatient(int id){
+    public ObservableList<DateClass> getAppointmentsForPatient(int id) {
         ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
-        try{
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+        try {
             preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE patientId = ?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int aId = rs.getInt(1);
                 DateClass a = appointmentDAO.getAppointment(aId).getAppointmentDate();
                 appointmentsForPatient.add(a);
