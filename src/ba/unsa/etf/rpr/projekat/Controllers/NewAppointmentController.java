@@ -8,12 +8,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.userDAO;
@@ -59,7 +61,24 @@ public class NewAppointmentController {
 
     private boolean checkAppointmentDate(LocalDate value) {
         LocalDate localDate = LocalDate.now();
-        return (!value.isBefore(localDate));
+        boolean takenDate = false;
+        User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
+        for(User u: doctors){
+            if(u.equals(doctor)){
+                doctor.setId(doctor.getId());
+                break;
+            }
+        }
+        ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
+        for(Appointment a: appointments){
+            if(a.getAppointmentDate().equals(date)){
+                takenDate = true;
+                break;
+            }
+        }
+        return (!value.isBefore(localDate) && !takenDate);
     }
 
     public void addAction(ActionEvent actionEvent) {
@@ -74,7 +93,9 @@ public class NewAppointmentController {
             stage.close();
         }
         else {
-            System.out.println("nesh nije dobro");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Zauzet datum ili neispravna polja! Probajte ponovo");
+            alert.showAndWait();
         }
     }
     public void goBackAction(ActionEvent actionEvent){

@@ -61,6 +61,23 @@ public class AppointmentModificationController {
 
     private boolean checkAppointmentDate(LocalDate value) {
         LocalDate localDate = LocalDate.now();
+        boolean takenDate = false;
+        User doctor = (User) doctorChoice.getSelectionModel().getSelectedItem();
+        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
+        for(User u: doctors){
+            if(u.equals(doctor)){
+                doctor.setId(doctor.getId());
+                break;
+            }
+        }
+        ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
+        for(Appointment a: appointments){
+            if(a.getAppointmentDate().equals(date)){
+                takenDate = true;
+                break;
+            }
+        }
         return (!value.isBefore(localDate));
     }
 
@@ -77,7 +94,7 @@ public class AppointmentModificationController {
             stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Polja nisu popunjena");
+            alert.setContentText("Zauzet datum ili neispravna polja! Probajte ponovo");
             alert.showAndWait();
         }
     }
