@@ -44,12 +44,12 @@
                   <Image url="@../images/group+people+team+users+icon-1320196240876938595.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Lozinka" />
             <TextField fx:id="fldUsername" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Korisnicko ime">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </TextField>
+            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Lozinka" />
          </children>
       </AnchorPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />

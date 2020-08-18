@@ -4,7 +4,9 @@ import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.regex.Matcher;
@@ -153,7 +155,9 @@ public class RegistrationController {
                 userDAO.addUser(d);
                 userDAO.getUsers().add(d);
             }
-            registrationStage.close();
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
             mainLogicStage.show();
         }
     }
@@ -269,7 +273,9 @@ public class RegistrationController {
     }
 
     public void goBackAction(ActionEvent actionEvent) {
-        registrationStage.hide();
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
         mainLogicStage.show();
     }
 }
