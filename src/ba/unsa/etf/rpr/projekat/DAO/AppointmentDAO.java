@@ -23,12 +23,6 @@ public class AppointmentDAO {
     public AppointmentDAO() {
 //        File dbFile = new File("users.db");
 //        if(!dbFile.exists()) createBase();
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
         createBase();
     }
 
@@ -51,7 +45,7 @@ public class AppointmentDAO {
     private void createBase() {
         Statement statement = null;
         try {
-//            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             //to erase table appointment completely, i think this will be useful
             try {
                 statement = connection.createStatement();
@@ -71,7 +65,7 @@ public class AppointmentDAO {
             statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021');");
             statement.execute("INSERT INTO appointment VALUES (3, 1, 2, '23-1-2021');");
             currentId = 2;
-//            connection.close();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -82,11 +76,12 @@ public class AppointmentDAO {
         if (!dbFile.exists()) createBase();
         else {
             try {
-//                connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:users.db");
                 preparedStatement = connection.prepareStatement("SELECT max(appointmentId) FROM appointment");
                 ResultSet rs = preparedStatement.executeQuery();
                 rs.next();
                 currentId = rs.getInt(1) + 1;
+                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -99,6 +94,7 @@ public class AppointmentDAO {
         ArrayList<Appointment> list = new ArrayList<>();
         ObservableList<User> doctors = userDAO.getDoctorUsers();
         try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select * from appointment");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -112,6 +108,7 @@ public class AppointmentDAO {
                 appointment.setId(appointmentId);
                 list.add(appointment);
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,6 +121,7 @@ public class AppointmentDAO {
 
     public void addAppointment(Appointment appointment) {
         try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("INSERT INTO appointment VALUES (?, ?, ?, ?);");
             appointment.setId(currentId);
             preparedStatement.setInt(1, currentId++);
@@ -131,6 +129,7 @@ public class AppointmentDAO {
             preparedStatement.setInt(3, appointment.getPatient().getId());
             preparedStatement.setString(4, appointment.getAppointmentDateString());
             preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -138,9 +137,11 @@ public class AppointmentDAO {
 
     public void removeAppointment(int id) {
         try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointmentId = ?;");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -165,12 +166,13 @@ public class AppointmentDAO {
 
     public void updateAppointmentDate(int appointmentId, String toString, int doctorId) {
         try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("UPDATE appointment SET doctorId = ?, appointmentDate = ? WHERE appointmentId = ?");
             preparedStatement.setInt(1, doctorId);
             preparedStatement.setString(2, toString);
             preparedStatement.setInt(3, appointmentId);
             preparedStatement.executeUpdate();
-
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -179,6 +181,7 @@ public class AppointmentDAO {
     public Appointment getAppointment(int aId) {
         Appointment appointment = new Appointment();
         try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("SELECT * FROM appointment WHERE appointmentId = ?");
             preparedStatement.setInt(1, aId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -192,7 +195,7 @@ public class AppointmentDAO {
             appointment.setAppointmentDate(date);
             appointment = new Appointment(doctor, patient, dateString);
             appointment.setId(rs.getInt(1));
-
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
