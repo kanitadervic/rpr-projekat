@@ -9,7 +9,7 @@ public class Appointment {
     public String patientLastName;
 
 
-    public Appointment(Doctor doctor, Patient patient, DateClass appointmentDate) {
+    public Appointment(User doctor, User patient, DateClass appointmentDate) {
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;

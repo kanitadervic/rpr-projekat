@@ -133,6 +133,7 @@ public class AppointmentDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        appointments.add(appointment);
     }
 
     public void removeAppointment(int id) {

@@ -7,13 +7,16 @@ import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +36,8 @@ public class PatientController {
     public ListView appointmentListView;
     public Button btnChangeAppointment;
     public Button btnDeleteAppointment;
+    public Button btnLogOut;
+    public Button btnNewAppointment;
 
 
     public PatientController(User user, UserDAO userDAO) {
@@ -107,5 +112,24 @@ public class PatientController {
             appointmentDAO.removeAppointment(removing.getId());
             appointmentListView.getItems().remove(removeDate);
         }
+    }
+
+    public void logOutAction(ActionEvent actionEvent){
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
+        mainLogicStage.show();
+    }
+
+    public void addAppointmentAction(ActionEvent actionEvent) throws IOException {
+        NewAppointmentController ctrl = new NewAppointmentController(patient);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/newappointment.fxml"));
+        loader.setController(ctrl);
+        Parent root2 = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Novi termin");
+        stage.setScene(new Scene(root2));
+        stage.showAndWait();
+        appointmentListView.setItems(userDAO.getAppointmentsForPatient(this.patient.getId()));
     }
 }

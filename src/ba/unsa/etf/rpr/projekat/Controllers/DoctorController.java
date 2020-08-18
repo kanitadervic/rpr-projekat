@@ -56,8 +56,6 @@ public class DoctorController {
         columnLastName.setCellValueFactory(new PropertyValueFactory<>("patientLastName"));
         columnDate.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
         refresh();
-
-
     }
 
     public void logOutAction(ActionEvent actionEvent) {
