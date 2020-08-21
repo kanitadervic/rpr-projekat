@@ -64,7 +64,7 @@ public class AppointmentDAO {
             statement.execute("INSERT INTO appointment VALUES (1, 1, 2, '3-9-2021');");
             statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021');");
             statement.execute("INSERT INTO appointment VALUES (3, 1, 2, '23-1-2021');");
-            currentId = 2;
+            currentId = 4;
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -92,7 +92,6 @@ public class AppointmentDAO {
 
     public ArrayList<Appointment> getAllAppointments() {
         ArrayList<Appointment> list = new ArrayList<>();
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select * from appointment");
