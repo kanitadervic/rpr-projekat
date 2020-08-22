@@ -122,8 +122,10 @@ public class DiseaseDAO {
             preparedStatement.setInt(1,diseaseId);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                int patientId =  rs.getInt(2);
                 String diseaseName = rs.getString(3);
+                if(diseaseName == null) {
+
+                }
                 disease.setName(diseaseName);
                 disease.setId(diseaseId);
             }
@@ -133,4 +135,38 @@ public class DiseaseDAO {
         }
         return disease;
     }
+
+    public int getIdByName(String name) {
+        int id = 0;
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT disease_id FROM disease WHERE disease_name = ?");
+            preparedStatement.setString(1,name);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()) {
+                id = rs.getInt(1);
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
+    }
+
+    public void addDisease(Disease disease, int patientId) {
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("INSERT INTO disease VALUES (?, ?, ?);");
+            disease.setId(currentId);
+            preparedStatement.setInt(1, currentId++);
+            preparedStatement.setInt(2, patientId);
+            preparedStatement.setString(3, disease.getName());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        diseases.add(disease);
+    }
+
 }

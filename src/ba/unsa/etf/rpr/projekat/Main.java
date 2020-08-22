@@ -42,7 +42,7 @@ public class Main extends Application{
         mainLogicStage = primaryStage;
         primaryStage.show();
 //        DiseaseController diseaseController = new DiseaseController();
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/disease.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/newappointment.fxml"));
 //        primaryStage.setTitle("Disease");
 //        primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
 //        primaryStage.show();

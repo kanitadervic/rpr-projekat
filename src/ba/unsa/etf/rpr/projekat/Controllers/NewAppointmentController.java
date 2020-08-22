@@ -2,78 +2,110 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.DateClass;
-import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Models.Disease;
 import ba.unsa.etf.rpr.projekat.Models.User;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
+import static java.lang.Character.isLetter;
+import static java.lang.Character.isWhitespace;
 
 public class NewAppointmentController {
-    public Button addButton;
-    public Button backButton;
+    public ListView listViewDiseases;
+    public TextField fldSearch;
+    public Button btnAdd;
+    public Button btnSearch;
+    public Button btnCancel;
     public DatePicker appointmentDate;
     public ChoiceBox cbDoctorChoice;
     private User patient;
+    private Text txtDisease;
+
 
     public NewAppointmentController(User patient) {
         this.patient = (User) patient;
         this.patient.setId(patient.getId());
     }
 
-    @FXML
-    public void initialize(){
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
-        cbDoctorChoice.setItems(doctors);
-
-        cbDoctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                cbDoctorChoice.getStyleClass().removeAll("incorrectField");
-                cbDoctorChoice.getStyleClass().add("correctField");
-            } else {
-                cbDoctorChoice.getStyleClass().removeAll("correctField");
-                cbDoctorChoice.getStyleClass().add("incorrectField");
+    private ArrayList<String> getResults(int startIndex, String result) {
+        ArrayList<String> bolesti = new ArrayList<>();
+        StringBuilder slovo = new StringBuilder();
+        for (int j = startIndex; j < result.length(); j++) {
+            if (isLetter(result.charAt(j)) || isWhitespace(result.charAt(j)) || result.charAt(j) == '-') {
+                slovo.append(result.charAt(j));
+            } else if (result.charAt(j) == ']' && result.charAt(j + 1) == ',') {
+                if (!bolesti.contains(String.valueOf(slovo))) {
+                    bolesti.add(String.valueOf(slovo));
+                }
+                slovo = new StringBuilder();
+            } else if (result.charAt(j) == ']' && result.charAt(j + 1) == ']') {
+                break;
             }
-        });
-
-        appointmentDate.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (checkAppointmentDate(newVal)) {
-                appointmentDate.getStyleClass().removeAll("incorrectField");
-                appointmentDate.getStyleClass().add("correctField");
-            } else {
-                appointmentDate.getStyleClass().removeAll("correctField");
-                appointmentDate.getStyleClass().add("incorrectField");
-            }
-        });
-
+        }
+        return bolesti;
     }
 
-    private boolean checkAppointmentDate(LocalDate value) {
+    @FXML
+    public void initialize() {
+        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        cbDoctorChoice.setItems(doctors);
+    }
+
+    private boolean checkDoctorChoice() {
+        if (cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
+            cbDoctorChoice.getStyleClass().removeAll("incorrect");
+            cbDoctorChoice.getStyleClass().add("correct");
+        } else {
+            cbDoctorChoice.getStyleClass().removeAll("correct");
+            cbDoctorChoice.getStyleClass().add("incorrect");
+        }
+        return cbDoctorChoice.getStyleClass().contains("correct");
+    }
+
+    private boolean checkAppointmentDate() {
+        if (isDateValid(appointmentDate.getValue())) {
+            appointmentDate.getStyleClass().removeAll("incorrect");
+            appointmentDate.getStyleClass().add("correct");
+        } else {
+            appointmentDate.getStyleClass().removeAll("correct");
+            appointmentDate.getStyleClass().add("incorrect");
+        }
+        return (appointmentDate.getStyleClass().contains("correct"));
+    }
+
+    private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
         boolean takenDate = false;
         User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
         ObservableList<User> doctors = userDAO.getDoctorUsers();
         DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
-        for(User u: doctors){
-            if(u.equals(doctor)){
+        for (User u : doctors) {
+            if (u.equals(doctor)) {
                 doctor.setId(doctor.getId());
                 break;
             }
         }
         ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-        for(Appointment a: appointments){
-            if(a.getAppointmentDate().equals(date)){
+        for (Appointment a : appointments) {
+            if (a.getAppointmentDate().equals(date)) {
                 takenDate = true;
                 break;
             }
@@ -82,26 +114,108 @@ public class NewAppointmentController {
     }
 
     public void addAction(ActionEvent actionEvent) {
-        if (!appointmentDate.getStyleClass().contains("incorrectField") && !cbDoctorChoice.getStyleClass().contains("incorrectField") && cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
-//            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
-//            LocalDate localDate = appointmentDate.getValue();
-//            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-//            Appointment toAdd= new Appointment(doctor, this.patient, date);
-//            appointmentDAO.addAppointment(toAdd);
-            System.out.println("popravit");
+        if (checkAppointmentDate() &&
+                checkDoctorChoice() &&
+                listViewDiseases.getSelectionModel().getSelectedItem() != null) {
+            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+            LocalDate localDate = appointmentDate.getValue();
+            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+            Disease disease = new Disease(listViewDiseases.getSelectionModel().getSelectedItem().toString());
+            if (diseaseDAO.getIdByName(disease.getName()) == 0) diseaseDAO.addDisease(disease, this.patient.getId());
+            else disease.setId(diseaseDAO.getIdByName(disease.getName()));
+            Appointment toAdd = new Appointment(doctor, this.patient, date, disease);
+            appointmentDAO.addAppointment(toAdd);
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Zauzet datum ili neispravna polja! Probajte ponovo");
             alert.showAndWait();
         }
     }
-    public void goBackAction(ActionEvent actionEvent){
+
+    public void goBackAction(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
+    }
+
+    public void searchAction(ActionEvent actionEvent) {
+        listViewDiseases.getItems().clear();
+        String url = "https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?";
+        String parameter = "terms=" + fldSearch.getText();
+        String result = executeGetMethod(url, parameter);
+        int r = result.indexOf("[[") + 1;
+        Image slika = new Image("images/loading.gif");
+        ImageView loading = new ImageView(slika);
+        loading.setFitWidth(15);
+        loading.setFitHeight(15);
+        ArrayList<String> rez = getResults(r, result);
+        new Thread(() -> {
+            for (int i = 0; i < rez.size(); i++) {
+                btnSearch.setOnMouseClicked((e) -> {
+                    Platform.runLater(() -> {
+                        btnSearch.setGraphic(loading);
+                    });
+                });
+                Image image = new Image("images/check.png");
+                ImageView check = new ImageView(image);
+                check.setFitHeight(15);
+                check.setFitWidth(15);
+
+                int finalI = i;
+                Platform.runLater(() -> {
+                    listViewDiseases.getItems().add(rez.get(finalI));
+                });
+                Platform.runLater(() -> {
+                    btnSearch.setGraphic(check);
+                });
+            }
+        }).start();
+    }
+
+    private static String executeGetMethod(String urlLink, String urlParameters) {
+        HttpURLConnection connection = null;
+        try {
+            //Create connection
+            URL url = new URL(urlLink);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+
+            connection.setRequestProperty("Content-Length",
+                    Integer.toString(urlParameters.getBytes().length));
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            connection.setUseCaches(false);
+            connection.setDoOutput(true);
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    connection.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.close();
+
+            //Get Response
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
     }
 }
