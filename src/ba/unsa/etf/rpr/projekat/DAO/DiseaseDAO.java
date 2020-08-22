@@ -32,7 +32,6 @@ public class DiseaseDAO {
                 statement = connection.createStatement();
                 statement.execute("DROP TABLE disease");
             } catch (SQLException throwables) {
-                System.out.println("Table already exists");
             }
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"disease\" (\n" +

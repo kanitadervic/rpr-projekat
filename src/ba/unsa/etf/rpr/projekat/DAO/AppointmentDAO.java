@@ -51,15 +51,14 @@ public class AppointmentDAO {
                 statement = connection.createStatement();
                 statement.execute("DROP TABLE appointment");
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"appointment\" (\n" +
-                    "\t\"appointmentId\"\tINTEGER NOT NULL,\n" +
-                    "\t\"doctorId\"\tINTEGER NOT NULL,\n" +
-                    "\t\"patientId\"\tINTEGER NOT NULL,\n" +
-                    "\t\"appointmentDate\"\tTEXT NOT NULL,\n" +
-                    "\tPRIMARY KEY(\"appointmentId\")\n" +
+                    "\t\"appointment_id\"\tINTEGER NOT NULL,\n" +
+                    "\t\"doctor_id\"\tINTEGER NOT NULL,\n" +
+                    "\t\"patient_id\"\tINTEGER NOT NULL,\n" +
+                    "\t\"appointment_date\"\tTEXT NOT NULL,\n" +
+                    "\tPRIMARY KEY(\"appointment_id\")\n" +
                     ");");
             statement.execute("INSERT INTO appointment VALUES (1, 1, 2, '3-9-2021');");
             statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021');");
@@ -77,7 +76,7 @@ public class AppointmentDAO {
         else {
             try {
                 connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-                preparedStatement = connection.prepareStatement("SELECT max(appointmentId) FROM appointment");
+                preparedStatement = connection.prepareStatement("SELECT max(appointment_id) FROM appointment");
                 ResultSet rs = preparedStatement.executeQuery();
                 rs.next();
                 currentId = rs.getInt(1) + 1;
@@ -138,7 +137,7 @@ public class AppointmentDAO {
     public void removeAppointment(int id) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointmentId = ?;");
+            preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointment_id = ?;");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             connection.close();
@@ -164,12 +163,12 @@ public class AppointmentDAO {
         }
     }
 
-    public void updateAppointmentDate(int appointmentId, String toString, int doctorId) {
+    public void updateAppointmentDate(int appointmentId, String appointmentDate, int doctorId) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("UPDATE appointment SET doctorId = ?, appointmentDate = ? WHERE appointmentId = ?");
+            preparedStatement = connection.prepareStatement("UPDATE appointment SET doctor_id = ?, appointment_date = ? WHERE appointment_id = ?");
             preparedStatement.setInt(1, doctorId);
-            preparedStatement.setString(2, toString);
+            preparedStatement.setString(2, appointmentDate);
             preparedStatement.setInt(3, appointmentId);
             preparedStatement.executeUpdate();
             connection.close();
@@ -182,7 +181,7 @@ public class AppointmentDAO {
         Appointment appointment = new Appointment();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("SELECT * FROM appointment WHERE appointmentId = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM appointment WHERE appointment_id = ?");
             preparedStatement.setInt(1, aId);
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();

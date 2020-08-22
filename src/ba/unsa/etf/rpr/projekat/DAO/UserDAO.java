@@ -36,15 +36,14 @@ public class UserDAO {
                 statement = connection.createStatement();
                 statement.execute("DROP TABLE user");
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
             statement = connection.createStatement();
             statement.execute("CREATE TABLE IF NOT EXISTS \"user\" (\n" +
                     "\t\"id\"\tINTEGER NOT NULL,\n" +
-                    "\t\"firstName\"\tTEXT NOT NULL,\n" +
-                    "\t\"lastName\"\tTEXT NOT NULL,\n" +
+                    "\t\"first_name\"\tTEXT NOT NULL,\n" +
+                    "\t\"last_name\"\tTEXT NOT NULL,\n" +
                     "\t\"email\"\tTEXT NOT NULL,\n" +
-                    "\t\"phoneNumber\"\tTEXT NOT NULL,\n" +
+                    "\t\"phone_number\"\tTEXT NOT NULL,\n" +
                     "\t\"username\"\tTEXT NOT NULL,\n" +
                     "\t\"password\"\tTEXT NOT NULL,\n" +
                     "\t\"gender\"\tTEXT NOT NULL,\n" +
@@ -86,7 +85,7 @@ public class UserDAO {
         ArrayList<User> list = new ArrayList<>();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 User u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
@@ -137,7 +136,7 @@ public class UserDAO {
         ObservableList<User> doctors = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE admin= ?");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user WHERE admin= ?");
             preparedStatement.setString(1, "admin");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -176,7 +175,7 @@ public class UserDAO {
         User u = new User();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select firstName, lastName, email, phoneNumber, username, password, gender, birthdate, id from user WHERE id= ?");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user WHERE id= ?");
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -195,7 +194,7 @@ public class UserDAO {
         ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE doctorId = ?");
+            preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE doctor_id = ?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -244,7 +243,7 @@ public class UserDAO {
         ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("SELECT appointmentId FROM appointment WHERE patientId = ?");
+            preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE patient_id = ?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {

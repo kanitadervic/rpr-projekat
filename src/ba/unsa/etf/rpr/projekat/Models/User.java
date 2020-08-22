@@ -3,11 +3,13 @@ package ba.unsa.etf.rpr.projekat.Models;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class User {
     private SimpleStringProperty firstName, lastName, email, phoneNumber, userName, password, gender;
     private DateClass dateOfBirth;
+    private ArrayList<Disease> diseases = new ArrayList<>();
     private int id;
 
     public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateClass dateOfBirth) {
@@ -169,6 +171,14 @@ public class User {
                 Objects.equals(password, user.password) &&
                 Objects.equals(gender, user.gender) &&
                 Objects.equals(dateOfBirth, user.dateOfBirth);
+    }
+
+    public ArrayList<Disease> getDiseases() {
+        return diseases;
+    }
+
+    public void setDiseases(ArrayList<Disease> diseases) {
+        this.diseases = diseases;
     }
 
     @Override
