@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class AppointmentDAO {
     private Connection connection;
@@ -58,11 +57,12 @@ public class AppointmentDAO {
                     "\t\"doctor_id\"\tINTEGER NOT NULL,\n" +
                     "\t\"patient_id\"\tINTEGER NOT NULL,\n" +
                     "\t\"appointment_date\"\tTEXT NOT NULL,\n" +
+                    "\t\"disease_id\"\tINTEGER NOT NULL,\n" +
                     "\tPRIMARY KEY(\"appointment_id\")\n" +
                     ");");
-            statement.execute("INSERT INTO appointment VALUES (1, 1, 2, '3-9-2021');");
-            statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021');");
-            statement.execute("INSERT INTO appointment VALUES (3, 1, 2, '23-1-2021');");
+            statement.execute("INSERT INTO appointment VALUES (1, 1, 2, '3-9-2021', 1);");
+            statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021', 2);");
+            statement.execute("INSERT INTO appointment VALUES (3, 1, 2, '23-1-2021', 3);");
             currentId = 4;
             connection.close();
         } catch (SQLException throwables) {
@@ -100,10 +100,13 @@ public class AppointmentDAO {
                 int doctorId = rs.getInt(2);
                 int patientId = rs.getInt(3);
                 String appointmentDate = rs.getString(4);
+                int diseaseId = rs.getInt(5);
                 User doctor = userDAO.findUserById(doctorId);
                 User patient = userDAO.findUserById(patientId);
-                Appointment appointment = new Appointment(doctor, patient, appointmentDate);
+                Disease disease = diseaseDAO.findDiseaseById(diseaseId);
+                Appointment appointment = new Appointment(doctor, patient, appointmentDate, disease);
                 appointment.setId(appointmentId);
+//                appointment.setDisease(disease);
                 list.add(appointment);
             }
             connection.close();
@@ -120,12 +123,13 @@ public class AppointmentDAO {
     public void addAppointment(Appointment appointment) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("INSERT INTO appointment VALUES (?, ?, ?, ?);");
+            preparedStatement = connection.prepareStatement("INSERT INTO appointment VALUES (?, ?, ?, ?, ?);");
             appointment.setId(currentId);
             preparedStatement.setInt(1, currentId++);
             preparedStatement.setInt(2, appointment.getDoctor().getId());
             preparedStatement.setInt(3, appointment.getPatient().getId());
             preparedStatement.setString(4, appointment.getAppointmentDateString());
+            preparedStatement.setInt(5, appointment.getDisease().getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException throwables) {
@@ -188,12 +192,15 @@ public class AppointmentDAO {
             User doctor = userDAO.findUserById(rs.getInt(2));
             User patient = userDAO.findUserById(rs.getInt(3));
             String dateString = rs.getString(4);
+            int diseaseId = rs.getInt(5);
             DateClass date = new DateClass(dateString);
+            Disease disease = diseaseDAO.findDiseaseById(diseaseId);
             appointment.setDoctor(doctor);
             appointment.setPatient(patient);
             appointment.setAppointmentDate(date);
-            appointment = new Appointment(doctor, patient, dateString);
+            appointment = new Appointment(doctor, patient, dateString, disease);
             appointment.setId(rs.getInt(1));
+//            appointment.setDisease(disease);
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

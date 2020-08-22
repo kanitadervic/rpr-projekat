@@ -31,6 +31,7 @@ public class DoctorController {
     public TableColumn columnLastName;
     public TableColumn columnDate;
     public TableColumn columnName;
+    public TableColumn columnDisease;
     public ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
 
@@ -55,6 +56,7 @@ public class DoctorController {
         columnName.setCellValueFactory(new PropertyValueFactory<>("patientFirstName"));
         columnLastName.setCellValueFactory(new PropertyValueFactory<>("patientLastName"));
         columnDate.setCellValueFactory(new PropertyValueFactory<>("appointmentDate"));
+        columnDisease.setCellValueFactory(new PropertyValueFactory<>("diseaseName"));
         refresh();
     }
 

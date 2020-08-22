@@ -83,11 +83,12 @@ public class NewAppointmentController {
 
     public void addAction(ActionEvent actionEvent) {
         if (!appointmentDate.getStyleClass().contains("incorrectField") && !cbDoctorChoice.getStyleClass().contains("incorrectField") && cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
-            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
-            LocalDate localDate = appointmentDate.getValue();
-            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
-            Appointment toAdd= new Appointment(doctor, this.patient, date);
-            appointmentDAO.addAppointment(toAdd);
+//            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+//            LocalDate localDate = appointmentDate.getValue();
+//            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+//            Appointment toAdd= new Appointment(doctor, this.patient, date);
+//            appointmentDAO.addAppointment(toAdd);
+            System.out.println("popravit");
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();

@@ -42,7 +42,8 @@ public class DiseaseDAO {
                     ");");
             statement.execute("INSERT INTO disease VALUES (1, 2, 'Depression');");
             statement.execute("INSERT INTO disease VALUES (2, 2, 'Common cold');");
-            statement.execute("INSERT INTO disease VALUES (3, 2, 'Back pain');");
+            statement.execute("INSERT INTO disease VALUES (3, 3, 'Back pain');");
+
             currentId = 4;
             connection.close();
         } catch (SQLException throwables) {
@@ -113,4 +114,23 @@ public class DiseaseDAO {
     }
 
 
+    public Disease findDiseaseById(int diseaseId) {
+        Disease disease = new Disease();
+        try{
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT * FROM DISEASE WHERE disease_id=?");
+            preparedStatement.setInt(1,diseaseId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                int patientId =  rs.getInt(2);
+                String diseaseName = rs.getString(3);
+                disease.setName(diseaseName);
+                disease.setId(diseaseId);
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return disease;
+    }
 }

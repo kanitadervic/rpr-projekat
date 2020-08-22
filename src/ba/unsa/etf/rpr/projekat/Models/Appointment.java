@@ -7,18 +7,21 @@ public class Appointment {
     private int id;
     public String patientFirstName;
     public String patientLastName;
+    private Disease disease;
+    public String diseaseName;
 
-
-    public Appointment(User doctor, User patient, DateClass appointmentDate) {
+    public Appointment(User doctor, User patient, DateClass appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
         this.patientFirstName = patient.getFirstName();
         this.patientLastName = patient.getLastName();
+        this.disease = disease;
+        this.diseaseName = disease.getName();
     }
 
 
-    public Appointment(User doctor, User patient, String appointmentDate) {
+    public Appointment(User doctor, User patient, String appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
         String[] parts = appointmentDate.split("\\-");
@@ -28,6 +31,8 @@ public class Appointment {
         this.appointmentDate = new DateClass(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
         this.patientFirstName = patient.getFirstName();
         this.patientLastName = patient.getLastName();
+        this.disease = disease;
+        this.diseaseName = disease.getName();
     }
 
     public Appointment() {
@@ -84,6 +89,23 @@ public class Appointment {
 
     public void setPatientLastName(String patientLastName) {
         this.patientLastName = patientLastName;
+    }
+
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
+
+    public String getDiseaseName() {
+        return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+        this.diseaseName = diseaseName;
     }
 
     @Override
