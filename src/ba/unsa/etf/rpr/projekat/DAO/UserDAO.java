@@ -1,9 +1,6 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
-import ba.unsa.etf.rpr.projekat.Models.Appointment;
-import ba.unsa.etf.rpr.projekat.Models.DateClass;
-import ba.unsa.etf.rpr.projekat.Models.Doctor;
-import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +8,7 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class UserDAO {
     private Connection connection;
@@ -239,8 +235,8 @@ public class UserDAO {
         return userDAO;
     }
 
-    public ObservableList<DateClass> getAppointmentsForPatient(int id) {
-        ObservableList<DateClass> appointmentsForPatient = FXCollections.observableArrayList();
+    public ObservableList<Appointment> getAppointmentsForPatient(int id) {
+        ObservableList<Appointment> appointmentsForPatient = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE patient_id = ?");
@@ -248,8 +244,11 @@ public class UserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int aId = rs.getInt(1);
-                DateClass a = appointmentDAO.getAppointment(aId).getAppointmentDate();
-                appointmentsForPatient.add(a);
+                Appointment appointment = appointmentDAO.getAppointment(aId);
+//                DateClass a = appointmentDAO.getAppointment(aId).getAppointmentDate();
+//                Disease disease = diseaseDAO.getDiseaseById(dId);
+//                a.setDisease(disease);
+                appointmentsForPatient.add(appointment);
             }
             connection.close();
         } catch (SQLException throwables) {

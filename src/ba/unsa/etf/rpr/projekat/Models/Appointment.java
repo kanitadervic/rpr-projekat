@@ -110,6 +110,6 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return (patient.getFirstName() + " " + patient.getLastName() + " " + getAppointmentDateString());
+        return (getAppointmentDateString() + " // " + getDisease());
     }
 }

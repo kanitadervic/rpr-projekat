@@ -200,7 +200,6 @@ public class AppointmentDAO {
             appointment.setAppointmentDate(date);
             appointment = new Appointment(doctor, patient, dateString, disease);
             appointment.setId(rs.getInt(1));
-//            appointment.setDisease(disease);
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -50,6 +50,7 @@ public class DateClass {
         this.day = day;
     }
 
+
     public String getAppointmentDateOutput() {
         return getDay() + "-" + getMonth() + "-" + getYear();
     }
