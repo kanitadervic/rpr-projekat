@@ -27,8 +27,8 @@ public class DoctorController {
     public Text txtWelcome;
     public Doctor doctor = new Doctor();
     public TableView tableViewPatients;
-    public Button btnPatient;
-    public Button btnAppointmentDelete;
+    public MenuItem btnPatient;
+    public MenuItem btnAppointmentDelete;
     public Button btnLogOut;
     public UserDAO userDAO;
     public TableColumn columnLastName;
@@ -36,7 +36,12 @@ public class DoctorController {
     public TableColumn columnName;
     public TableColumn columnDisease;
     public ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-
+    public Menu fileMenu1 = new Menu("_Help");
+    public Menu fileMenu2 = new Menu("_File");
+    public Menu fileMenu3 = new Menu("_Edit");
+    MenuItem btnExit = new MenuItem("_Exit");
+    MenuItem btnSave = new MenuItem("_Save");
+    MenuItem btnAbout = new Menu("_About");
 
     public DoctorController(User u, UserDAO userDAO) {
         doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
@@ -120,5 +125,9 @@ public class DoctorController {
             alert.setContentText("Invalid file");
             alert.showAndWait();
         }
+    }
+
+    public void exitAction(ActionEvent actionEvent){
+        System.exit(0);
     }
 }
