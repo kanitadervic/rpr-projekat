@@ -1,6 +1,10 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
-public class Appointment {
+import java.time.LocalDate;
+
+import static java.lang.Integer.valueOf;
+
+public class Appointment implements Comparable{
     private User doctor;
     private User patient;
     private DateClass appointmentDate;
@@ -111,5 +115,14 @@ public class Appointment {
     @Override
     public String toString() {
         return (getAppointmentDateString() + " // " + getDisease());
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+        Appointment appointment = (Appointment) o;
+        LocalDate l1 = LocalDate.of(Integer.parseInt(this.getAppointmentDate().getYear()), Integer.parseInt(this.getAppointmentDate().getMonth()), Integer.parseInt(this.getAppointmentDate().getDay()));
+        LocalDate l2 = LocalDate.of(Integer.parseInt(appointment.getAppointmentDate().getYear()), Integer.parseInt(appointment.getAppointmentDate().getMonth()), Integer.parseInt(appointment.getAppointmentDate().getDay()));
+        return l1.compareTo(l2);
     }
 }

@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.projekat.Models.DateClass;
 import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
@@ -58,7 +63,16 @@ public class PatientController {
         txtUsername.setText(patient.getUserName());
         txtPassword.setText(patient.getPassword());
         ObservableList appointmentsForPatient = userDAO.getAppointmentsForPatient(patient.getId());
-        appointmentListView.setItems(appointmentsForPatient);
+        SortedList<Appointment> list = new SortedList(appointmentsForPatient);
+        list.setComparator(new Comparator<Appointment>() {
+            @Override
+            public int compare(Appointment o1, Appointment o2) {
+                LocalDate l1 = LocalDate.of(Integer.parseInt(o1.getAppointmentDate().getYear()), Integer.parseInt(o1.getAppointmentDate().getMonth()), Integer.parseInt(o1.getAppointmentDate().getDay()));
+                LocalDate l2 = LocalDate.of(Integer.parseInt(o2.getAppointmentDate().getYear()), Integer.parseInt(o2.getAppointmentDate().getMonth()), Integer.parseInt(o2.getAppointmentDate().getDay()));
+                return l1.compareTo(l2);
+            }
+        });
+        appointmentListView.setItems(list);
         txtPassword.setVisible(false);
         cbShowPassword.setSelected(false);
     }
@@ -113,7 +127,7 @@ public class PatientController {
         }
     }
 
-    public void logOutAction(ActionEvent actionEvent){
+    public void logOutAction(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();

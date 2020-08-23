@@ -245,9 +245,6 @@ public class UserDAO {
             while (rs.next()) {
                 int aId = rs.getInt(1);
                 Appointment appointment = appointmentDAO.getAppointment(aId);
-//                DateClass a = appointmentDAO.getAppointment(aId).getAppointmentDate();
-//                Disease disease = diseaseDAO.getDiseaseById(dId);
-//                a.setDisease(disease);
                 appointmentsForPatient.add(appointment);
             }
             connection.close();
