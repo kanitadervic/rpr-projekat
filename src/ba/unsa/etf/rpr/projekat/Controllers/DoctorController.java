@@ -86,7 +86,13 @@ public class DoctorController {
     }
 
     public void showPatientAction(ActionEvent actionEvent) {
-        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) return;
+        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Informacije o pacijentu");
+            alert.setContentText("Niste odabrali pacijenta!");
+            alert.showAndWait();
+            return;
+        }
         Appointment appointment = (Appointment) tableViewPatients.getSelectionModel().getSelectedItem();
         User patient = appointment.getPatient();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -99,10 +105,17 @@ public class DoctorController {
                 "Spol: " + gender + "\n" +
                 "Bolest: " + appointment.getDisease());
         alert.showAndWait();
+
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent) {
-        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) return;
+        if (tableViewPatients.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Brisanje termina");
+            alert.setContentText("Niste odabrali termin za brisanje!");
+            alert.showAndWait();
+            return;
+        };
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Brisanje termina");
         alert.setContentText("Da li želite izbrisati termin?");
