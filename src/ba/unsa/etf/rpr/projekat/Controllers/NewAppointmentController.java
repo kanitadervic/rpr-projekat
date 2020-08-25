@@ -1,9 +1,6 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
-import ba.unsa.etf.rpr.projekat.Models.Appointment;
-import ba.unsa.etf.rpr.projekat.Models.DateClass;
-import ba.unsa.etf.rpr.projekat.Models.Disease;
-import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,12 +33,12 @@ public class NewAppointmentController {
     public Button btnCancel;
     public DatePicker appointmentDate;
     public ChoiceBox cbDoctorChoice;
-    private User patient;
+    private Patient patient;
     private Text txtDisease;
 
 
-    public NewAppointmentController(User patient) {
-        this.patient = (User) patient;
+    public NewAppointmentController(Patient patient) {
+        this.patient = patient;
         this.patient.setId(patient.getId());
     }
 
@@ -117,7 +114,7 @@ public class NewAppointmentController {
         if (checkAppointmentDate() &&
                 checkDoctorChoice() &&
                 listViewDiseases.getSelectionModel().getSelectedItem() != null) {
-            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+            Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
             LocalDate localDate = appointmentDate.getValue();
             DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             Disease disease = new Disease(listViewDiseases.getSelectionModel().getSelectedItem().toString());

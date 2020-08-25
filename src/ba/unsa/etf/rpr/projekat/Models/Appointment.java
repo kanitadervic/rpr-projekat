@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import static java.lang.Integer.valueOf;
 
 public class Appointment implements Comparable{
-    private User doctor;
-    private User patient;
+    private Doctor doctor;
+    private Patient patient;
     private DateClass appointmentDate;
     private int id;
     public String patientFirstName;
@@ -14,7 +14,7 @@ public class Appointment implements Comparable{
     private Disease disease;
     public String diseaseName;
 
-    public Appointment(User doctor, User patient, DateClass appointmentDate, Disease disease) {
+    public Appointment(Doctor doctor, Patient patient, DateClass appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
@@ -25,7 +25,7 @@ public class Appointment implements Comparable{
     }
 
 
-    public Appointment(User doctor, User patient, String appointmentDate, Disease disease) {
+    public Appointment(Doctor doctor, Patient patient, String appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
         String[] parts = appointmentDate.split("\\-");
@@ -43,19 +43,19 @@ public class Appointment implements Comparable{
 
     }
 
-    public User getDoctor() {
+    public Doctor getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(User doctor) {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
-    public User getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(User patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 

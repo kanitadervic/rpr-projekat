@@ -110,7 +110,6 @@ public class UserDAO {
             preparedStatement.setString(7, u.getPassword());
             preparedStatement.setString(8, u.getGender());
             preparedStatement.setString(9, u.getDateOfBirthString());
-
             if (u instanceof Doctor) {
                 preparedStatement.setString(10, "admin");
             } else {
@@ -167,21 +166,40 @@ public class UserDAO {
     }
 
 
-    public User findUserById(int userId) {
-        User u = new User();
+    public Doctor findDoctorById(int doctorId) {
+        Doctor u = new Doctor();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user WHERE id= ?");
-            preparedStatement.setInt(1, userId);
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id, admin from user WHERE id= ?");
+            preparedStatement.setInt(1, doctorId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
+                u = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
                 u.setId(rs.getInt(9));
             }
             connection.close();
         } catch (SQLException throwables) {
-            return null;
+            System.out.println("No user was found");
+        }
+        return u;
+    }
+
+    public Patient findPatientById(int patientId) {
+        Patient u = new Patient();
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id, admin from user WHERE id= ?");
+            preparedStatement.setInt(1, patientId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                u = new Patient(rs.getString(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                u.setId(rs.getInt(9));
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            System.out.println("No user was found");
         }
         return u;
     }

@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.DAO;
 
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,9 +96,9 @@ public class DiseaseDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int diseaseId = rs.getInt(1);
-                int patientId = rs.getInt(2);
+//                int patientId = rs.getInt(2);
                 String diseaseName = rs.getString(3);
-                User patient = userDAO.findUserById(patientId);
+//                Patient patient = userDAO.findPatientById(patientId);
                 Disease disease = new Disease(diseaseName);
                 disease.setId(diseaseId);
                 list.add(disease);

@@ -14,4 +14,12 @@ public class Patient extends User{
     public Patient() {
 
     }
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
 }

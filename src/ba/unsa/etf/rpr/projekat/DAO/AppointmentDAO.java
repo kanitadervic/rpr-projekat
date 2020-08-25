@@ -101,12 +101,11 @@ public class AppointmentDAO {
                 int patientId = rs.getInt(3);
                 String appointmentDate = rs.getString(4);
                 int diseaseId = rs.getInt(5);
-                User doctor = userDAO.findUserById(doctorId);
-                User patient = userDAO.findUserById(patientId);
+                Doctor doctor = userDAO.findDoctorById(doctorId);
+                Patient patient = userDAO.findPatientById(patientId);
                 Disease disease = diseaseDAO.findDiseaseById(diseaseId);
                 Appointment appointment = new Appointment(doctor, patient, appointmentDate, disease);
                 appointment.setId(appointmentId);
-//                appointment.setDisease(disease);
                 list.add(appointment);
             }
             connection.close();
@@ -189,8 +188,8 @@ public class AppointmentDAO {
             preparedStatement.setInt(1, aId);
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();
-            User doctor = userDAO.findUserById(rs.getInt(2));
-            User patient = userDAO.findUserById(rs.getInt(3));
+            Doctor doctor = userDAO.findDoctorById(rs.getInt(2));
+            Patient patient = userDAO.findPatientById(rs.getInt(3));
             String dateString = rs.getString(4);
             int diseaseId = rs.getInt(5);
             DateClass date = new DateClass(dateString);
