@@ -125,7 +125,6 @@ public class DiseaseDAO {
             while(rs.next()){
                 String diseaseName = rs.getString(3);
                 if(diseaseName == null) {
-
                 }
                 disease.setName(diseaseName);
                 disease.setId(diseaseId);

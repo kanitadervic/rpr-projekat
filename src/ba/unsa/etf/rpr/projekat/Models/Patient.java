@@ -1,7 +1,9 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
+import java.util.ArrayList;
+
 public class Patient extends User{
-    private Disease disease;
+    private ArrayList<Disease> diseases;
 
     public Patient(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateClass dateOfBirth) {
         super(firstName, lastName, email, phoneNumber, userName, password, gender, dateOfBirth);
@@ -15,11 +17,17 @@ public class Patient extends User{
 
     }
 
-    public Disease getDisease() {
-        return disease;
+    @Override
+    public ArrayList<Disease> getDiseases() {
+        return diseases;
     }
 
-    public void setDisease(Disease disease) {
-        this.disease = disease;
+    @Override
+    public void setDiseases(ArrayList<Disease> diseases) {
+        this.diseases = diseases;
+    }
+
+    public void addDisease(Disease d){
+        this.diseases.add(d);
     }
 }

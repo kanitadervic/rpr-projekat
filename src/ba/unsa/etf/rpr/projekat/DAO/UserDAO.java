@@ -255,6 +255,7 @@ public class UserDAO {
 
     public ObservableList<Appointment> getAppointmentsForPatient(int id) {
         ObservableList<Appointment> appointmentsForPatient = FXCollections.observableArrayList();
+        ArrayList<Disease> diseases = new ArrayList<>();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE patient_id = ?");
@@ -264,11 +265,14 @@ public class UserDAO {
                 int aId = rs.getInt(1);
                 Appointment appointment = appointmentDAO.getAppointment(aId);
                 appointmentsForPatient.add(appointment);
+                diseases.add(appointment.getDisease());
             }
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        Patient p = userDAO.findPatientById(id);
+        p.setDiseases(diseases);
         return appointmentsForPatient;
     }
 

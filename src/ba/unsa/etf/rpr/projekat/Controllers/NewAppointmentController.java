@@ -121,6 +121,7 @@ public class NewAppointmentController {
             if (diseaseDAO.getIdByName(disease.getName()) == 0) diseaseDAO.addDisease(disease, this.patient.getId());
             else disease.setId(diseaseDAO.getIdByName(disease.getName()));
             Appointment toAdd = new Appointment(doctor, this.patient, date, disease);
+            patient.addDisease(disease);
             appointmentDAO.addAppointment(toAdd);
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
