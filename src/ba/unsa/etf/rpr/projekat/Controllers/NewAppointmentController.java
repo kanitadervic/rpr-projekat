@@ -64,32 +64,39 @@ public class NewAppointmentController {
     public void initialize() {
         ObservableList<User> doctors = userDAO.getDoctorUsers();
         cbDoctorChoice.setItems(doctors);
+
+        cbDoctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
+                cbDoctorChoice.getStyleClass().removeAll("incorrectField");
+                cbDoctorChoice.getStyleClass().add("correctField");
+            } else {
+                cbDoctorChoice.getStyleClass().removeAll("correctField");
+                cbDoctorChoice.getStyleClass().add("incorrectField");
+            }
+        });
+
+        appointmentDate.valueProperty().addListener((obs, oldVal, newVal) ->{
+            if (isDateValid(appointmentDate.getValue())) {
+                appointmentDate.getStyleClass().removeAll("incorrectField");
+                appointmentDate.getStyleClass().add("correctField");
+            } else {
+                appointmentDate.getStyleClass().removeAll("correctField");
+                appointmentDate.getStyleClass().add("incorrectField");
+            }
+        });
     }
 
     private boolean checkDoctorChoice() {
-        if (cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
-            cbDoctorChoice.getStyleClass().removeAll("incorrect");
-            cbDoctorChoice.getStyleClass().add("correct");
-        } else {
-            cbDoctorChoice.getStyleClass().removeAll("correct");
-            cbDoctorChoice.getStyleClass().add("incorrect");
-        }
-        return cbDoctorChoice.getStyleClass().contains("correct");
+        return cbDoctorChoice.getStyleClass().contains("correctField");
     }
 
     private boolean checkAppointmentDate() {
-        if (isDateValid(appointmentDate.getValue())) {
-            appointmentDate.getStyleClass().removeAll("incorrect");
-            appointmentDate.getStyleClass().add("correct");
-        } else {
-            appointmentDate.getStyleClass().removeAll("correct");
-            appointmentDate.getStyleClass().add("incorrect");
-        }
-        return (appointmentDate.getStyleClass().contains("correct"));
+        return (appointmentDate.getStyleClass().contains("correctField"));
     }
 
     private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
+        if(value == null || value.isBefore(localDate) || cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return false;
         boolean takenDate = false;
         User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
         ObservableList<User> doctors = userDAO.getDoctorUsers();
@@ -107,7 +114,7 @@ public class NewAppointmentController {
                 break;
             }
         }
-        return (!value.isBefore(localDate) && !takenDate);
+        return (!takenDate);
     }
 
     public void addAction(ActionEvent actionEvent) {
@@ -121,7 +128,7 @@ public class NewAppointmentController {
             if (diseaseDAO.getIdByName(disease.getName()) == 0) diseaseDAO.addDisease(disease, this.patient.getId());
             else disease.setId(diseaseDAO.getIdByName(disease.getName()));
             Appointment toAdd = new Appointment(doctor, this.patient, date, disease);
-            patient.addDisease(disease);
+            this.patient.addDisease(disease);
             appointmentDAO.addAppointment(toAdd);
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();

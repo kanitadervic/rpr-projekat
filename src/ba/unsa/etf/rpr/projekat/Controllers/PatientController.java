@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
 import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
@@ -62,6 +60,12 @@ public class PatientController {
         txtPhoneNumber.setText(patient.getPhoneNumber());
         txtUsername.setText(patient.getUserName());
         txtPassword.setText(patient.getPassword());
+        refreshList();
+        txtPassword.setVisible(false);
+        cbShowPassword.setSelected(false);
+    }
+
+    private void refreshList() {
         ObservableList appointmentsForPatient = userDAO.getAppointmentsForPatient(patient.getId());
         SortedList<Appointment> list = new SortedList(appointmentsForPatient);
         list.setComparator(new Comparator<Appointment>() {
@@ -73,8 +77,6 @@ public class PatientController {
             }
         });
         appointmentListView.setItems(list);
-        txtPassword.setVisible(false);
-        cbShowPassword.setSelected(false);
     }
 
     public void showPasswordAction(ActionEvent actionEvent) {
@@ -143,6 +145,6 @@ public class PatientController {
         stage.setTitle("Novi termin");
         stage.setScene(new Scene(root2));
         stage.showAndWait();
-        appointmentListView.setItems(userDAO.getAppointmentsForPatient(this.patient.getId()));
+        refreshList();
     }
 }
