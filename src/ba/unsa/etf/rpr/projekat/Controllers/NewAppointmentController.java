@@ -34,7 +34,7 @@ public class NewAppointmentController {
     public DatePicker appointmentDate;
     public ChoiceBox cbDoctorChoice;
     private Patient patient;
-    private Text txtDisease;
+    public Text txtDisease;
 
 
     public NewAppointmentController(Patient patient) {
@@ -62,6 +62,7 @@ public class NewAppointmentController {
 
     @FXML
     public void initialize() {
+        appointmentDate.setValue(LocalDate.now());
         ObservableList<User> doctors = userDAO.getDoctorUsers();
         cbDoctorChoice.setItems(doctors);
 
@@ -75,13 +76,19 @@ public class NewAppointmentController {
             }
         });
 
-        appointmentDate.valueProperty().addListener((obs, oldVal, newVal) ->{
+        appointmentDate.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (isDateValid(appointmentDate.getValue())) {
                 appointmentDate.getStyleClass().removeAll("incorrectField");
                 appointmentDate.getStyleClass().add("correctField");
             } else {
                 appointmentDate.getStyleClass().removeAll("correctField");
                 appointmentDate.getStyleClass().add("incorrectField");
+            }
+        });
+
+        listViewDiseases.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (listViewDiseases.getSelectionModel().getSelectedItem() != null) {
+                txtDisease.setText(newVal.toString());
             }
         });
     }
@@ -96,22 +103,25 @@ public class NewAppointmentController {
 
     private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
-        if(value == null || value.isBefore(localDate) || cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return false;
+        if (value == null || value.isBefore(localDate)) return false;
         boolean takenDate = false;
-        User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
-        DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
-        for (User u : doctors) {
-            if (u.equals(doctor)) {
-                doctor.setId(doctor.getId());
-                break;
+        if (cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return true;
+        else {
+            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+            ObservableList<User> doctors = userDAO.getDoctorUsers();
+            DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
+            for (User u : doctors) {
+                if (u.equals(doctor)) {
+                    doctor.setId(doctor.getId());
+                    break;
+                }
             }
-        }
-        ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-        for (Appointment a : appointments) {
-            if (a.getAppointmentDate().equals(date)) {
-                takenDate = true;
-                break;
+            ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
+            for (Appointment a : appointments) {
+                if (a.getAppointmentDate().equals(date)) {
+                    takenDate = true;
+                    break;
+                }
             }
         }
         return (!takenDate);
@@ -206,7 +216,7 @@ public class NewAppointmentController {
             //Get Response
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+            StringBuilder response = new StringBuilder();
             String line;
             while ((line = rd.readLine()) != null) {
                 response.append(line);
