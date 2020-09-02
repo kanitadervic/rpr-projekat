@@ -19,10 +19,11 @@ import javafx.stage.Stage;
 import javax.print.Doc;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
-import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class StartPageController {
     public Button btnLogIn;
@@ -37,7 +38,7 @@ public class StartPageController {
         stage.close();
         try {
             RegistrationController ctrl = new RegistrationController(userDAO);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registration.fxml"), resourceBundle);
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
@@ -68,7 +69,7 @@ public class StartPageController {
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
             DoctorController ctrl = new DoctorController(user, userDAO);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor.fxml"), resourceBundle);
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
@@ -80,7 +81,7 @@ public class StartPageController {
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
             PatientController ctrl = new PatientController(user, userDAO);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient.fxml"), resourceBundle);
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
@@ -89,8 +90,8 @@ public class StartPageController {
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Greška");
-            alert.setContentText("Pogrešni podaci! Pokušajte ponovo.");
+            alert.setHeaderText(resourceBundle.getString("error"));
+            alert.setContentText(resourceBundle.getString("wrong.data"));
             alert.showAndWait();
         }
     }

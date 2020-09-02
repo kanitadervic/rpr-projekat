@@ -13,8 +13,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 import static java.lang.Integer.valueOf;
 
 public class AppointmentModificationController {
@@ -94,7 +93,7 @@ public class AppointmentModificationController {
             stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Zauzet datum ili neispravna polja! Probajte ponovo");
+            alert.setContentText(resourceBundle.getString("appointment.invalid"));
             alert.showAndWait();
         }
     }

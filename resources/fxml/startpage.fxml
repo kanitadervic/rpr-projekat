@@ -17,9 +17,9 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="708.0" style="-fx-background-color: #ffff66;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.projekat.Controllers.StartPageController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="144.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="117.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="117.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="0.0" prefWidth="125.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="105.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="147.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="0.0" prefWidth="116.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="10.0" prefWidth="137.0" />
   </columnConstraints>
   <rowConstraints>
@@ -31,12 +31,12 @@
       <RowConstraints maxHeight="362.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Text fill="#5d5a75f5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dobrodošli u HealthTech" textAlignment="CENTER" wrappingWidth="695.7294921875" GridPane.columnSpan="5">
+      <Text fill="#5d5a75f5" strokeType="OUTSIDE" strokeWidth="0.0" text="%welcomeText" textAlignment="CENTER" wrappingWidth="695.7294921875" GridPane.columnSpan="5">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Text fill="#0d0d0d" strokeType="OUTSIDE" strokeWidth="0.0" text="Molimo unesite vaše podatke:" textAlignment="CENTER" wrappingWidth="694.22216796875" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <Text fill="#0d0d0d" strokeType="OUTSIDE" strokeWidth="0.0" text="%enterData" textAlignment="CENTER" wrappingWidth="694.22216796875" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-background-color: white; -fx-opacity: 1;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="3">
          <children>
             <ImageView fx:id="userImage" fitHeight="124.0" fitWidth="125.0" layoutX="116.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
@@ -44,20 +44,20 @@
                   <Image url="@../images/group+people+team+users+icon-1320196240876938595.png" />
                </image>
             </ImageView>
-            <TextField fx:id="fldEmail" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Korisnicko ime">
+            <TextField fx:id="fldEmail" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%email">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </TextField>
-            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Lozinka" />
+            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%password" />
          </children>
       </AnchorPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#logInAction" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Prijava" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+    <Button fx:id="btnLogIn" mnemonicParsing="false" onAction="#logInAction" prefHeight="28.0" prefWidth="139.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="%logIn" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#registerAction" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="Registruj se!" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#registerAction" prefHeight="28.0" prefWidth="139.0" style="-fx-background-color: #ffff66; -fx-border-color: grey;" text="%registration" textAlignment="CENTER" textFill="#454f51" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>

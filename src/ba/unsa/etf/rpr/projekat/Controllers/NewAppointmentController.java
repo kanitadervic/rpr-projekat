@@ -145,7 +145,7 @@ public class NewAppointmentController {
             stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Zauzet datum ili neispravna polja! Probajte ponovo");
+            alert.setContentText(resourceBundle.getString("appointment.invalid"));
             alert.showAndWait();
         }
     }

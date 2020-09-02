@@ -33,8 +33,8 @@
             <Font size="37.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Podaci:" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ime i prezime:" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%data" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%fullname" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
@@ -49,12 +49,12 @@
             <Insets right="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.rowIndex="3">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%email" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Broj telefona:" GridPane.rowIndex="4">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%phone" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
@@ -64,27 +64,17 @@
             <Insets right="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Korisničko ime:" GridPane.rowIndex="5">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%password" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
       </Text>
-      <Text fx:id="txtUsername" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="215.7294921875" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+      <Text fx:id="txtPassword" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="230.0" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lozinka:" GridPane.rowIndex="6">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin>
-      </Text>
-      <Text fx:id="txtPassword" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="230.0" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin>
-      </Text>
-      <CheckBox fx:id="cbShowPassword" mnemonicParsing="false" onAction="#showPasswordAction" text="Prikaži lozinku" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="TOP">
+      <CheckBox fx:id="cbShowPassword" mnemonicParsing="false" onAction="#showPasswordAction" text="%show.password" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="10.0" right="10.0" />
          </GridPane.margin>
@@ -94,23 +84,23 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </ListView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezervisani termini:" textAlignment="CENTER" wrappingWidth="394.17138671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button fx:id="btnChangeAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#changeAppointmentAction" prefWidth="108.0" text="Uredi termin" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%appointments" textAlignment="CENTER" wrappingWidth="394.17138671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="btnChangeAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#changeAppointmentAction" prefWidth="108.0" text="%edit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets right="15.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnDeleteAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#deleteAppointmentAction" prefWidth="108.0" text="Izbriši termin" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+      <Button fx:id="btnDeleteAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#deleteAppointmentAction" prefWidth="108.0" text="%delete" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="15.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnNewAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#addAppointmentAction" prefWidth="108.0" text="Novi termin" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <Button fx:id="btnNewAppointment" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#addAppointmentAction" prefWidth="108.0" text="%new" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets right="15.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnLogOut" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#logOutAction" prefWidth="108.0" style="-fx-background-color: red; -fx-border-color: black;" text="Odjavi se" textFill="#fffefe" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+      <Button fx:id="btnLogOut" maxWidth="108.0" minWidth="108.0" mnemonicParsing="false" onAction="#logOutAction" prefWidth="108.0" style="-fx-background-color: red; -fx-border-color: black;" text="%logout" textFill="#fffefe" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>

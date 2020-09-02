@@ -19,9 +19,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.Locale;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class DoctorController {
     public Text txtWelcome;
@@ -65,10 +65,13 @@ public class DoctorController {
 
     @FXML
     public void initialize() {
-        if (doctor.getGender().equals("F")) {
-            txtWelcome.setText("Dobrodošla, " + doctor.getFirstName());
-        } else {
+        if (resourceBundle.getLocale().toString().equals("en")) {
+            txtWelcome.setText("Welcome, " + doctor.getFirstName());
+        } else if (doctor.getGender().equals("M")) {
             txtWelcome.setText("Dobrodošao, " + doctor.getFirstName());
+        }
+        else {
+            txtWelcome.setText("Dobrodošla, " + doctor.getFirstName());
         }
         appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
         columnName.setCellValueFactory(new PropertyValueFactory<>("patientFirstName"));
@@ -88,22 +91,22 @@ public class DoctorController {
     public void showPatientAction(ActionEvent actionEvent) {
         if (tableViewPatients.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Informacije o pacijentu");
-            alert.setContentText("Niste odabrali pacijenta!");
+            alert.setHeaderText(resourceBundle.getString("patient.info"));
+            alert.setContentText(resourceBundle.getString("patient.error"));
             alert.showAndWait();
             return;
         }
         Appointment appointment = (Appointment) tableViewPatients.getSelectionModel().getSelectedItem();
         User patient = appointment.getPatient();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Informacije o pacijentu");
-        String gender = patient.getGender().equals("F")? "Žensko" : "Muško";
-        alert.setContentText("Ime: " + patient.getFirstName() + "\n" +
-                "Prezime: " + patient.getLastName() + "\n" +
-                "Email: " + patient.getEmail() + "\n" +
-                "Broj telefona: " + patient.getPhoneNumber() + "\n" +
-                "Spol: " + gender + "\n" +
-                "Bolest: " + appointment.getDisease());
+        alert.setHeaderText(resourceBundle.getString("patient.info"));
+        String gender = patient.getGender().equals("F")? resourceBundle.getString("genderf") : resourceBundle.getString("genderm");
+        alert.setContentText(resourceBundle.getString("name") + patient.getFirstName() + "\n" +
+                resourceBundle.getString("last.name")  + patient.getLastName() + "\n" +
+                resourceBundle.getString("email")  + patient.getEmail() + "\n" +
+                resourceBundle.getString("phone")  + patient.getPhoneNumber() + "\n" +
+                resourceBundle.getString("gender") + gender + "\n" +
+                resourceBundle.getString("disease")  + appointment.getDisease());
         alert.showAndWait();
 
     }
@@ -111,14 +114,14 @@ public class DoctorController {
     public void deleteAppointmentAction(ActionEvent actionEvent) {
         if (tableViewPatients.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Brisanje termina");
-            alert.setContentText("Niste odabrali termin za brisanje!");
+            alert.setHeaderText(resourceBundle.getString("appointment.delete"));
+            alert.setContentText(resourceBundle.getString("appointment.error"));
             alert.showAndWait();
             return;
         };
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Brisanje termina");
-        alert.setContentText("Da li želite izbrisati termin?");
+        alert.setHeaderText(resourceBundle.getString("appointment.delete"));
+        alert.setContentText(resourceBundle.getString("appointment.confirm"));
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.OK) {

@@ -42,28 +42,28 @@
    <children>
       <TextField fx:id="fldName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="fldLastName" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <RadioButton fx:id="rbMale" mnemonicParsing="false" text="M" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <RadioButton fx:id="rbFemale" mnemonicParsing="false" text="Ž" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <RadioButton fx:id="rbMale" mnemonicParsing="false" text="%genderm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <RadioButton fx:id="rbFemale" mnemonicParsing="false" text="%genderf" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <DatePicker fx:id="birthdayPicker" promptText="MM/DD/YYYY" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-      <TextField fx:id="fldPhoneNumber" promptText="xxx/xxx-xxx ILI xx0/xxx-xxxx" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <TextField fx:id="fldPhoneNumber" promptText="%phone.default" GridPane.columnIndex="3" GridPane.rowIndex="4" />
       <TextField fx:id="fldEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <TextField fx:id="fldEmailRepeat" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <PasswordField fx:id="fldPassword" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <PasswordField fx:id="fldPasswordRepeat" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-      <CheckBox fx:id="isDoctor" mnemonicParsing="false" onAction="#doctorCheck" text="Doktor" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <CheckBox fx:id="isDoctor" mnemonicParsing="false" onAction="#doctorCheck" text="%doctor" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       <PasswordField fx:id="fldClinicPassword" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-      <Button fx:id="btnConfirmRegistration" mnemonicParsing="false" onAction="#registrationAction" text="Potvrdi podatke" GridPane.columnIndex="3" GridPane.rowIndex="12" />
-      <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#goBackAction" prefWidth="121.0" text="Idi nazad" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ime:" wrappingWidth="83.7294921875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prezime:" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <Button fx:id="btnConfirmRegistration" mnemonicParsing="false" onAction="#registrationAction" prefWidth="121.0" text="%submit" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+      <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#goBackAction" prefWidth="121.0" text="%back.button" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%name" wrappingWidth="83.7294921875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%last.name" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Označite polje ukoliko imate titulu doktora:" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lozinka klinke:" GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lozinka:" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datum rođenja:" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Spol:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ponovite lozinku:" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ponovite e-mail:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Broj telefona:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%doctor.check" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%clinic.password" GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%password" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%birthdate" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%gender" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%password.repeat" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%email.repeat" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%phone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    </children>
 </GridPane>

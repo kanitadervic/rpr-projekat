@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ba.unsa.etf.rpr.projekat.Controllers.StartPageController.registrationStage;
 import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
 import static java.lang.Character.*;
 
@@ -199,7 +198,7 @@ public class RegistrationController {
     }
 
     private boolean checkBirthDate(LocalDate value) {
-        if(value == null) return false;
+        if (value == null) return false;
         LocalDate localDate = LocalDate.of(2010, 1, 1);
         return (value.isBefore(localDate));
     }

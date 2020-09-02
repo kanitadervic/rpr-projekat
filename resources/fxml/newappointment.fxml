@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,22 +9,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<?import java.net.URL?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <stylesheets>
       <URL value="@/css/registration.css" />
    </stylesheets>
    <children>
       <TextField fx:id="fldSearch" layoutX="14.0" layoutY="14.0" prefHeight="33.0" prefWidth="223.0" />
-      <Button fx:id="btnSearch" layoutX="246.0" layoutY="18.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="26.0" prefWidth="99.0" text="Pretraga" />
+      <Button fx:id="btnSearch" layoutX="246.0" layoutY="18.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="26.0" prefWidth="99.0" text="%search" />
       <ListView fx:id="listViewDiseases" layoutX="14.0" layoutY="56.0" prefHeight="194.0" prefWidth="331.0" />
-      <Button fx:id="btnCancel" layoutX="527.0" layoutY="223.0" mnemonicParsing="false" onAction="#goBackAction" prefWidth="99.0" text="Odustani" />
-      <Text layoutX="354.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doktor:" />
+      <Button fx:id="btnCancel" layoutX="527.0" layoutY="223.0" mnemonicParsing="false" onAction="#goBackAction" prefWidth="99.0" text="%back.button" />
+      <Text layoutX="354.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%doctor" />
       <ChoiceBox fx:id="cbDoctorChoice" layoutX="421.0" layoutY="70.0" prefHeight="26.0" prefWidth="205.0" />
       <DatePicker fx:id="appointmentDate" layoutX="421.0" layoutY="103.0" prefHeight="26.0" prefWidth="205.0" />
-      <Text layoutX="354.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" />
-      <Text layoutX="356.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bolest:" />
+      <Text layoutX="354.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%date" />
+      <Text layoutX="356.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%disease" />
       <Text fx:id="txtDisease" layoutX="421.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="205.0" />
-      <Button fx:id="btnAdd" layoutX="421.0" layoutY="223.0" mnemonicParsing="false" prefWidth="99.0" onAction="#addAction" text="Dodaj" />
+      <Button fx:id="btnAdd" layoutX="421.0" layoutY="223.0" mnemonicParsing="false" onAction="#addAction" prefWidth="99.0" text="%add" />
    </children>
 </AnchorPane>

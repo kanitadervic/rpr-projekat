@@ -34,12 +34,12 @@
             <Font size="31.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nadolazeći termini:" textAlignment="CENTER" wrappingWidth="715.7294921875" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%appointments" textAlignment="CENTER" wrappingWidth="715.7294921875" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Button fx:id="btnLogOut" maxWidth="122.0" minWidth="122.0" mnemonicParsing="false" onAction="#logOutAction" prefWidth="122.0" style="-fx-background-color: red; -fx-border-color: black;" text="Odjavi se" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+      <Button fx:id="btnLogOut" maxWidth="122.0" minWidth="122.0" mnemonicParsing="false" onAction="#logOutAction" prefWidth="122.0" style="-fx-background-color: red; -fx-border-color: black;" text="%logout" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
@@ -49,10 +49,10 @@
       </Button>
       <TableView fx:id="tableViewPatients" prefHeight="287.0" prefWidth="700.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.rowSpan="4">
         <columns>
-          <TableColumn fx:id="columnName" prefWidth="163.0" resizable="false" text="Ime" />
-          <TableColumn fx:id="columnLastName" prefWidth="189.0" resizable="false" text="Prezime" />
-            <TableColumn fx:id="columnDate" prefWidth="178.0" resizable="false" text="Datum " />
-            <TableColumn fx:id="columnDisease" prefWidth="169.0" resizable="false" text="Bolest" />
+          <TableColumn fx:id="columnName" prefWidth="163.0" resizable="false" text="%name" />
+          <TableColumn fx:id="columnLastName" prefWidth="189.0" resizable="false" text="%last.name" />
+            <TableColumn fx:id="columnDate" prefWidth="178.0" resizable="false" text="%date" />
+            <TableColumn fx:id="columnDisease" prefWidth="169.0" resizable="false" text="%disease" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -65,26 +65,26 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Isprintaj" />
-                  <Menu mnemonicParsing="false" text="Jezik">
+              <MenuItem mnemonicParsing="false" text="%print" />
+                  <Menu mnemonicParsing="false" text="%language">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Bosanski" />
-                        <MenuItem mnemonicParsing="false" text="Engleski" />
+                      <MenuItem mnemonicParsing="false" text="%bosnian" />
+                        <MenuItem mnemonicParsing="false" text="%english" />
                     </items>
                   </Menu>
-                  <MenuItem fx:id="btnExit" mnemonicParsing="false" onAction="#exitAction" text="Napusti aplikaciju" />
+                  <MenuItem fx:id="btnExit" mnemonicParsing="false" onAction="#exitAction" text="%close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="btnAppointmentDelete" mnemonicParsing="false" onAction="#deleteAppointmentAction" text="Obriši termin" />
-                  <MenuItem fx:id="btnPatient" mnemonicParsing="false" onAction="#showPatientAction" text="Prikaži pacijenta" />
-                  <MenuItem fx:id="saveFiles" mnemonicParsing="false" onAction="#saveAppointmentsAction" text="Spasi termine" />
+              <MenuItem fx:id="btnAppointmentDelete" mnemonicParsing="false" onAction="#deleteAppointmentAction" text="%delete" />
+                  <MenuItem fx:id="btnPatient" mnemonicParsing="false" onAction="#showPatientAction" text="%show.patient" />
+                  <MenuItem fx:id="saveFiles" mnemonicParsing="false" onAction="#saveAppointmentsAction" text="%save" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="O nama" />
+              <MenuItem mnemonicParsing="false" text="%about" />
             </items>
           </Menu>
         </menus>

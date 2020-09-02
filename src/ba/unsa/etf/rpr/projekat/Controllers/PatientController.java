@@ -22,8 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
-import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class PatientController {
     private final UserDAO userDAO;
@@ -32,7 +31,6 @@ public class PatientController {
     public Text txtName;
     public Text txtEmail;
     public Text txtPhoneNumber;
-    public Text txtUsername;
     public Text txtPassword;
     public CheckBox cbShowPassword;
     public ListView appointmentListView;
@@ -100,7 +98,7 @@ public class PatientController {
         loader.setController(ctrl);
         Parent root2 = loader.load();
         Stage stage = new Stage();
-        stage.setTitle("Modifikacija");
+        stage.setTitle(resourceBundle.getString("appointment.modification"));
         stage.setScene(new Scene(root2));
         stage.show();
     }
@@ -108,8 +106,8 @@ public class PatientController {
     public void deleteAppointmentAction(ActionEvent actionEvent) {
         if (appointmentListView.getSelectionModel().getSelectedItem() == null) return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Brisanje termina");
-        alert.setContentText("Da li želite otkazati termin?");
+        alert.setHeaderText(resourceBundle.getString("appointment.delete"));
+        alert.setContentText(resourceBundle.getString("appointment.confirm"));
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.OK) {
@@ -137,11 +135,11 @@ public class PatientController {
 
     public void addAppointmentAction(ActionEvent actionEvent) throws IOException {
         NewAppointmentController ctrl = new NewAppointmentController(patient);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/newappointment.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/newappointment.fxml"), resourceBundle);
         loader.setController(ctrl);
         Parent root2 = loader.load();
         Stage stage = new Stage();
-        stage.setTitle("Novi termin");
+        stage.setTitle(resourceBundle.getString("new.appointment"));
         stage.setScene(new Scene(root2));
         stage.showAndWait();
         refreshList();
