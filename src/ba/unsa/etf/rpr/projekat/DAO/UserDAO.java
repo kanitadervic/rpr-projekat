@@ -40,16 +40,15 @@ public class UserDAO {
                     "\t\"last_name\"\tTEXT NOT NULL,\n" +
                     "\t\"email\"\tTEXT NOT NULL,\n" +
                     "\t\"phone_number\"\tTEXT NOT NULL,\n" +
-                    "\t\"username\"\tTEXT NOT NULL,\n" +
                     "\t\"password\"\tTEXT NOT NULL,\n" +
                     "\t\"gender\"\tTEXT NOT NULL,\n" +
                     "\t\"birthdate\"\tTEXT NOT NULL,\n" +
                     "\t\"admin\"\tTEXT,\n" +
                     "\tPRIMARY KEY(\"id\")\n" +
                     ");");
-            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic@faks.com', '062/062-062', 'kdervic', 'test', 'F', '23-1-1999', 'admin');");
-            statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'ssaric', 'test', 'F', '10-10-2003', null);");
-            statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'ttestic', 'test', 'M', '21-11-1998', null);");
+            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic@faks.com', '062/062-062', 'test', 'F', '23-1-1999', 'admin');");
+            statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'test', 'F', '10-10-2003', null);");
+            statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'test', 'M', '21-11-1998', null);");
             currentId = 4;
             connection.close();
         } catch (SQLException throwables) {
@@ -81,12 +80,12 @@ public class UserDAO {
         ArrayList<User> list = new ArrayList<>();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 User u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-                u.setId(rs.getInt(9));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                u.setId(rs.getInt(8));
                 list.add(u);
             }
             connection.close();
@@ -99,21 +98,20 @@ public class UserDAO {
     public void addUser(User u) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            preparedStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
             u.setId(currentId);
             preparedStatement.setInt(1, currentId++);
             preparedStatement.setString(2, u.getFirstName());
             preparedStatement.setString(3, u.getLastName());
             preparedStatement.setString(4, u.getEmail());
             preparedStatement.setString(5, u.getPhoneNumber());
-            preparedStatement.setString(6, u.getUserName());
-            preparedStatement.setString(7, u.getPassword());
-            preparedStatement.setString(8, u.getGender());
-            preparedStatement.setString(9, u.getDateOfBirthString());
+            preparedStatement.setString(6, u.getPassword());
+            preparedStatement.setString(7, u.getGender());
+            preparedStatement.setString(8, u.getDateOfBirthString());
             if (u instanceof Doctor) {
-                preparedStatement.setString(10, "admin");
+                preparedStatement.setString(9, "admin");
             } else {
-                preparedStatement.setString(10, null);
+                preparedStatement.setString(9, null);
             }
 
             preparedStatement.executeUpdate();
@@ -131,13 +129,13 @@ public class UserDAO {
         ObservableList<User> doctors = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id from user WHERE admin= ?");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user WHERE admin= ?");
             preparedStatement.setString(1, "admin");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Doctor d = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-                d.setId(rs.getInt(9));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                d.setId(rs.getInt(8));
                 doctors.add(d);
             }
             connection.close();
@@ -170,13 +168,13 @@ public class UserDAO {
         Doctor u = new Doctor();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id, admin from user WHERE id= ?");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, admin from user WHERE id= ?");
             preparedStatement.setInt(1, doctorId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 u = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-                u.setId(rs.getInt(9));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                u.setId(rs.getInt(8));
             }
             connection.close();
         } catch (SQLException throwables) {
@@ -189,13 +187,13 @@ public class UserDAO {
         Patient u = new Patient();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, username, password, gender, birthdate, id, admin from user WHERE id= ?");
+            preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, admin from user WHERE id= ?");
             preparedStatement.setInt(1, patientId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 u = new Patient(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
-                u.setId(rs.getInt(9));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                u.setId(rs.getInt(8));
             }
             connection.close();
         } catch (SQLException throwables) {

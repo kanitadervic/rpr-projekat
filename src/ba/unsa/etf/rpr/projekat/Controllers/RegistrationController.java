@@ -24,8 +24,10 @@ public class RegistrationController {
     public TextField fldUsername;
     public PasswordField fldPassword;
     public TextField fldPhoneNumber;
+    public PasswordField fldPasswordRepeat;
     public Button btnConfirmRegistration;
     public TextField fldEmail;
+    public TextField fldEmailRepeat;
     public DatePicker birthdayPicker;
     public CheckBox isDoctor;
     public TextField fldCity;
@@ -47,16 +49,6 @@ public class RegistrationController {
         fldClinicPassword.setDisable(true);
 
 
-        fldUsername.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (!newVal.isEmpty() && checkUserName(newVal)) {
-                fldUsername.getStyleClass().removeAll("incorrectField");
-                fldUsername.getStyleClass().add("correctField");
-            } else {
-                fldUsername.getStyleClass().removeAll("correctField");
-                fldUsername.getStyleClass().add("incorrectField");
-            }
-        });
-
         fldEmail.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && checkEmail(newVal)) {
                 fldEmail.getStyleClass().removeAll("incorrectField");
@@ -64,6 +56,16 @@ public class RegistrationController {
             } else {
                 fldEmail.getStyleClass().removeAll("correctField");
                 fldEmail.getStyleClass().add("incorrectField");
+            }
+        });
+
+        fldEmailRepeat.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkEmail(newVal) && newVal.equals(fldEmail.getText())) {
+                fldEmailRepeat.getStyleClass().removeAll("incorrectField");
+                fldEmailRepeat.getStyleClass().add("correctField");
+            } else {
+                fldEmailRepeat.getStyleClass().removeAll("correctField");
+                fldEmailRepeat.getStyleClass().add("incorrectField");
             }
         });
 
@@ -77,13 +79,13 @@ public class RegistrationController {
             }
         });
 
-        fldCity.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (!newVal.isEmpty()) {
-                fldCity.getStyleClass().removeAll("incorrectField");
-                fldCity.getStyleClass().add("correctField");
+        fldPasswordRepeat.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty() && checkPassword(newVal) && newVal.equals(fldPassword.getText())) {
+                fldPasswordRepeat.getStyleClass().removeAll("incorrectField");
+                fldPasswordRepeat.getStyleClass().add("correctField");
             } else {
-                fldCity.getStyleClass().removeAll("correctField");
-                fldCity.getStyleClass().add("incorrectField");
+                fldPasswordRepeat.getStyleClass().removeAll("correctField");
+                fldPasswordRepeat.getStyleClass().add("incorrectField");
             }
         });
 
@@ -145,12 +147,12 @@ public class RegistrationController {
             LocalDate localDate = birthdayPicker.getValue();
             DateClass dateOfBirth = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             if (!isDoctor.isSelected()) {
-                Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(p);
                 userDAO.getUsers().add(p);
             } else {
-                Doctor d = new Doctor(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(), fldUsername.getText(),
+                Doctor d = new Doctor(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(d);
                 userDAO.getUsers().add(d);
@@ -163,7 +165,14 @@ public class RegistrationController {
     }
 
     private boolean checkData() {
-        return (checkName(fldName.getText()) && checkName(fldLastName.getText()) && checkEmail(fldEmail.getText()) && checkPassword(fldPassword.getText()) && checkUserName(fldUsername.getText()) && checkBirthDate(birthdayPicker.getValue()) && checkPhoneNumber(fldPhoneNumber.getText()));
+        return (checkName(fldName.getText()) &&
+                checkName(fldLastName.getText()) &&
+                checkEmail(fldEmail.getText()) &&
+                fldEmailRepeat.getText().equals(fldEmail.getText()) &&
+                checkPassword(fldPassword.getText()) &&
+                fldPasswordRepeat.getText().equals(fldPassword.getText()) &&
+                checkBirthDate(birthdayPicker.getValue())
+                && checkPhoneNumber(fldPhoneNumber.getText()));
     }
 
     private boolean checkPhoneNumber(String phoneNumber) {
@@ -190,18 +199,9 @@ public class RegistrationController {
     }
 
     private boolean checkBirthDate(LocalDate value) {
+        if(value == null) return false;
         LocalDate localDate = LocalDate.of(2010, 1, 1);
         return (value.isBefore(localDate));
-    }
-
-    private boolean checkUserName(String username) {
-        Pattern p = Pattern.compile("[!@#$%&*()+=|<>?{}\\[\\]~.,-]");
-        if (username.length() > 16 || username.isEmpty()) return false;
-        if (username.startsWith("_") || username.startsWith("$")) return false;
-        Matcher m = p.matcher(username);
-        if (m.find()) return false;
-        if (hasSpace(username)) return false;
-        else return true;
     }
 
     private boolean hasSpace(String text) {

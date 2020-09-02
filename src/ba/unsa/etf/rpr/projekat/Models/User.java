@@ -7,28 +7,26 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class User {
-    private SimpleStringProperty firstName, lastName, email, phoneNumber, userName, password, gender;
+    private SimpleStringProperty firstName, lastName, email, phoneNumber, password, gender;
     private DateClass dateOfBirth;
     private ArrayList<Disease> diseases = new ArrayList<>();
     private int id;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, DateClass dateOfBirth) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, DateClass dateOfBirth) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
-        this.userName = new SimpleStringProperty(userName);
         this.password = new SimpleStringProperty(password);
         this.gender = new SimpleStringProperty(gender);
         this.dateOfBirth = dateOfBirth;
     }
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String userName, String password, String gender, String date) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, String date) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
-        this.userName = new SimpleStringProperty(userName);
         this.password = new SimpleStringProperty(password);
         this.gender = new SimpleStringProperty(gender);
         String[] parts = date.split("\\-");
@@ -47,7 +45,6 @@ public class User {
         this.lastName = new SimpleStringProperty(copyUser.lastName.toString());
         this.email = new SimpleStringProperty(copyUser.email.toString());
         this.phoneNumber = new SimpleStringProperty(copyUser.phoneNumber.toString());
-        this.userName = new SimpleStringProperty(copyUser.userName.toString());
         this.password = new SimpleStringProperty(copyUser.password.toString());
         this.gender = new SimpleStringProperty(copyUser.gender.toString());
         this.dateOfBirth = copyUser.getDateOfBirth();
@@ -99,18 +96,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber.set(phoneNumber);
-    }
-
-    public String getUserName() {
-        return userName.get();
-    }
-
-    public SimpleStringProperty userNameProperty() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName.set(userName);
     }
 
     public String getPassword() {
@@ -167,7 +152,6 @@ public class User {
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(phoneNumber, user.phoneNumber) &&
-                Objects.equals(userName, user.userName) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(gender, user.gender) &&
                 Objects.equals(dateOfBirth, user.dateOfBirth);
@@ -183,7 +167,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, phoneNumber, userName, password, gender, dateOfBirth, id);
+        return Objects.hash(firstName, lastName, email, phoneNumber, password, gender, dateOfBirth, id);
     }
 
     @Override

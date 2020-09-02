@@ -43,7 +43,7 @@ public class PatientController {
 
 
     public PatientController(User user, UserDAO userDAO) {
-        patient = new Patient(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getUserName(), user.getPassword(), user.getGender(), user.getDateOfBirth());
+        patient = new Patient(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getPassword(), user.getGender(), user.getDateOfBirth());
         patient.setId(user.getId());
         this.userDAO = userDAO;
     }
@@ -58,7 +58,6 @@ public class PatientController {
         txtName.setText(patient.getFirstName() + " " + patient.getLastName());
         txtEmail.setText(patient.getEmail());
         txtPhoneNumber.setText(patient.getPhoneNumber());
-        txtUsername.setText(patient.getUserName());
         txtPassword.setText(patient.getPassword());
         refreshList();
         txtPassword.setVisible(false);

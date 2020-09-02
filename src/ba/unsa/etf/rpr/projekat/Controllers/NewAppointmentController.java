@@ -199,7 +199,6 @@ public class NewAppointmentController {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
-
             connection.setRequestProperty("Content-Length",
                     Integer.toString(urlParameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");

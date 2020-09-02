@@ -44,7 +44,7 @@
                   <Image url="@../images/group+people+team+users+icon-1320196240876938595.png" />
                </image>
             </ImageView>
-            <TextField fx:id="fldUsername" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Korisnicko ime">
+            <TextField fx:id="fldEmail" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="Korisnicko ime">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

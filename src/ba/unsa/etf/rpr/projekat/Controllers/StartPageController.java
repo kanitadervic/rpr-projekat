@@ -26,7 +26,7 @@ import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
 public class StartPageController {
     public Button btnLogIn;
-    public TextField fldUsername;
+    public TextField fldEmail;
     public TextField fldPassword;
     public ImageView userImage;
     public static Stage registrationStage;
@@ -55,10 +55,10 @@ public class StartPageController {
         User user = new User();
         ObservableList<User> users = userDAO.getUsers();
         for (User u : users) {
-            if (u.getUserName().equals(fldUsername.getText()) && u.getPassword().equals(fldPassword.getText())) {
+            if (u.getEmail().equals(fldEmail.getText()) && u.getPassword().equals(fldPassword.getText())) {
                 doctor = userDAO.checkIfDoctor(u);
                 found = true;
-                user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
+                user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getPassword(), u.getGender(), u.getDateOfBirth());
                 user.setId(u.getId());
                 break;
             }

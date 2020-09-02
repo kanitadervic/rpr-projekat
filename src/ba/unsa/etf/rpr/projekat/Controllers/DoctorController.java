@@ -44,7 +44,7 @@ public class DoctorController {
     MenuItem btnAbout = new Menu("_About");
 
     public DoctorController(User u, UserDAO userDAO) {
-        doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getUserName(), u.getPassword(), u.getGender(), u.getDateOfBirth());
+        doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getPassword(), u.getGender(), u.getDateOfBirth());
         doctor.setId(u.getId());
         this.userDAO = userDAO;
     }
