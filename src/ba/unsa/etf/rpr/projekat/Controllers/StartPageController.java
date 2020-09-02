@@ -1,8 +1,5 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
-import ba.unsa.etf.rpr.projekat.Main;
-import ba.unsa.etf.rpr.projekat.Models.Doctor;
-import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,14 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
-import javax.print.Doc;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
+import static ba.unsa.etf.rpr.projekat.Controllers.DoctorController.doctorStage;
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class StartPageController {
@@ -75,6 +67,7 @@ public class StartPageController {
             stage = new Stage();
             stage.setTitle("Doktor");
             stage.setScene(new Scene(root2));
+            doctorStage = stage;
             stage.show();
         } else if (found) {
             Node n = (Node) actionEvent.getSource();

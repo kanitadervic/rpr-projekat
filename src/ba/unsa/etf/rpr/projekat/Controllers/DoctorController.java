@@ -9,7 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -17,9 +20,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
@@ -42,6 +47,7 @@ public class DoctorController {
     MenuItem btnExit = new MenuItem("_Exit");
     MenuItem btnSave = new MenuItem("_Save");
     MenuItem btnAbout = new Menu("_About");
+    public static Stage doctorStage;
 
     public DoctorController(User u, UserDAO userDAO) {
         doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getPassword(), u.getGender(), u.getDateOfBirth());
@@ -53,10 +59,10 @@ public class DoctorController {
         tableViewPatients.setItems(appointments);
         Comparator<DateClass> columnComparator =
                 (DateClass o1, DateClass o2) -> {
-            LocalDate l1 = LocalDate.of(Integer.parseInt(o1.getYear()), Integer.parseInt(o1.getMonth()), Integer.parseInt(o1.getDay()));
-            LocalDate l2 = LocalDate.of(Integer.parseInt(o2.getYear()), Integer.parseInt(o2.getMonth()), Integer.parseInt(o2.getDay()));
-            return l1.compareTo(l2);
-        };
+                    LocalDate l1 = LocalDate.of(Integer.parseInt(o1.getYear()), Integer.parseInt(o1.getMonth()), Integer.parseInt(o1.getDay()));
+                    LocalDate l2 = LocalDate.of(Integer.parseInt(o2.getYear()), Integer.parseInt(o2.getMonth()), Integer.parseInt(o2.getDay()));
+                    return l1.compareTo(l2);
+                };
         columnDate.setComparator(columnComparator);
         columnDate.setSortType(TableColumn.SortType.ASCENDING);
         tableViewPatients.getSortOrder().add(columnDate);
@@ -67,11 +73,12 @@ public class DoctorController {
     public void initialize() {
         if (resourceBundle.getLocale().toString().equals("en")) {
             txtWelcome.setText("Welcome, " + doctor.getFirstName());
-        } else if (doctor.getGender().equals("M")) {
-            txtWelcome.setText("Dobrodošao, " + doctor.getFirstName());
-        }
-        else {
-            txtWelcome.setText("Dobrodošla, " + doctor.getFirstName());
+        } else {
+            if (doctor.getGender().equals("M")) {
+                txtWelcome.setText("Dobrodošao, " + doctor.getFirstName());
+            } else {
+                txtWelcome.setText("Dobrodošla, " + doctor.getFirstName());
+            }
         }
         appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
         columnName.setCellValueFactory(new PropertyValueFactory<>("patientFirstName"));
@@ -100,13 +107,13 @@ public class DoctorController {
         User patient = appointment.getPatient();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(resourceBundle.getString("patient.info"));
-        String gender = patient.getGender().equals("F")? resourceBundle.getString("genderf") : resourceBundle.getString("genderm");
+        String gender = patient.getGender().equals("F") ? resourceBundle.getString("genderf") : resourceBundle.getString("genderm");
         alert.setContentText(resourceBundle.getString("name") + patient.getFirstName() + "\n" +
-                resourceBundle.getString("last.name")  + patient.getLastName() + "\n" +
-                resourceBundle.getString("email")  + patient.getEmail() + "\n" +
-                resourceBundle.getString("phone")  + patient.getPhoneNumber() + "\n" +
+                resourceBundle.getString("last.name") + patient.getLastName() + "\n" +
+                resourceBundle.getString("email") + patient.getEmail() + "\n" +
+                resourceBundle.getString("phone") + patient.getPhoneNumber() + "\n" +
                 resourceBundle.getString("gender") + gender + "\n" +
-                resourceBundle.getString("disease")  + appointment.getDisease());
+                resourceBundle.getString("disease") + appointment.getDisease());
         alert.showAndWait();
 
     }
@@ -118,7 +125,8 @@ public class DoctorController {
             alert.setContentText(resourceBundle.getString("appointment.error"));
             alert.showAndWait();
             return;
-        };
+        }
+        ;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(resourceBundle.getString("appointment.delete"));
         alert.setContentText(resourceBundle.getString("appointment.confirm"));
@@ -131,19 +139,41 @@ public class DoctorController {
         }
     }
 
-    public void saveAppointmentsAction(ActionEvent actionEvent){
+    public void saveAppointmentsAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             appointmentDAO.writeFileForDoctor(selectedFile, doctor.getId());
-        } else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Invalid file");
             alert.showAndWait();
         }
     }
 
-    public void exitAction(ActionEvent actionEvent){
+    public void bosnianAction(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("bs", "BA"));
+        resourceBundle = ResourceBundle.getBundle("Translation", new Locale("bs", "BA"));
+        setLanguage(new Locale("bs", "BA"));
+    }
+
+    public void englishAction(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("en", "EN"));
+        resourceBundle = ResourceBundle.getBundle("Translation", new Locale("en", "EN"));
+        setLanguage(new Locale("en", "EN"));
+    }
+
+    private void setLanguage(Locale locale) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor.fxml"), resourceBundle);
+        loader.setController(this);
+        try {
+            doctorStage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exitAction(ActionEvent actionEvent) {
         System.exit(0);
     }
 }

@@ -68,8 +68,8 @@
               <MenuItem mnemonicParsing="false" text="%print" />
                   <Menu mnemonicParsing="false" text="%language">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="%bosnian" />
-                        <MenuItem mnemonicParsing="false" text="%english" />
+                      <MenuItem onAction="#bosnianAction" mnemonicParsing="false" text="%bosnian" />
+                        <MenuItem onAction="#englishAction" mnemonicParsing="false" text="%english" />
                     </items>
                   </Menu>
                   <MenuItem fx:id="btnExit" mnemonicParsing="false" onAction="#exitAction" text="%close" />
