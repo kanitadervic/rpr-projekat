@@ -32,9 +32,9 @@ public class AppointmentModificationController {
 
     @FXML
     public void initialize() {
-        LocalDate localDate = LocalDate.of(valueOf(appointmentModification.getAppointmentDate().getYear()), valueOf(appointmentModification.getAppointmentDate().getMonth()), valueOf(appointmentModification.getAppointmentDate().getDay()));
+        LocalDate localDate = LocalDate.of(Integer.parseInt(appointmentModification.getAppointmentDate().getYear()), Integer.parseInt(appointmentModification.getAppointmentDate().getMonth()), Integer.parseInt(appointmentModification.getAppointmentDate().getDay()));
         newAppointmentDate.setValue(localDate);
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
         doctorChoice.setItems(doctors);
 
         doctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -61,8 +61,9 @@ public class AppointmentModificationController {
     private boolean checkAppointmentDate(LocalDate value) {
         LocalDate localDate = LocalDate.now();
         boolean takenDate = false;
-        User doctor = (User) doctorChoice.getSelectionModel().getSelectedItem();
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        Doctor doctor = (Doctor) doctorChoice.getSelectionModel().getSelectedItem();
+        if(doctor == null) return false;
+        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
         DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
         for(User u: doctors){
             if(u.equals(doctor)){

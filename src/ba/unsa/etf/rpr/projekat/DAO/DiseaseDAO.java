@@ -1,8 +1,7 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
-import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Disease;
-import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +10,7 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static ba.unsa.etf.rpr.projekat.Main.diseaseDAO;
-import static ba.unsa.etf.rpr.projekat.Main.userDAO;
+import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class DiseaseDAO {
     private Connection connection;
@@ -21,7 +19,9 @@ public class DiseaseDAO {
     private int currentId = 1;
 
     public DiseaseDAO() {
-        createBase();
+//        File dbFile = new File("users.db");
+//        if (!dbFile.exists())
+            createBase();
     }
 
     private void createBase() {
@@ -69,9 +69,9 @@ public class DiseaseDAO {
     }
 
     public void importData() {
-        File dbFile = new File("users.db");
-        if (!dbFile.exists()) createBase();
-        else {
+//        File dbFile = new File("users.db");
+//        if (!dbFile.exists()) createBase();
+//        else {
             try {
                 connection = DriverManager.getConnection("jdbc:sqlite:users.db");
                 preparedStatement = connection.prepareStatement("SELECT max(disease_id) FROM disease");
@@ -83,22 +83,19 @@ public class DiseaseDAO {
                 e.printStackTrace();
             }
 
-        }
+//        }
         diseases = FXCollections.observableArrayList(getAllDiseases());
     }
 
     private ArrayList<Disease> getAllDiseases() {
         ArrayList<Disease> list = new ArrayList<>();
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select * from disease");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int diseaseId = rs.getInt(1);
-//                int patientId = rs.getInt(2);
                 String diseaseName = rs.getString(3);
-//                Patient patient = userDAO.findPatientById(patientId);
                 Disease disease = new Disease(diseaseName);
                 disease.setId(diseaseId);
                 list.add(disease);
@@ -167,6 +164,27 @@ public class DiseaseDAO {
             throwables.printStackTrace();
         }
         diseases.add(disease);
+    }
+
+    public ArrayList<Disease> getDiseasesForPatient(int id) {
+        ArrayList<Disease> diseases = new ArrayList<>();
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT disease_id, disease_name FROM disease WHERE patient_id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int dId = rs.getInt(1);
+                String name = rs.getString(2);
+                Disease disease = new Disease(name);
+                disease.setId(dId);
+                diseases.add(disease);
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return diseases;
     }
 
 }

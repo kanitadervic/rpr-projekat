@@ -63,7 +63,7 @@ public class NewAppointmentController {
     @FXML
     public void initialize() {
         appointmentDate.setValue(LocalDate.now());
-        ObservableList<User> doctors = userDAO.getDoctorUsers();
+        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
         cbDoctorChoice.setItems(doctors);
 
         cbDoctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -108,9 +108,9 @@ public class NewAppointmentController {
         if (cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return true;
         else {
             User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
-            ObservableList<User> doctors = userDAO.getDoctorUsers();
+            ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
             DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
-            for (User u : doctors) {
+            for (Doctor u : doctors) {
                 if (u.equals(doctor)) {
                     doctor.setId(doctor.getId());
                     break;
@@ -135,8 +135,10 @@ public class NewAppointmentController {
             LocalDate localDate = appointmentDate.getValue();
             DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             Disease disease = new Disease(listViewDiseases.getSelectionModel().getSelectedItem().toString());
-            if (diseaseDAO.getIdByName(disease.getName()) == 0) diseaseDAO.addDisease(disease, this.patient.getId());
-            else disease.setId(diseaseDAO.getIdByName(disease.getName()));
+            if (diseaseDAO.getIdByName(disease.getName()) == 0)
+                diseaseDAO.addDisease(disease, this.patient.getId());
+            else
+                disease.setId(diseaseDAO.getIdByName(disease.getName()));
             Appointment toAdd = new Appointment(doctor, this.patient, date, disease);
             this.patient.addDisease(disease);
             appointmentDAO.addAppointment(toAdd);

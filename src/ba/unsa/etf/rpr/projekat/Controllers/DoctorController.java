@@ -132,7 +132,6 @@ public class DoctorController {
             alert.showAndWait();
             return;
         }
-        ;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(resourceBundle.getString("appointment.delete"));
         alert.setContentText(resourceBundle.getString("appointment.confirm"));

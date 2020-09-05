@@ -114,7 +114,7 @@ public class Appointment implements Comparable{
 
     @Override
     public String toString() {
-        return (getAppointmentDateString() + " // " + getDisease());
+        return (getAppointmentDateString());
     }
 
 

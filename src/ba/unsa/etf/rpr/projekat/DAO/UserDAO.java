@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,8 +20,7 @@ public class UserDAO {
     AppointmentDAO appDAO;
 
     public UserDAO() {
-        File dbFile = new File("users.db");
-        if (!dbFile.exists()) createBase();
+        createBase();
     }
 
     private void createBase() {
@@ -58,20 +58,20 @@ public class UserDAO {
     }
 
     public void importData() {
-        File dbFile = new File("users.db");
-        if (!dbFile.exists()) createBase();
-        else {
-            try {
-                connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-                preparedStatement = connection.prepareStatement("SELECT max(id) FROM user");
-                ResultSet rs = preparedStatement.executeQuery();
-                rs.next();
-                currentId = rs.getInt(1) + 1;
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//        File dbFile = new File("users.db");
+//        if (!dbFile.exists()) createBase();
+//        else {
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT max(id) FROM user");
+            ResultSet rs = preparedStatement.executeQuery();
+            rs.next();
+            currentId = rs.getInt(1) + 1;
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+//        }
         users = FXCollections.observableArrayList(getAllUsers());
         currentUser.set(null);
     }
@@ -125,8 +125,8 @@ public class UserDAO {
         return users;
     }
 
-    public ObservableList<User> getDoctorUsers() {
-        ObservableList<User> doctors = FXCollections.observableArrayList();
+    public ObservableList<Doctor> getDoctorUsers() {
+        ObservableList<Doctor> doctors = FXCollections.observableArrayList();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user WHERE admin= ?");
@@ -197,30 +197,11 @@ public class UserDAO {
             }
             connection.close();
         } catch (SQLException throwables) {
-            System.out.println("No user was found");
-        }
-        return u;
-    }
-
-    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
-        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
-            preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE doctor_id = ?");
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int aId = rs.getInt(1);
-                Appointment a = appointmentDAO.getAppointment(aId);
-                appointmentsForDoctor.add(a);
-            }
-            connection.close();
-        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return appointmentsForDoctor;
-    }
 
+        return u;
+    }
     public void removeUser(int id) {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
@@ -250,10 +231,29 @@ public class UserDAO {
         }
         return userDAO;
     }
+    public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
+        ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE doctor_id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int aId = rs.getInt(1);
+                Appointment a = appointmentDAO.getAppointment(aId);
+                appointmentsForDoctor.add(a);
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return appointmentsForDoctor;
+    }
+
+
 
     public ObservableList<Appointment> getAppointmentsForPatient(int id) {
         ObservableList<Appointment> appointmentsForPatient = FXCollections.observableArrayList();
-        ArrayList<Disease> diseases = new ArrayList<>();
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE patient_id = ?");
@@ -263,14 +263,11 @@ public class UserDAO {
                 int aId = rs.getInt(1);
                 Appointment appointment = appointmentDAO.getAppointment(aId);
                 appointmentsForPatient.add(appointment);
-                diseases.add(appointment.getDisease());
             }
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Patient p = userDAO.findPatientById(id);
-        p.setDiseases(diseases);
         return appointmentsForPatient;
     }
 

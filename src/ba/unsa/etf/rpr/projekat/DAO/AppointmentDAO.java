@@ -71,9 +71,9 @@ public class AppointmentDAO {
     }
 
     public void importData() {
-        File dbFile = new File("users.db");
-        if (!dbFile.exists()) createBase();
-        else {
+//        File dbFile = new File("users.db");
+//        if (!dbFile.exists()) createBase();
+//        else {
             try {
                 connection = DriverManager.getConnection("jdbc:sqlite:users.db");
                 preparedStatement = connection.prepareStatement("SELECT max(appointment_id) FROM appointment");
@@ -85,7 +85,7 @@ public class AppointmentDAO {
                 e.printStackTrace();
             }
 
-        }
+//        }
         appointments = FXCollections.observableArrayList(getAllAppointments());
     }
 
@@ -139,10 +139,11 @@ public class AppointmentDAO {
 
     public void removeAppointment(int id) {
         try {
+            System.out.println(id + "!");
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointment_id = ?;");
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            preparedStatement.execute();
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
