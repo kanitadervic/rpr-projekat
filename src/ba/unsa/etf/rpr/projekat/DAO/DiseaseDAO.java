@@ -165,7 +165,7 @@ public class DiseaseDAO {
         }
         diseases.add(disease);
     }
-
+    //TODO
     public ArrayList<Disease> getDiseasesForPatient(int id) {
         ArrayList<Disease> diseases = new ArrayList<>();
         try {

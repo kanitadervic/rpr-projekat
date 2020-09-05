@@ -3,26 +3,72 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static ba.unsa.etf.rpr.projekat.Controllers.DoctorController.doctorStage;
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class StartPageController {
+    public RadioButton rbBosnian;
+    public RadioButton rbEnglish;
     public Button btnLogIn;
     public TextField fldEmail;
     public TextField fldPassword;
     public ImageView userImage;
     public static Stage registrationStage;
+
+    @FXML
+    public void initialize() {
+        if(resourceBundle.getLocale().toString().equals("en")) {
+            rbEnglish.setSelected(true);
+        }
+        else rbBosnian.setSelected(true);
+
+        System.out.println(resourceBundle.getLocale());
+        rbBosnian.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(rbBosnian.isSelected()){
+                    Locale.setDefault(new Locale("bs", "BA"));
+                    resourceBundle = ResourceBundle.getBundle("Translation", new Locale("bs", "BA"));
+                    setLanguage(new Locale("bs", "BA"));
+                }
+            }
+        });
+        rbEnglish.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(rbEnglish.isSelected()){
+                    Locale.setDefault(new Locale("en", "EN"));
+                    resourceBundle = ResourceBundle.getBundle("Translation", new Locale("en", "EN"));
+                    setLanguage(new Locale("en", "EN"));
+                }
+            }
+        });
+    }
+
+    private void setLanguage(Locale locale) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
+//        loader.setController(this);
+        try {
+            Scene scene = new Scene(loader.load());
+            mainLogicStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void registerAction(ActionEvent actionEvent) {
         Node n = (Node) actionEvent.getSource();

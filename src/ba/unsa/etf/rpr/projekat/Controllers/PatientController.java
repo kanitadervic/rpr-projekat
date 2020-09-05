@@ -71,8 +71,6 @@ public class PatientController {
     }
 
     private void refreshList() {
-        ArrayList<Disease> diseases = diseaseDAO.getDiseasesForPatient(patient.getId());
-        patient.setDiseases(diseases);
         appointmentsForPatient = userDAO.getAppointmentsForPatient(patient.getId());
         tableViewAppointment.setItems(appointmentsForPatient);
         Comparator<DateClass> columnComparator =
@@ -105,7 +103,6 @@ public class PatientController {
             }
         }
         if (forModification.getId() == 0) return;
-        System.out.println("ovdje");
         AppointmentModificationController ctrl = new AppointmentModificationController(forModification);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/appointmentmodification.fxml"), resourceBundle);
         loader.setController(ctrl);
@@ -131,7 +128,6 @@ public class PatientController {
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
             Appointment removeDate = (Appointment) tableViewAppointment.getSelectionModel().getSelectedItem();
-            System.out.println(removeDate.getId());
             appointmentDAO.removeAppointment(removeDate.getId());
             tableViewAppointment.getItems().remove(removeDate);
         }

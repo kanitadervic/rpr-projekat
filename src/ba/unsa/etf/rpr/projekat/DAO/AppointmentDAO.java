@@ -139,7 +139,6 @@ public class AppointmentDAO {
 
     public void removeAppointment(int id) {
         try {
-            System.out.println(id + "!");
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");
             preparedStatement = connection.prepareStatement("DELETE FROM appointment WHERE appointment_id = ?;");
             preparedStatement.setInt(1, id);

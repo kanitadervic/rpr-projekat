@@ -45,6 +45,7 @@ public class RegistrationController {
         ToggleGroup group = new ToggleGroup();
         rbMale.setToggleGroup(group);
         rbFemale.setToggleGroup(group);
+        rbMale.setSelected(true);
         fldClinicPassword.setDisable(true);
 
 
