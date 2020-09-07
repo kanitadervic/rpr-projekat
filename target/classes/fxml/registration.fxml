@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane prefHeight="474.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <stylesheets>
+      <URL value="@/css/registration.css" />
+  </stylesheets>
+
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="0.0" prefWidth="32.0" />
+    <ColumnConstraints maxWidth="375.0" minWidth="10.0" prefWidth="320.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="32.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="320.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="32.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="171.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="102.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TextField fx:id="fldName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="fldLastName" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <RadioButton fx:id="rbMale" mnemonicParsing="false" text="%genderm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <RadioButton fx:id="rbFemale" mnemonicParsing="false" text="%genderf" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <DatePicker fx:id="birthdayPicker" promptText="MM/DD/YYYY" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+      <TextField fx:id="fldPhoneNumber" promptText="%phone.default" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <TextField fx:id="fldEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="fldEmailRepeat" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <PasswordField fx:id="fldPassword" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <PasswordField fx:id="fldPasswordRepeat" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <CheckBox fx:id="isDoctor" mnemonicParsing="false" onAction="#doctorCheck" text="%doctor" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <PasswordField fx:id="fldClinicPassword" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+      <Button fx:id="btnConfirmRegistration" mnemonicParsing="false" onAction="#registrationAction" prefWidth="121.0" text="%submit" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+      <Button fx:id="btnGoBack" mnemonicParsing="false" onAction="#goBackAction" prefWidth="121.0" text="%back.button" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%name" wrappingWidth="83.7294921875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%last.name" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%doctor.check" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%clinic.password" GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%password" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%birthdate" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%gender" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%password.repeat" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%email.repeat" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%phone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </children>
+</GridPane>

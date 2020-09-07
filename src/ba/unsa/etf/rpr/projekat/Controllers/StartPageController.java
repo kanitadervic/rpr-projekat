@@ -35,8 +35,6 @@ public class StartPageController {
             rbEnglish.setSelected(true);
         }
         else rbBosnian.setSelected(true);
-
-        System.out.println(resourceBundle.getLocale());
         rbBosnian.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -80,7 +78,7 @@ public class StartPageController {
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
-            stage.setTitle("Registracija");
+            stage.setTitle(resourceBundle.getString("register"));
             stage.setScene(new Scene(root2));
             stage.show();
         } catch (IOException e) {
@@ -111,7 +109,7 @@ public class StartPageController {
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
-            stage.setTitle("Doktor");
+            stage.setTitle(resourceBundle.getString("doctor"));
             stage.setScene(new Scene(root2));
             doctorStage = stage;
             stage.show();
@@ -124,7 +122,7 @@ public class StartPageController {
             loader.setController(ctrl);
             Parent root2 = loader.load();
             stage = new Stage();
-            stage.setTitle("Pacijent");
+            stage.setTitle(resourceBundle.getString("patient"));
             stage.setScene(new Scene(root2));
             stage.show();
         } else {

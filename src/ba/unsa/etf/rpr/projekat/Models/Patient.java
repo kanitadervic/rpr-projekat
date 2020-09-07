@@ -2,7 +2,7 @@ package ba.unsa.etf.rpr.projekat.Models;
 
 import java.util.ArrayList;
 
-public class Patient extends User{
+public class Patient extends User {
     private ArrayList<Disease> diseases;
 
     public Patient(String firstName, String lastName, String email, String phoneNumber, String password, String gender, DateClass dateOfBirth) {
@@ -16,20 +16,17 @@ public class Patient extends User{
     }
 
     public Patient() {
-
     }
 
-    @Override
     public ArrayList<Disease> getDiseases() {
         return diseases;
     }
 
-    @Override
     public void setDiseases(ArrayList<Disease> diseases) {
         this.diseases = diseases;
     }
 
-    public void addDisease(Disease d){
+    public void addDisease(Disease d) {
         this.diseases.add(d);
     }
 }

@@ -60,7 +60,7 @@ public class AppointmentModificationController {
 
     private boolean checkAppointmentDate(LocalDate value) {
         LocalDate localDate = LocalDate.now();
-        boolean takenDate = false;
+        final boolean[] takenDate = {false};
         Doctor doctor = (Doctor) doctorChoice.getSelectionModel().getSelectedItem();
         if(doctor == null) return false;
         ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
@@ -72,13 +72,10 @@ public class AppointmentModificationController {
             }
         }
         ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-        for(Appointment a: appointments){
-            if(a.getAppointmentDate().equals(date)){
-                takenDate = true;
-                break;
-            }
-        }
-        return (!value.isBefore(localDate));
+        appointments.forEach(appointment -> {
+            if(appointment.getAppointmentDate().equals(date)) takenDate[0] = true;
+        });
+        return (!value.isBefore(localDate) && !takenDate[0]);
     }
 
     public void okClickedAction(ActionEvent actionEvent) {
@@ -87,7 +84,6 @@ public class AppointmentModificationController {
             LocalDate localDate = newAppointmentDate.getValue();
             DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             appointmentModification.setAppointmentDate(date);
-            System.out.println(appointmentModification.getId());
             appointmentDAO.updateAppointmentDate(appointmentModification.getId(), date.toString(), appointmentModification.getDoctor().getId());
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();

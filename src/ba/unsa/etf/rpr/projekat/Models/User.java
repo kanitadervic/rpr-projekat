@@ -9,7 +9,6 @@ import java.util.Objects;
 public class User {
     private SimpleStringProperty firstName, lastName, email, phoneNumber, password, gender;
     private DateClass dateOfBirth;
-    private ArrayList<Disease> diseases = new ArrayList<>();
     private int id;
 
     public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, DateClass dateOfBirth) {
@@ -157,13 +156,6 @@ public class User {
                 Objects.equals(dateOfBirth, user.dateOfBirth);
     }
 
-    public ArrayList<Disease> getDiseases() {
-        return diseases;
-    }
-
-    public void setDiseases(ArrayList<Disease> diseases) {
-        this.diseases = diseases;
-    }
 
     @Override
     public int hashCode() {

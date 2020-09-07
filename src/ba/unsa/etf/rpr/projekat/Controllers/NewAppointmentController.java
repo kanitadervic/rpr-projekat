@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -104,27 +105,21 @@ public class NewAppointmentController {
     private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
         if (value == null || value.isBefore(localDate)) return false;
-        boolean takenDate = false;
+        final boolean[] takenDate = {false};
         if (cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return true;
         else {
-            User doctor = (User) cbDoctorChoice.getSelectionModel().getSelectedItem();
+            Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
             ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
             DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
-            for (Doctor u : doctors) {
-                if (u.equals(doctor)) {
-                    doctor.setId(doctor.getId());
-                    break;
-                }
-            }
+            doctors.forEach(d -> {
+                if(d.equals(doctor)) doctor.setId(d.getId());
+            });
             ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-            for (Appointment a : appointments) {
-                if (a.getAppointmentDate().equals(date)) {
-                    takenDate = true;
-                    break;
-                }
-            }
+            appointments.forEach(appointment -> {
+                if(appointment.getAppointmentDate().equals(date)) takenDate[0] = true;
+            });
         }
-        return (!takenDate);
+        return (!takenDate[0]);
     }
 
     public void addAction(ActionEvent actionEvent) {
@@ -164,8 +159,8 @@ public class NewAppointmentController {
         String parameter = "terms=" + fldSearch.getText();
         String result = executeGetMethod(url, parameter);
         int r = result.indexOf("[[") + 1;
-        Image slika = new Image("images/loading.gif");
-        ImageView loading = new ImageView(slika);
+        Image loadingImage = new Image("images/loading.gif");
+        ImageView loading = new ImageView(loadingImage);
         loading.setFitWidth(15);
         loading.setFitHeight(15);
         ArrayList<String> rez = getResults(r, result);
@@ -176,8 +171,8 @@ public class NewAppointmentController {
                         btnSearch.setGraphic(loading);
                     });
                 });
-                Image image = new Image("images/check.png");
-                ImageView check = new ImageView(image);
+                Image checkImage = new Image("images/check.png");
+                ImageView check = new ImageView(checkImage);
                 check.setFitHeight(15);
                 check.setFitWidth(15);
 
