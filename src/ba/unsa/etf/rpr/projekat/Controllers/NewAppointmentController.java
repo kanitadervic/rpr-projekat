@@ -1,6 +1,9 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
-import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -104,13 +106,13 @@ public class NewAppointmentController {
 
     private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
-        if (value == null || value.isBefore(localDate)) return false;
+        if (value == null || value.isBefore(localDate) || cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return false;
         final boolean[] takenDate = {false};
         if (cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return true;
         else {
             Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
             ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
-            DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
+            LocalDate date = LocalDate.of(value.getYear(), value.getMonthValue(), value.getDayOfMonth());
             doctors.forEach(d -> {
                 if(d.equals(doctor)) doctor.setId(d.getId());
             });
@@ -128,13 +130,13 @@ public class NewAppointmentController {
                 listViewDiseases.getSelectionModel().getSelectedItem() != null) {
             Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
             LocalDate localDate = appointmentDate.getValue();
-            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+//            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             Disease disease = new Disease(listViewDiseases.getSelectionModel().getSelectedItem().toString());
             if (diseaseDAO.getIdByName(disease.getName()) == 0)
                 diseaseDAO.addDisease(disease, this.patient.getId());
             else
                 disease.setId(diseaseDAO.getIdByName(disease.getName()));
-            Appointment toAdd = new Appointment(doctor, this.patient, date, disease);
+            Appointment toAdd = new Appointment(doctor, this.patient, localDate, disease);
             this.patient.addDisease(disease);
             appointmentDAO.addAppointment(toAdd);
             Node n = (Node) actionEvent.getSource();

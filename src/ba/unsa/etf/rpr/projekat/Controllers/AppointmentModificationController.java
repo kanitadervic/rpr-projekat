@@ -32,7 +32,7 @@ public class AppointmentModificationController {
 
     @FXML
     public void initialize() {
-        LocalDate localDate = LocalDate.of(Integer.parseInt(appointmentModification.getAppointmentDate().getYear()), Integer.parseInt(appointmentModification.getAppointmentDate().getMonth()), Integer.parseInt(appointmentModification.getAppointmentDate().getDay()));
+        LocalDate localDate = LocalDate.of((appointmentModification.getAppointmentDate().getYear()), (appointmentModification.getAppointmentDate().getMonth()), (appointmentModification.getAppointmentDate().getDayOfMonth()));
         newAppointmentDate.setValue(localDate);
         ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
         doctorChoice.setItems(doctors);
@@ -64,7 +64,7 @@ public class AppointmentModificationController {
         Doctor doctor = (Doctor) doctorChoice.getSelectionModel().getSelectedItem();
         if(doctor == null) return false;
         ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
-        DateClass date = new DateClass(value.getDayOfMonth(), value.getMonthValue(), value.getYear());
+        LocalDate date = LocalDate.of(value.getYear(),value.getMonthValue(), value.getDayOfMonth());
         for(User u: doctors){
             if(u.equals(doctor)){
                 doctor.setId(doctor.getId());
@@ -82,9 +82,9 @@ public class AppointmentModificationController {
         if (!newAppointmentDate.getStyleClass().contains("incorrectField") && !doctorChoice.getStyleClass().contains("incorrectField") && doctorChoice.getSelectionModel().getSelectedItem() != null) {
             appointmentModification.setDoctor((Doctor) doctorChoice.getSelectionModel().getSelectedItem());
             LocalDate localDate = newAppointmentDate.getValue();
-            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+            String date = localDate.getDayOfMonth() + "-" + localDate.getMonthValue() + "-" + localDate.getYear();
             appointmentModification.setAppointmentDate(date);
-            appointmentDAO.updateAppointmentDate(appointmentModification.getId(), date.toString(), appointmentModification.getDoctor().getId());
+            appointmentDAO.updateAppointmentDate(appointmentModification.getId(), date, appointmentModification.getDoctor().getId());
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();

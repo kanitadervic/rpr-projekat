@@ -4,17 +4,17 @@ import java.time.LocalDate;
 
 import static java.lang.Integer.valueOf;
 
-public class Appointment implements Comparable{
+public class Appointment implements Comparable {
     private Doctor doctor;
     private Patient patient;
-    private DateClass appointmentDate;
+    private LocalDate appointmentDate;
     private int id;
     public String patientFirstName;
     public String patientLastName;
     private Disease disease;
     public String diseaseName;
 
-    public Appointment(Doctor doctor, Patient patient, DateClass appointmentDate, Disease disease) {
+    public Appointment(Doctor doctor, Patient patient, LocalDate appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
@@ -32,7 +32,7 @@ public class Appointment implements Comparable{
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
-        this.appointmentDate = new DateClass(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year));
+        this.appointmentDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
         this.patientFirstName = patient.getFirstName();
         this.patientLastName = patient.getLastName();
         this.disease = disease;
@@ -59,14 +59,6 @@ public class Appointment implements Comparable{
         this.patient = patient;
     }
 
-    public DateClass getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    public void setAppointmentDate(DateClass appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
     public void setId(int currentId) {
         this.id = currentId;
     }
@@ -76,7 +68,7 @@ public class Appointment implements Comparable{
     }
 
     public String getAppointmentDateString() {
-        return appointmentDate.getDay() + "-" + appointmentDate.getMonth() + "-" + appointmentDate.getYear();
+        return appointmentDate.getDayOfMonth() + "-" + appointmentDate.getMonthValue() + "-" + appointmentDate.getYear();
     }
 
     public String getPatientFirstName() {
@@ -112,6 +104,24 @@ public class Appointment implements Comparable{
         this.diseaseName = diseaseName;
     }
 
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public void setAppointmentDate(String appointmentDate) {
+        String[] parts = appointmentDate.split("\\-");
+        String day = parts[0];
+        String month = parts[1];
+        String year = parts[2];
+        this.appointmentDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    }
+
+
     @Override
     public String toString() {
         return (getAppointmentDateString());
@@ -121,8 +131,7 @@ public class Appointment implements Comparable{
     @Override
     public int compareTo(Object o) {
         Appointment appointment = (Appointment) o;
-        LocalDate l1 = LocalDate.of(Integer.parseInt(this.getAppointmentDate().getYear()), Integer.parseInt(this.getAppointmentDate().getMonth()), Integer.parseInt(this.getAppointmentDate().getDay()));
-        LocalDate l2 = LocalDate.of(Integer.parseInt(appointment.getAppointmentDate().getYear()), Integer.parseInt(appointment.getAppointmentDate().getMonth()), Integer.parseInt(appointment.getAppointmentDate().getDay()));
-        return l1.compareTo(l2);
+        LocalDate l2 = LocalDate.of((appointment.getAppointmentDate().getYear()), (appointment.getAppointmentDate().getMonth()), (appointment.getAppointmentDate().getDayOfMonth()));
+        return this.compareTo(l2);
     }
 }

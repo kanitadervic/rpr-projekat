@@ -194,11 +194,12 @@ public class AppointmentDAO {
             Patient patient = userDAO.findPatientById(rs.getInt(3));
             String dateString = rs.getString(4);
             int diseaseId = rs.getInt(5);
-            DateClass date = new DateClass(dateString);
+            appointment.setAppointmentDate(dateString);
+//            DateClass date = new DateClass(dateString);
             Disease disease = diseaseDAO.findDiseaseById(diseaseId);
             appointment.setDoctor(doctor);
             appointment.setPatient(patient);
-            appointment.setAppointmentDate(date);
+//            appointment.setAppointmentDate(date);
             appointment = new Appointment(doctor, patient, dateString, disease);
             appointment.setId(rs.getInt(1));
             connection.close();

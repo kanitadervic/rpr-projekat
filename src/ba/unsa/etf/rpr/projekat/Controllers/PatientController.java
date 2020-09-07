@@ -73,12 +73,8 @@ public class PatientController {
     private void refreshList() {
         appointmentsForPatient = userDAO.getAppointmentsForPatient(patient.getId());
         tableViewAppointment.setItems(appointmentsForPatient);
-        Comparator<DateClass> columnComparator =
-                (DateClass o1, DateClass o2) -> {
-                    LocalDate l1 = LocalDate.of(Integer.parseInt(o1.getYear()), Integer.parseInt(o1.getMonth()), Integer.parseInt(o1.getDay()));
-                    LocalDate l2 = LocalDate.of(Integer.parseInt(o2.getYear()), Integer.parseInt(o2.getMonth()), Integer.parseInt(o2.getDay()));
-                    return l1.compareTo(l2);
-                };
+        Comparator<LocalDate> columnComparator =
+                Comparator.naturalOrder();
         columnDate.setComparator(columnComparator);
         columnDate.setSortType(TableColumn.SortType.ASCENDING);
         tableViewAppointment.getSortOrder().add(columnDate);
@@ -97,8 +93,9 @@ public class PatientController {
         Appointment forModification = new Appointment();
         ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
         for (Appointment a : appointments) {
-            if (selectedItem.toString().equals(a.getAppointmentDate().toString()) && this.patient.getId() == a.getPatient().getId()) {
+            if (selectedItem.toString().equals(a.getAppointmentDateString()) && this.patient.getId() == a.getPatient().getId()) {
                 forModification = a;
+                forModification.setAppointmentDate(a.getAppointmentDateString());
                 forModification.setId(a.getId());
                 break;
             }

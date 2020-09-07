@@ -3,15 +3,16 @@ package ba.unsa.etf.rpr.projekat.Models;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class User {
     private SimpleStringProperty firstName, lastName, email, phoneNumber, password, gender;
-    private DateClass dateOfBirth;
+    private LocalDate dateOfBirth;
     private int id;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, DateClass dateOfBirth) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, LocalDate dateOfBirth) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -32,22 +33,20 @@ public class User {
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
-        dateOfBirth = new DateClass(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        dateOfBirth = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
-    public User() {
+    public User() {}
 
-    }
-
-    public User(User copyUser) {
-        this.firstName = new SimpleStringProperty(copyUser.firstName.toString());
-        this.lastName = new SimpleStringProperty(copyUser.lastName.toString());
-        this.email = new SimpleStringProperty(copyUser.email.toString());
-        this.phoneNumber = new SimpleStringProperty(copyUser.phoneNumber.toString());
-        this.password = new SimpleStringProperty(copyUser.password.toString());
-        this.gender = new SimpleStringProperty(copyUser.gender.toString());
-        this.dateOfBirth = copyUser.getDateOfBirth();
-    }
+//    public User(User copyUser) {
+//        this.firstName = new SimpleStringProperty(copyUser.firstName.toString());
+//        this.lastName = new SimpleStringProperty(copyUser.lastName.toString());
+//        this.email = new SimpleStringProperty(copyUser.email.toString());
+//        this.phoneNumber = new SimpleStringProperty(copyUser.phoneNumber.toString());
+//        this.password = new SimpleStringProperty(copyUser.password.toString());
+//        this.gender = new SimpleStringProperty(copyUser.gender.toString());
+//        this.dateOfBirth = copyUser.getDateOfBirth();
+//    }
 
     public String getFirstName() {
         return firstName.get();
@@ -121,16 +120,17 @@ public class User {
         this.gender.set(gender);
     }
 
-    public DateClass getDateOfBirth() {
+
+    public String getDateOfBirthString() {
+        return dateOfBirth.getDayOfMonth() + "-" + dateOfBirth.getMonth() + "-" + dateOfBirth.getYear();
+    }
+
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(DateClass dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getDateOfBirthString() {
-        return dateOfBirth.getDay() + "-" + dateOfBirth.getMonth() + "-" + dateOfBirth.getYear();
     }
 
     public int getId() {

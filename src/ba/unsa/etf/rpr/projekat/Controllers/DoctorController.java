@@ -2,7 +2,6 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
-import ba.unsa.etf.rpr.projekat.Models.DateClass;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,12 +55,7 @@ public class DoctorController {
 
     private void refresh() {
         tableViewPatients.setItems(appointments);
-        Comparator<DateClass> columnComparator =
-                (DateClass o1, DateClass o2) -> {
-                    LocalDate l1 = LocalDate.of(Integer.parseInt(o1.getYear()), Integer.parseInt(o1.getMonth()), Integer.parseInt(o1.getDay()));
-                    LocalDate l2 = LocalDate.of(Integer.parseInt(o2.getYear()), Integer.parseInt(o2.getMonth()), Integer.parseInt(o2.getDay()));
-                    return l1.compareTo(l2);
-                };
+        Comparator<LocalDate> columnComparator = Comparator.naturalOrder();
         columnDate.setComparator(columnComparator);
         columnDate.setSortType(TableColumn.SortType.ASCENDING);
         tableViewPatients.getSortOrder().add(columnDate);

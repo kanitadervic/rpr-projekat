@@ -1,7 +1,8 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
-import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -145,7 +146,7 @@ public class RegistrationController {
     public void registrationAction(ActionEvent actionEvent) {
         if (checkData()) {
             LocalDate localDate = birthdayPicker.getValue();
-            DateClass dateOfBirth = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+            LocalDate dateOfBirth = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
             if (!isDoctor.isSelected()) {
                 Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
