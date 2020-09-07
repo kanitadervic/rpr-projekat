@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
@@ -156,7 +157,8 @@ public class AppointmentDAO {
             }
             FileWriter fileWriter = new FileWriter(selectedFile);
             String result = "";
-            for (Appointment appointment : userDAO.getAppointmentsForDoctor(doctorId)) {
+            ObservableList<Appointment> appointmentsForDoctor = userDAO.getAppointmentsForDoctor(doctorId);
+            for (Appointment appointment : appointmentsForDoctor) {
                 result += appointment.getPatientFirstName() + " " + appointment.getPatientLastName() + ", " + appointment.getAppointmentDateString() + "\n";
             }
             fileWriter.write(result);
