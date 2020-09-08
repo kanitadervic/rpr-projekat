@@ -88,7 +88,6 @@ public class DoctorController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
         try {
             mainLogicStage.setScene(new Scene(loader.load()));
-//            mainLogicStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

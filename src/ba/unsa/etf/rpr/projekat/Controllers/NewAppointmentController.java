@@ -1,9 +1,6 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
-import ba.unsa.etf.rpr.projekat.Models.Appointment;
-import ba.unsa.etf.rpr.projekat.Models.Disease;
-import ba.unsa.etf.rpr.projekat.Models.Doctor;
-import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Models.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,7 +67,7 @@ public class NewAppointmentController {
         cbDoctorChoice.setItems(doctors);
 
         cbDoctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (cbDoctorChoice.getSelectionModel().getSelectedItem() != null) {
+            if (isDoctorValid(newVal)) {
                 cbDoctorChoice.getStyleClass().removeAll("incorrectField");
                 cbDoctorChoice.getStyleClass().add("correctField");
             } else {
@@ -97,6 +94,7 @@ public class NewAppointmentController {
     }
 
     private boolean checkDoctorChoice() {
+        isDoctorValid(cbDoctorChoice.getSelectionModel().getSelectedItem());
         return cbDoctorChoice.getStyleClass().contains("correctField");
     }
 
@@ -104,24 +102,48 @@ public class NewAppointmentController {
         return (appointmentDate.getStyleClass().contains("correctField"));
     }
 
+
+    private boolean isDoctorValid(Object selectedDoctor) {
+        Doctor doctor = (Doctor) selectedDoctor;
+        final boolean[] takenDate = {false};
+        if(doctor == null) {
+            try {
+                throw new InvalidDoctorChoice(resourceBundle.getString("invalid.choice"));
+            } catch (InvalidDoctorChoice e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                return false;
+            }
+        }
+        ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
+        LocalDate localDate = appointmentDate.valueProperty().get();
+        for(User u: doctors){
+            if(u.equals(doctor)){
+                doctor.setId(doctor.getId());
+                break;
+            }
+        }
+        ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
+        appointments.forEach(appointment -> {
+            if(appointment.getAppointmentDate().equals(localDate)) takenDate[0] = true;
+        });
+        return(!takenDate[0]);
+    }
+
     private boolean isDateValid(LocalDate value) {
         LocalDate localDate = LocalDate.now();
-        if (value == null || value.isBefore(localDate) || cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return false;
-        final boolean[] takenDate = {false};
-        if (cbDoctorChoice.getSelectionModel().getSelectedItem() == null) return true;
-        else {
-            Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
-            ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
-            LocalDate date = LocalDate.of(value.getYear(), value.getMonthValue(), value.getDayOfMonth());
-            doctors.forEach(d -> {
-                if(d.equals(doctor)) doctor.setId(d.getId());
-            });
-            ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
-            appointments.forEach(appointment -> {
-                if(appointment.getAppointmentDate().equals(date)) takenDate[0] = true;
-            });
+        if (value == null || value.isBefore(localDate)) {
+            try {
+                throw new IllegalDateException(resourceBundle.getString("invalid.date"));
+            } catch (IllegalDateException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                return false;
+            }
         }
-        return (!takenDate[0]);
+        return true;
     }
 
     public void addAction(ActionEvent actionEvent) {
@@ -130,7 +152,6 @@ public class NewAppointmentController {
                 listViewDiseases.getSelectionModel().getSelectedItem() != null) {
             Doctor doctor = (Doctor) cbDoctorChoice.getSelectionModel().getSelectedItem();
             LocalDate localDate = appointmentDate.getValue();
-//            DateClass date = new DateClass(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
             Disease disease = new Disease(listViewDiseases.getSelectionModel().getSelectedItem().toString());
             if (diseaseDAO.getIdByName(disease.getName()) == 0)
                 diseaseDAO.addDisease(disease, this.patient.getId());
@@ -142,10 +163,6 @@ public class NewAppointmentController {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(resourceBundle.getString("appointment.invalid"));
-            alert.showAndWait();
         }
     }
 

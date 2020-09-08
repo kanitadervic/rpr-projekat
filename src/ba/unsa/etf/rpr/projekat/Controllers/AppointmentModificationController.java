@@ -38,7 +38,7 @@ public class AppointmentModificationController {
         doctorChoice.setItems(doctors);
 
         doctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
+            if (isDoctorValid(newVal)) {
                 doctorChoice.getStyleClass().removeAll("incorrectField");
                 doctorChoice.getStyleClass().add("correctField");
             } else {
@@ -48,7 +48,7 @@ public class AppointmentModificationController {
         });
 
         newAppointmentDate.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (checkAppointmentDate(newVal)) {
+            if (isDateValid(newVal)) {
                 newAppointmentDate.getStyleClass().removeAll("incorrectField");
                 newAppointmentDate.getStyleClass().add("correctField");
             } else {
@@ -58,13 +58,21 @@ public class AppointmentModificationController {
         });
     }
 
-    private boolean checkAppointmentDate(LocalDate value) {
-        LocalDate localDate = LocalDate.now();
+    private boolean isDoctorValid(Object selectedDoctor) {
+        Doctor doctor = (Doctor) selectedDoctor;
         final boolean[] takenDate = {false};
-        Doctor doctor = (Doctor) doctorChoice.getSelectionModel().getSelectedItem();
-        if(doctor == null) return false;
+        if(doctor == null) {
+            try {
+                throw new InvalidDoctorChoice(resourceBundle.getString("invalid.choice"));
+            } catch (InvalidDoctorChoice e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                return false;
+            }
+        }
         ObservableList<Doctor> doctors = userDAO.getDoctorUsers();
-        LocalDate date = LocalDate.of(value.getYear(),value.getMonthValue(), value.getDayOfMonth());
+        LocalDate localDate = newAppointmentDate.valueProperty().get();
         for(User u: doctors){
             if(u.equals(doctor)){
                 doctor.setId(doctor.getId());
@@ -73,13 +81,37 @@ public class AppointmentModificationController {
         }
         ObservableList<Appointment> appointments = userDAO.getAppointmentsForDoctor(doctor.getId());
         appointments.forEach(appointment -> {
-            if(appointment.getAppointmentDate().equals(date)) takenDate[0] = true;
+            if(appointment.getAppointmentDate().equals(localDate)) takenDate[0] = true;
         });
-        return (!value.isBefore(localDate) && !takenDate[0]);
+        return(!takenDate[0]);
+    }
+
+    private boolean checkDoctorChoice() {
+        isDoctorValid(doctorChoice.getSelectionModel().getSelectedItem());
+        return doctorChoice.getStyleClass().contains("correctField");
+    }
+
+    private boolean checkAppointmentDate() {
+        return (newAppointmentDate.getStyleClass().contains("correctField"));
+    }
+
+    private boolean isDateValid(LocalDate value) {
+        LocalDate localDate = LocalDate.now();
+        if (value == null || value.isBefore(localDate)) {
+            try {
+                throw new IllegalDateException(resourceBundle.getString("invalid.date"));
+            } catch (IllegalDateException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                return false;
+            }
+        }
+        return true;
     }
 
     public void okClickedAction(ActionEvent actionEvent) {
-        if (!newAppointmentDate.getStyleClass().contains("incorrectField") && !doctorChoice.getStyleClass().contains("incorrectField") && doctorChoice.getSelectionModel().getSelectedItem() != null) {
+        if (checkAppointmentDate() && checkDoctorChoice()) {
             appointmentModification.setDoctor((Doctor) doctorChoice.getSelectionModel().getSelectedItem());
             LocalDate localDate = newAppointmentDate.getValue();
             String date = localDate.getDayOfMonth() + "-" + localDate.getMonthValue() + "-" + localDate.getYear();
@@ -88,10 +120,6 @@ public class AppointmentModificationController {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(resourceBundle.getString("appointment.invalid"));
-            alert.showAndWait();
         }
     }
 

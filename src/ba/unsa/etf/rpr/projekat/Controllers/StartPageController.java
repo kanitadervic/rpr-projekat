@@ -59,7 +59,6 @@ public class StartPageController {
 
     private void setLanguage(Locale locale) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
-//        loader.setController(this);
         try {
             Scene scene = new Scene(loader.load());
             mainLogicStage.setScene(scene);

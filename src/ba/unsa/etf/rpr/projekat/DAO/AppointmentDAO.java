@@ -155,6 +155,7 @@ public class AppointmentDAO {
             if (selectedFile == null) {
                 return;
             }
+            //TODO rastuci poredak
             FileWriter fileWriter = new FileWriter(selectedFile);
             String result = "";
             ObservableList<Appointment> appointmentsForDoctor = userDAO.getAppointmentsForDoctor(doctorId);
@@ -195,11 +196,9 @@ public class AppointmentDAO {
             String dateString = rs.getString(4);
             int diseaseId = rs.getInt(5);
             appointment.setAppointmentDate(dateString);
-//            DateClass date = new DateClass(dateString);
             Disease disease = diseaseDAO.findDiseaseById(diseaseId);
             appointment.setDoctor(doctor);
             appointment.setPatient(patient);
-//            appointment.setAppointmentDate(date);
             appointment = new Appointment(doctor, patient, dateString, disease);
             appointment.setId(rs.getInt(1));
             connection.close();
