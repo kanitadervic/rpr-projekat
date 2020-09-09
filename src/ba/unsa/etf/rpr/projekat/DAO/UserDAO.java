@@ -271,4 +271,7 @@ public class UserDAO {
         return appointmentsForPatient;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 }

@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Utilities.DoctorReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,9 +17,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Locale;
@@ -42,6 +47,7 @@ public class DoctorController {
     public Menu fileMenu1 = new Menu("_Help");
     public Menu fileMenu2 = new Menu("_File");
     public Menu fileMenu3 = new Menu("_Edit");
+    MenuItem btnPrint = new MenuItem("_Print");
     MenuItem btnExit = new MenuItem("_Exit");
     MenuItem btnSave = new MenuItem("_Save");
     MenuItem btnAbout = new Menu("_About");
@@ -167,6 +173,19 @@ public class DoctorController {
             doctorStage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void reportAction(ActionEvent actionEvent){
+        try {
+            Connection c = userDAO.getConnection();
+            c = DriverManager.getConnection("jdbc:sqlite:users.db");
+            new DoctorReport().showReport(c);
+            c.close();
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 

@@ -94,12 +94,11 @@ public class NewAppointmentController {
     }
 
     private boolean checkDoctorChoice() {
-        isDoctorValid(cbDoctorChoice.getSelectionModel().getSelectedItem());
-        return cbDoctorChoice.getStyleClass().contains("correctField");
+        return isDoctorValid(cbDoctorChoice.getSelectionModel().getSelectedItem());
     }
 
     private boolean checkAppointmentDate() {
-        return (appointmentDate.getStyleClass().contains("correctField"));
+        return isDateValid(appointmentDate.getValue());
     }
 
 
