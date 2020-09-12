@@ -122,7 +122,7 @@ public class User {
 
 
     public String getDateOfBirthString() {
-        return dateOfBirth.getDayOfMonth() + "-" + dateOfBirth.getMonth() + "-" + dateOfBirth.getYear();
+        return dateOfBirth.getDayOfMonth() + "-" + dateOfBirth.getMonthValue() + "-" + dateOfBirth.getYear();
     }
 
     public LocalDate getDateOfBirth() {

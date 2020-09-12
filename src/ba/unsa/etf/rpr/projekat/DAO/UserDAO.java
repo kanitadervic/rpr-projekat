@@ -20,7 +20,7 @@ public class UserDAO {
             appointmentsForDoctorQuery, appointmentsForPatientQuery;
     private ObservableList<User> users = FXCollections.observableArrayList();
     private SimpleObjectProperty<User> currentUser = new SimpleObjectProperty<>();
-    private int currentId = 1;
+    private int currentId = 4;
     AppointmentDAO appDAO;
 
     public UserDAO() {
