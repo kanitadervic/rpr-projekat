@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
 
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
@@ -12,10 +13,11 @@ public class User {
     private LocalDate dateOfBirth;
     private int id;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, LocalDate dateOfBirth) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, LocalDate dateOfBirth) throws IllegalDateException {
         if(firstName == null || lastName == null || email == null || phoneNumber == null || password == null || gender == null){
             throw new IllegalArgumentException("Parameters cannot be null!");
         }
+        if(dateOfBirth.isAfter(LocalDate.now())) throw new IllegalDateException("Date of birth cannot be in the future");
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -25,7 +27,7 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, String date) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, String date) throws IllegalDateException {
         if(firstName == null || lastName == null || email == null || phoneNumber == null || password == null || gender == null){
             throw new IllegalArgumentException("Parameters cannot be null!");
         }
@@ -40,6 +42,7 @@ public class User {
         String month = parts[1];
         String year = parts[2];
         dateOfBirth = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        if(dateOfBirth.isAfter(LocalDate.now())) throw new IllegalDateException("Date of birth cannot be in the future");
     }
 
     public User() {}
@@ -132,8 +135,9 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalDateException {
         if(dateOfBirth.equals(null)) throw new IllegalArgumentException("Argument cannot be empty!");
+        if(dateOfBirth.isAfter(LocalDate.now())) throw new IllegalDateException("Date of birth cannot be in the future");
         this.dateOfBirth = dateOfBirth;
     }
 

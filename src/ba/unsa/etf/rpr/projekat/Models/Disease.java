@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
-import java.util.ArrayList;
-
 public class Disease {
     private String name;
     private int id;

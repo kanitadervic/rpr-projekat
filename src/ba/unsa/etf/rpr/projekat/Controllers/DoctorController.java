@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.projekat.Models.Appointment;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.DoctorReport;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,7 +54,7 @@ public class DoctorController {
     MenuItem btnAbout = new Menu("_About");
     public static Stage doctorStage;
 
-    public DoctorController(User u, UserDAO userDAO) {
+    public DoctorController(User u, UserDAO userDAO) throws IllegalDateException {
         doctor = new Doctor(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getPassword(), u.getGender(), u.getDateOfBirth());
         doctor.setId(u.getId());
         this.userDAO = userDAO;

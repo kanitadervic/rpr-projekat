@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -88,7 +89,7 @@ public class StartPageController {
         }
     }
 
-    public void logInAction(ActionEvent actionEvent) throws IOException {
+    public void logInAction(ActionEvent actionEvent) throws IOException, IllegalDateException {
         boolean found = false;
         Boolean doctor = false;
         User user = new User();

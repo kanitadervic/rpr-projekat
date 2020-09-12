@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -42,7 +43,7 @@ public class PatientController {
     public ObservableList<Appointment> appointmentsForPatient = FXCollections.observableArrayList();
 
 
-    public PatientController(User user, UserDAO userDAO) {
+    public PatientController(User user, UserDAO userDAO) throws IllegalDateException {
         patient = new Patient(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getPassword(), user.getGender(), user.getDateOfBirth());
         patient.setId(user.getId());
         this.userDAO = userDAO;

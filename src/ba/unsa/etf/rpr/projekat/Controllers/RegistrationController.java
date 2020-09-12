@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.projekat.Controllers;
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -143,7 +144,7 @@ public class RegistrationController {
 
     }
 
-    public void registrationAction(ActionEvent actionEvent) {
+    public void registrationAction(ActionEvent actionEvent) throws IllegalDateException {
         if (checkData()) {
             LocalDate localDate = birthdayPicker.getValue();
             LocalDate dateOfBirth = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());

@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.projekat.Models;
 
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
+
 import java.time.LocalDate;
 
 import static java.lang.Integer.valueOf;
@@ -118,7 +120,8 @@ public class Appointment implements Comparable {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(LocalDate appointmentDate) {
+    public void setAppointmentDate(LocalDate appointmentDate) throws IllegalDateException {
+        if(appointmentDate.isBefore(LocalDate.now())) throw new IllegalDateException("Appointment cannot be in the past");
         if(appointmentDate == null) throw new IllegalArgumentException("Argument cannot be null!");
         this.appointmentDate = appointmentDate;
     }

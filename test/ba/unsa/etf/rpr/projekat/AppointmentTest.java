@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat;
 import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AppointmentTest {
     @Test
-    void constructorTest() {
+    void constructorTest() throws IllegalDateException {
         LocalDate localDate = LocalDate.now();
         LocalDate appointmentDate = LocalDate.of(2021, 3, 23);
         Doctor doctor = new Doctor("Doctor", "Doctory", "doc@someone.com", "123/444-222", "pass1", "M", localDate);
@@ -23,7 +24,7 @@ public class AppointmentTest {
     }
 
     @Test
-    void constructorTestException()throws IllegalArgumentException{
+    void constructorTestException() throws IllegalArgumentException, IllegalDateException {
         LocalDate localDate = LocalDate.now();
 
         Doctor doctor = new Doctor("Doctor", "Doctory", "doc@someone.com", "123/444-222", "pass1", "M", localDate);
@@ -35,7 +36,7 @@ public class AppointmentTest {
     }
 
     @Test
-    void testingSetters() throws IllegalArgumentException {
+    void testingSetters() throws IllegalArgumentException, IllegalDateException {
         LocalDate localDate = LocalDate.now();
         LocalDate appointmentDate = LocalDate.of(2021, 3, 23);
         Doctor doctor = new Doctor("Doctor", "Doctory", "doc@someone.com", "123/444-222", "pass1", "M", localDate);
@@ -46,11 +47,13 @@ public class AppointmentTest {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> appointment.setDoctor(null));
         assertEquals("Argument cannot be null!", exception.getMessage());
-        exception = assertThrows(IllegalArgumentException.class,
-                () -> appointment.setAppointmentDate((LocalDate) null));
-        assertEquals("Argument cannot be null!", exception.getMessage());
         appointment.setAppointmentDate(localDate);
         assertEquals(appointment.getAppointmentDate(), localDate);
+        appointmentDate = LocalDate.of(2000, 3, 3);
+        LocalDate finalAppointmentDate = appointmentDate;
+        Throwable throwable = assertThrows(IllegalDateException.class,
+                () -> appointment.setAppointmentDate((finalAppointmentDate)));
+        assertEquals(throwable.getMessage(),"Appointment cannot be in the past");
     }
 
     @Test
@@ -64,7 +67,7 @@ public class AppointmentTest {
     }
 
     @Test
-    void testingToStringMethod(){
+    void testingToStringMethod() throws IllegalDateException {
         LocalDate localDate = LocalDate.now();
         LocalDate appointmentDate = LocalDate.of(2021, 3, 23);
         Doctor doctor = new Doctor("Doctor", "Doctory", "doc@someone.com", "123/444-222", "pass1", "M", localDate);
@@ -76,7 +79,7 @@ public class AppointmentTest {
     }
 
     @Test
-    void testingDateFormatingFromString() throws IllegalArgumentException{
+    void testingDateFormatingFromString() throws IllegalArgumentException, IllegalDateException {
         LocalDate localDate = LocalDate.now();
         String appointmentDate = "111-2-2010";
         Doctor doctor = new Doctor("Doctor", "Doctory", "doc@someone.com", "123/444-222", "pass1", "M", localDate);

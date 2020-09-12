@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
 import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,7 +98,7 @@ public class UserDAO {
                 u.setId(rs.getInt(8));
                 list.add(u);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalDateException e) {
             e.printStackTrace();
         }
         return list;
@@ -141,7 +142,7 @@ public class UserDAO {
                 d.setId(rs.getInt(8));
                 doctors.add(d);
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalDateException throwables) {
             throwables.printStackTrace();
         }
         return doctors;
@@ -164,7 +165,7 @@ public class UserDAO {
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
                 u.setId(rs.getInt(8));
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalDateException throwables) {
             System.out.println("No user was found");
         }
         return u;
@@ -180,7 +181,7 @@ public class UserDAO {
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
                 u.setId(rs.getInt(8));
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | IllegalDateException throwables) {
             throwables.printStackTrace();
         }
 
