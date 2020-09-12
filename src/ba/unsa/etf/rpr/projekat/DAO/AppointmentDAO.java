@@ -1,6 +1,9 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
-import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

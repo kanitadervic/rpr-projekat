@@ -1,5 +1,9 @@
 package ba.unsa.etf.rpr.projekat;
-import ba.unsa.etf.rpr.projekat.Models.*;
+
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +21,9 @@ public class AppointmentTest {
         Patient patient = new Patient("Patient", "Patienty", "pat@someone.com", "333/434-222", "pass1", "F", localDate);
         Disease disease = new Disease("Back pain");
         patient.addDisease(disease);
-        Appointment appointment = new Appointment(doctor,patient,appointmentDate,disease);
+        Appointment appointment = new Appointment(doctor, patient, appointmentDate, disease);
         assertEquals(appointment.getDoctor().getFirstName(), "Doctor");
-        assertEquals(appointment.getPatient().getDiseases().size(),1);
+        assertEquals(appointment.getPatient().getDiseases().size(), 1);
         assertEquals(appointment.getAppointmentDate(), appointmentDate);
     }
 
@@ -31,8 +35,8 @@ public class AppointmentTest {
         LocalDate appointmentDate = LocalDate.of(2021, 3, 23);
         Disease disease = new Disease("Back pain");
         Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> new Appointment(doctor,null,appointmentDate,disease));
-        assertEquals(exception.getMessage(),"Parameters cannot be null!");
+                () -> new Appointment(doctor, null, appointmentDate, disease));
+        assertEquals(exception.getMessage(), "Parameters cannot be null!");
     }
 
     @Test
@@ -43,7 +47,7 @@ public class AppointmentTest {
         Patient patient = new Patient("Patient", "Patienty", "pat@someone.com", "333/434-222", "pass1", "F", localDate);
         Disease disease = new Disease("Back pain");
         patient.addDisease(disease);
-        Appointment appointment = new Appointment(doctor,patient,appointmentDate,disease);
+        Appointment appointment = new Appointment(doctor, patient, appointmentDate, disease);
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> appointment.setDoctor(null));
         assertEquals("Argument cannot be null!", exception.getMessage());
@@ -53,11 +57,11 @@ public class AppointmentTest {
         LocalDate finalAppointmentDate = appointmentDate;
         Throwable throwable = assertThrows(IllegalDateException.class,
                 () -> appointment.setAppointmentDate((finalAppointmentDate)));
-        assertEquals(throwable.getMessage(),"Appointment cannot be in the past");
+        assertEquals(throwable.getMessage(), "Appointment cannot be in the past");
     }
 
     @Test
-    void testingEqualsMethod(){
+    void testingEqualsMethod() {
         LocalDate l1 = LocalDate.of(2010, 3, 23);
         LocalDate l2;
         l2 = LocalDate.now();
@@ -74,7 +78,7 @@ public class AppointmentTest {
         Patient patient = new Patient("Patient", "Patienty", "pat@someone.com", "333/434-222", "pass1", "F", localDate);
         Disease disease = new Disease("Back pain");
         patient.addDisease(disease);
-        Appointment appointment = new Appointment(doctor,patient,appointmentDate,disease);
+        Appointment appointment = new Appointment(doctor, patient, appointmentDate, disease);
         assertEquals(appointment.toString(), "23-3-2021");
     }
 
@@ -88,12 +92,12 @@ public class AppointmentTest {
         patient.addDisease(disease);
         String finalAppointmentDate = appointmentDate;
         Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> new Appointment(doctor,patient, finalAppointmentDate,disease));
+                () -> new Appointment(doctor, patient, finalAppointmentDate, disease));
         assertEquals(exception.getMessage(), "Date format is invalid!");
         appointmentDate = "11-2-20100";
         String finalAppointmentDate1 = appointmentDate;
         exception = assertThrows(IllegalArgumentException.class,
-                () -> new Appointment(doctor,patient, finalAppointmentDate1,disease));
+                () -> new Appointment(doctor, patient, finalAppointmentDate1, disease));
         assertEquals(exception.getMessage(), "Date format is invalid!");
     }
 }

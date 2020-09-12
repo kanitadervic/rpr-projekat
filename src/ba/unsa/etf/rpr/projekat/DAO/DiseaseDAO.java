@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
 import ba.unsa.etf.rpr.projekat.Models.Disease;
-import ba.unsa.etf.rpr.projekat.Models.User;
-import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static ba.unsa.etf.rpr.projekat.Main.*;
+import static ba.unsa.etf.rpr.projekat.Main.diseaseDAO;
 
 public class DiseaseDAO {
     private Connection connection;

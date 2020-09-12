@@ -2,11 +2,13 @@ package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.Models.Disease;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DiseaseTest {
     @Test
-    void constructorTest(){
+    void constructorTest() {
         Disease disease = new Disease("Back pain");
         assertEquals("Back pain", disease.getName());
         disease.setName("Corona");
@@ -14,14 +16,14 @@ public class DiseaseTest {
     }
 
     @Test
-    void constructorTestThrowsException() throws IllegalArgumentException{
+    void constructorTestThrowsException() throws IllegalArgumentException {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> new Disease(""));
-        assertEquals(exception.getMessage(),"Parameters are invalid");
+        assertEquals(exception.getMessage(), "Parameters are invalid");
     }
 
     @Test
-    void testingSetter(){
+    void testingSetter() {
         Disease disease = new Disease("Back pain");
         assertEquals("Back pain", disease.getName());
         disease.setName("New disease");

@@ -1,4 +1,5 @@
 package ba.unsa.etf.rpr.projekat;
+
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
@@ -11,7 +12,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserDAOTest {
     private UserDAO dao = UserDAO.getInstance();
@@ -52,7 +54,7 @@ public class UserDAOTest {
     @Test
     void findUserByIdTest() throws IllegalDateException {
         ArrayList<User> users = dao.getAllUsers();
-        assertEquals(users.get(0).getId(),1);
-        assertEquals(users.get(2).getId(),3);
+        assertEquals(users.get(0).getId(), 1);
+        assertEquals(users.get(2).getId(), 3);
     }
 }

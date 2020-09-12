@@ -2,10 +2,12 @@ package ba.unsa.etf.rpr.projekat.Utilities;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.swing.JRViewer;
-import javax.swing.*;;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class DoctorReport extends JFrame {
     public void showReport(Connection conn) throws JRException {

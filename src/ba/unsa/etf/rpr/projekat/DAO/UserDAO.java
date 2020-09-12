@@ -1,19 +1,22 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
-import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static ba.unsa.etf.rpr.projekat.Main.*;
+import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import static ba.unsa.etf.rpr.projekat.Main.userDAO;
 
 public class UserDAO {
     private Connection connection;
@@ -30,11 +33,11 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             resetBase();
         } catch (SQLException throwables) {
         }
-        try{
+        try {
             addUserQuery = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
         } catch (SQLException throwables) {
             regenerateBase();
@@ -44,7 +47,7 @@ public class UserDAO {
                 e.printStackTrace();
             }
         }
-        try{
+        try {
             getAllUsersQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user");
             getAdminQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user WHERE admin= ?");
             getUserByIdQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, admin from user WHERE id= ?");
@@ -152,7 +155,7 @@ public class UserDAO {
 
     public boolean checkIfDoctor(User u) {
         Doctor d = findDoctorById(u.getId());
-        if(d !=null) return true;
+        if (d != null) return true;
         return false;
     }
 
@@ -207,6 +210,7 @@ public class UserDAO {
         }
         return userDAO;
     }
+
     public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
         ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
         try {
@@ -223,7 +227,6 @@ public class UserDAO {
         }
         return appointmentsForDoctor;
     }
-
 
 
     public ObservableList<Appointment> getAppointmentsForPatient(int id) {

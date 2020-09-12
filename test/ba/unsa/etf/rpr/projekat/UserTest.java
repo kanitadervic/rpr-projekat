@@ -1,11 +1,14 @@
 package ba.unsa.etf.rpr.projekat;
+
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.Patient;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
     @Test
@@ -37,7 +40,7 @@ public class UserTest {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> new User("Neko", null, "email@email.com", "333/444-222", "pass1", "M", localDate));
         assertEquals("Parameters cannot be null!", exception.getMessage());
-        LocalDate newDate = LocalDate.of(2051, 3,1);
+        LocalDate newDate = LocalDate.of(2051, 3, 1);
         Throwable throwable = assertThrows(IllegalDateException.class,
                 () -> new User("Neko", "Smith", "email@email.com", "333/444-222", "pass1", "M", newDate));
         assertEquals("Date of birth cannot be in the future", throwable.getMessage());
@@ -61,7 +64,7 @@ public class UserTest {
     void testingDoctorUser() throws IllegalDateException {
         LocalDate localDate = LocalDate.now();
         User user = new Doctor("Neko", "Nekic", "neko@neko.com", "333/444-222", "pass1", "M", localDate);
-        assert(user instanceof Doctor);
+        assert (user instanceof Doctor);
     }
 
     @Test
@@ -77,7 +80,7 @@ public class UserTest {
     void testingPatientUser() throws IllegalDateException {
         LocalDate localDate = LocalDate.now();
         User user = new Patient("Neko", "Nekic", "neko@neko.com", "333/444-222", "pass1", "M", localDate);
-        assert(user instanceof Patient);
+        assert (user instanceof Patient);
     }
 
     @Test
