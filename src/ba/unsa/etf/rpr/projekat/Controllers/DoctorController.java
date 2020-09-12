@@ -179,7 +179,6 @@ public class DoctorController {
     public void reportAction(ActionEvent actionEvent){
         try {
             Connection c = userDAO.getConnection();
-            c = DriverManager.getConnection("jdbc:sqlite:users.db");
             new DoctorReport().showReport(c);
             c.close();
         } catch (JRException e1) {

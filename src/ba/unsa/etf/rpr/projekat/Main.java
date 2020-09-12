@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -15,16 +17,13 @@ import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class Main extends Application{
     public static Stage mainLogicStage;
-    public static UserDAO userDAO = new UserDAO();
     public static AppointmentDAO appointmentDAO = new AppointmentDAO();
     public static DiseaseDAO diseaseDAO = new DiseaseDAO();
+    public static UserDAO userDAO = new UserDAO();
     public static ResourceBundle resourceBundle = ResourceBundle.getBundle("Translation", new Locale("bs","BA"));
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        userDAO.importData();
-        appointmentDAO.importData();
-        diseaseDAO.importData();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
         primaryStage.setTitle("DocOnDuty");
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

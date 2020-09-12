@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
+import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -28,17 +30,18 @@ public class StartPageController {
     public TextField fldPassword;
     public ImageView userImage;
     public static Stage registrationStage;
+    private UserDAO userDAO = new UserDAO();
+
 
     @FXML
     public void initialize() {
-        if(resourceBundle.getLocale().toString().equals("en")) {
+        if (resourceBundle.getLocale().toString().equals("en")) {
             rbEnglish.setSelected(true);
-        }
-        else rbBosnian.setSelected(true);
+        } else rbBosnian.setSelected(true);
         rbBosnian.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(rbBosnian.isSelected()){
+                if (rbBosnian.isSelected()) {
                     Locale.setDefault(new Locale("bs", "BA"));
                     resourceBundle = ResourceBundle.getBundle("Translation", new Locale("bs", "BA"));
                     setLanguage(new Locale("bs", "BA"));
@@ -48,7 +51,7 @@ public class StartPageController {
         rbEnglish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(rbEnglish.isSelected()){
+                if (rbEnglish.isSelected()) {
                     Locale.setDefault(new Locale("en", "EN"));
                     resourceBundle = ResourceBundle.getBundle("Translation", new Locale("en", "EN"));
                     setLanguage(new Locale("en", "EN"));
@@ -89,7 +92,7 @@ public class StartPageController {
         boolean found = false;
         Boolean doctor = false;
         User user = new User();
-        ObservableList<User> users = userDAO.getUsers();
+        ArrayList<User> users = userDAO.getAllUsers();
         for (User u : users) {
             if (u.getEmail().equals(fldEmail.getText()) && u.getPassword().equals(fldPassword.getText())) {
                 doctor = userDAO.checkIfDoctor(u);

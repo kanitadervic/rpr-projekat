@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
+import ba.unsa.etf.rpr.projekat.Utilities.InvalidDoctorChoice;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
