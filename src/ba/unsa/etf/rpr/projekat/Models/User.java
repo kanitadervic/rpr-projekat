@@ -13,6 +13,9 @@ public class User {
     private int id;
 
     public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, LocalDate dateOfBirth) {
+        if(firstName == null || lastName == null || email == null || phoneNumber == null || password == null || gender == null){
+            throw new IllegalArgumentException("Parameters cannot be null!");
+        }
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -23,6 +26,9 @@ public class User {
     }
 
     public User(String firstName, String lastName, String email, String phoneNumber, String password, String gender, String date) {
+        if(firstName == null || lastName == null || email == null || phoneNumber == null || password == null || gender == null){
+            throw new IllegalArgumentException("Parameters cannot be null!");
+        }
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -38,15 +44,6 @@ public class User {
 
     public User() {}
 
-//    public User(User copyUser) {
-//        this.firstName = new SimpleStringProperty(copyUser.firstName.toString());
-//        this.lastName = new SimpleStringProperty(copyUser.lastName.toString());
-//        this.email = new SimpleStringProperty(copyUser.email.toString());
-//        this.phoneNumber = new SimpleStringProperty(copyUser.phoneNumber.toString());
-//        this.password = new SimpleStringProperty(copyUser.password.toString());
-//        this.gender = new SimpleStringProperty(copyUser.gender.toString());
-//        this.dateOfBirth = copyUser.getDateOfBirth();
-//    }
 
     public String getFirstName() {
         return firstName.get();
@@ -57,6 +54,7 @@ public class User {
     }
 
     public void setFirstName(String firstName) {
+        if(firstName.equals(null)) throw new IllegalArgumentException("Argument cannot be empty!");
         this.firstName.set(firstName);
     }
 
@@ -69,6 +67,7 @@ public class User {
     }
 
     public void setLastName(String lastName) {
+        if(lastName.equals("")) throw new IllegalArgumentException("Argument cannot be empty!");
         this.lastName.set(lastName);
     }
 
@@ -81,6 +80,7 @@ public class User {
     }
 
     public void setEmail(String email) {
+        if(email.equals("")) throw new IllegalArgumentException("Argument cannot be empty!");
         this.email.set(email);
     }
 
@@ -93,6 +93,7 @@ public class User {
     }
 
     public void setPhoneNumber(String phoneNumber) {
+        if(phoneNumber.equals("")) throw new IllegalArgumentException("Argument cannot be empty!");
         this.phoneNumber.set(phoneNumber);
     }
 
@@ -105,6 +106,7 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if(password.equals("")) throw new IllegalArgumentException("Argument cannot be empty!");
         this.password.set(password);
     }
 
@@ -117,6 +119,7 @@ public class User {
     }
 
     public void setGender(String gender) {
+        if(gender.equals("")) throw new IllegalArgumentException("Argument cannot be empty!");
         this.gender.set(gender);
     }
 
@@ -130,6 +133,7 @@ public class User {
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
+        if(dateOfBirth.equals(null)) throw new IllegalArgumentException("Argument cannot be empty!");
         this.dateOfBirth = dateOfBirth;
     }
 

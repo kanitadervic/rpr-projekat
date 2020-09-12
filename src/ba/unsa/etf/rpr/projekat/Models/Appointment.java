@@ -15,6 +15,9 @@ public class Appointment implements Comparable {
     public String diseaseName;
 
     public Appointment(Doctor doctor, Patient patient, LocalDate appointmentDate, Disease disease) {
+        if(doctor == null || patient == null || appointmentDate == null || disease == null){
+            throw new IllegalArgumentException("Parameters cannot be null!");
+        }
         this.doctor = doctor;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
@@ -24,7 +27,6 @@ public class Appointment implements Comparable {
         this.diseaseName = disease.getName();
     }
 
-
     public Appointment(Doctor doctor, Patient patient, String appointmentDate, Disease disease) {
         this.doctor = doctor;
         this.patient = patient;
@@ -32,6 +34,9 @@ public class Appointment implements Comparable {
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
+        if((day.length() > 2 || day.length()<0) || (month.length() > 2 || month.length()<0) || (year.length() != 4)){
+            throw new IllegalArgumentException("Date format is invalid!");
+        }
         this.appointmentDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
         this.patientFirstName = patient.getFirstName();
         this.patientLastName = patient.getLastName();
@@ -48,6 +53,7 @@ public class Appointment implements Comparable {
     }
 
     public void setDoctor(Doctor doctor) {
+        if(doctor == null) throw new IllegalArgumentException("Argument cannot be null!");
         this.doctor = doctor;
     }
 
@@ -56,7 +62,9 @@ public class Appointment implements Comparable {
     }
 
     public void setPatient(Patient patient) {
+        if(patient == null) throw new IllegalArgumentException("Argument cannot be null!");
         this.patient = patient;
+
     }
 
     public void setId(int currentId) {
@@ -93,6 +101,7 @@ public class Appointment implements Comparable {
     }
 
     public void setDisease(Disease disease) {
+        if(disease == null) throw new IllegalArgumentException("Argument cannot be null!");
         this.disease = disease;
     }
 
@@ -110,6 +119,7 @@ public class Appointment implements Comparable {
     }
 
     public void setAppointmentDate(LocalDate appointmentDate) {
+        if(appointmentDate == null) throw new IllegalArgumentException("Argument cannot be null!");
         this.appointmentDate = appointmentDate;
     }
 
@@ -118,6 +128,9 @@ public class Appointment implements Comparable {
         String day = parts[0];
         String month = parts[1];
         String year = parts[2];
+        if((day.length() > 2 || day.length()<0) || (month.length() > 2 || month.length()<0) || (year.length() != 4)){
+            throw new IllegalArgumentException("Date format is invalid!");
+        }
         this.appointmentDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
@@ -126,7 +139,6 @@ public class Appointment implements Comparable {
     public String toString() {
         return (getAppointmentDateString());
     }
-
 
     @Override
     public int compareTo(Object o) {
