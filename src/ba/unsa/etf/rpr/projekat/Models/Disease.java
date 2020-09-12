@@ -5,7 +5,7 @@ public class Disease {
     private int id;
 
     public Disease(String name) {
-        if(name.equals("") || name == null){
+        if(name.equals("")){
             throw new IllegalArgumentException("Parameters are invalid");
         }
         this.name = name;
@@ -20,7 +20,7 @@ public class Disease {
     }
 
     public void setName(String name) {
-        if(name.equals("") || name == null){
+        if(name.equals("")){
             throw new IllegalArgumentException("Parameters are invalid");
         }
         this.name = name;

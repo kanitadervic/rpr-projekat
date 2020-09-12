@@ -101,6 +101,7 @@ public class UserDAO {
         } catch (SQLException | IllegalDateException e) {
             e.printStackTrace();
         }
+        this.users.setAll(list);
         return list;
     }
 
@@ -125,6 +126,7 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.users.add(u);
     }
 
     public ObservableList<User> getUsers() {
@@ -188,7 +190,7 @@ public class UserDAO {
         return u;
     }
 
-    public void removeInstance() {
+    public static void removeInstance() {
         if (userDAO != null) {
             try {
                 userDAO.connection.close();
