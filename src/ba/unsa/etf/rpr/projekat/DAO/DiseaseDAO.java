@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.projekat.DAO;
 
 import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.User;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,9 +16,40 @@ import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class DiseaseDAO {
     private Connection connection;
-    private PreparedStatement getDiseasesQuery, getDiseaseQuery, getDiseaseByNameQuery, addDiseaseQuery, diseaseForPatientQuery, getDiseaseByIdQuery;
+    private PreparedStatement getDiseasesQuery, getAllDiseasesQuery, getDiseaseByNameQuery, addDiseaseQuery, diseaseForPatientQuery, getDiseaseByIdQuery;
     private ObservableList<Disease> diseases = FXCollections.observableArrayList();
     private int currentId = 4;
+
+    public void resetBase() throws SQLException {
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate("DELETE FROM appointment");
+        stmt.executeUpdate("DELETE FROM disease");
+        stmt.executeUpdate("DELETE FROM user");
+        regenerateBase();
+    }
+
+    public void regenerateBase() {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new FileInputStream("users.db.sql"));
+            String sql = "";
+            while (scanner.hasNext()) {
+                sql += scanner.nextLine();
+                if (sql.charAt(sql.length() - 1) == ';') {
+                    try {
+                        Statement stmt = connection.createStatement();
+                        stmt.execute(sql);
+                        sql = "";
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public DiseaseDAO() {
         try {
@@ -29,7 +62,7 @@ public class DiseaseDAO {
             getDiseaseByNameQuery = connection.prepareStatement("SELECT disease_id FROM disease WHERE disease_name = ?");
             addDiseaseQuery = connection.prepareStatement("INSERT INTO disease VALUES (?, ?, ?);");
             diseaseForPatientQuery = connection.prepareStatement("SELECT disease_id, disease_name FROM disease WHERE patient_id = ?");
-
+            getAllDiseasesQuery = connection.prepareStatement("SELECT disease_id FROM disease");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,6 +106,21 @@ public class DiseaseDAO {
             throwables.printStackTrace();
         }
         return disease;
+    }
+
+    public ArrayList<Disease> getAllDiseases() {
+        ArrayList<Disease> list = new ArrayList<>();
+        try {
+            ResultSet rs = getAllDiseasesQuery.executeQuery();
+            while (rs.next()) {
+                Disease d = findDiseaseById(rs.getInt(1));
+                list.add(d);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.diseases.setAll(list);
+        return list;
     }
 
     public int getIdByName(String name) {

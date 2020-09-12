@@ -18,6 +18,37 @@ public class AppointmentDAO {
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private int currentId = 4;
 
+    public void resetBase() throws SQLException {
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate("DELETE FROM appointment");
+        stmt.executeUpdate("DELETE FROM disease");
+        stmt.executeUpdate("DELETE FROM user");
+        regenerateBase();
+    }
+
+    public void regenerateBase() {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new FileInputStream("users.db.sql"));
+            String sql = "";
+            while (scanner.hasNext()) {
+                sql += scanner.nextLine();
+                if (sql.charAt(sql.length() - 1) == ';') {
+                    try {
+                        Statement stmt = connection.createStatement();
+                        stmt.execute(sql);
+                        sql = "";
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public AppointmentDAO() {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");

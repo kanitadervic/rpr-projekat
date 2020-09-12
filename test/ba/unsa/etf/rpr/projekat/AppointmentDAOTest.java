@@ -1,0 +1,50 @@
+package ba.unsa.etf.rpr.projekat;
+
+import ba.unsa.etf.rpr.projekat.DAO.AppointmentDAO;
+import static org.junit.jupiter.api.Assertions.*;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Disease;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class AppointmentDAOTest {
+    private AppointmentDAO appointmentDAO = AppointmentDAO.getInstance();
+
+    @BeforeEach
+    public void resetBase() throws SQLException {
+        appointmentDAO.resetBase();
+    }
+
+    @Test
+    void testGetAppointments(){
+        assertEquals(3, appointmentDAO.getAllAppointments().size());
+    }
+
+    @Test
+    void testRemoveAppointment(){
+        assertEquals(3, appointmentDAO.getAllAppointments().size());
+        appointmentDAO.removeAppointment(2);
+        appointmentDAO.removeAppointment(3);
+        assertEquals(1, appointmentDAO.getAllAppointments().size());
+        assertNotNull(appointmentDAO.getAllAppointments().get(0));
+    }
+
+    @Test
+    void testUpdateAppointmentDate(){
+        appointmentDAO.updateAppointmentDate(1, "3-3-2051",1);
+        assertEquals(appointmentDAO.getAllAppointments().get(0).getAppointmentDateString(), "3-3-2051");
+    }
+
+    @Test
+    void testGetAppointmentById(){
+        assertEquals(appointmentDAO.getAllAppointments().get(2).getId(), 3);
+    }
+
+
+}

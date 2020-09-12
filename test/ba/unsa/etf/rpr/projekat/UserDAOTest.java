@@ -54,10 +54,5 @@ public class UserDAOTest {
         ArrayList<User> users = dao.getAllUsers();
         assertEquals(users.get(0).getId(),1);
         assertEquals(users.get(2).getId(),3);
-
-        LocalDate localDate = LocalDate.now();
-        User user = new Doctor("Neko", "Nekic", "neko@neko.com", "333/444-222", "pass1", "M", localDate);
-        this.dao.addUser(user);
-        assertEquals(user.getId(),4);
     }
 }
