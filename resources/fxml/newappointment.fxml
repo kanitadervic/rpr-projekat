@@ -22,8 +22,8 @@
       <ChoiceBox fx:id="cbDoctorChoice" layoutX="421.0" layoutY="70.0" prefHeight="26.0" prefWidth="205.0" />
       <DatePicker fx:id="appointmentDate" layoutX="421.0" layoutY="103.0" prefHeight="26.0" prefWidth="205.0" />
       <Text layoutX="354.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%date" />
-      <Text layoutX="356.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%disease" />
-      <Text fx:id="txtDisease" layoutX="421.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="205.0" />
+      <Text layoutX="425.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%disease" textAlignment="CENTER" wrappingWidth="205.0" />
+      <Text fx:id="txtDisease" layoutX="421.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="205.0" />
       <Button fx:id="btnAdd" layoutX="421.0" layoutY="223.0" mnemonicParsing="false" onAction="#addAction" prefWidth="99.0" text="%add" />
    </children>
 </AnchorPane>

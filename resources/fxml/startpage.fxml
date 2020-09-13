@@ -47,12 +47,12 @@
                   <Image url="@../images/group+people+team+users+icon-1320196240876938595.png" />
                </image>
             </ImageView>
-            <TextField fx:id="fldEmail" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%email">
+            <TextField fx:id="fldEmail" layoutX="39.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%email.login">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </TextField>
-            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%password" />
+            <PasswordField fx:id="fldPassword" layoutX="39.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="279.0" promptText="%password.login" />
          </children>
       </AnchorPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />

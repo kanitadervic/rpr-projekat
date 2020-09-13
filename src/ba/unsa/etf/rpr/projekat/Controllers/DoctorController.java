@@ -168,7 +168,7 @@ public class DoctorController {
         }
     }
 
-    public void reportAction(ActionEvent actionEvent){
+    public void reportAction(ActionEvent actionEvent) {
         try {
             Connection c = userDAO.getConnection();
             new DoctorReport().showReport(c);
@@ -178,6 +178,16 @@ public class DoctorController {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void aboutAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(resourceBundle.getString("about"));
+        alert.setWidth(700);
+        alert.setHeight(500);
+        alert.setHeaderText("");
+        alert.setContentText("Predmet: Razvoj programskih rješenja\nGithub: kdervic1\nETFUNSA");
+        alert.showAndWait();
     }
 
     public void exitAction(ActionEvent actionEvent) {

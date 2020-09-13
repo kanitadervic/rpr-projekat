@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
@@ -40,6 +42,7 @@ public class PatientController {
     public Button btnDeleteAppointment;
     public Button btnLogOut;
     public Button btnNewAppointment;
+    static Stage patientStage;
     public ObservableList<Appointment> appointmentsForPatient = FXCollections.observableArrayList();
 
 
@@ -90,7 +93,13 @@ public class PatientController {
 
     public void changeAppointmentAction(ActionEvent actionEvent) throws IOException {
         Appointment selectedItem = (Appointment) tableViewAppointment.getSelectionModel().getSelectedItem();
-        if (selectedItem == null) return;
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(resourceBundle.getString("appointment.delete"));
+            alert.setContentText(resourceBundle.getString("appointment.error"));
+            alert.showAndWait();
+            return;
+        }
         Appointment forModification = new Appointment();
         ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
         for (Appointment a : appointments) {
@@ -108,6 +117,7 @@ public class PatientController {
         Parent root2 = loader.load();
         Stage stage = new Stage();
         stage.setTitle(resourceBundle.getString("appointment.modification"));
+        stage.setResizable(false);
         stage.setScene(new Scene(root2));
         stage.showAndWait();
         refreshList();
@@ -143,8 +153,41 @@ public class PatientController {
         Parent root2 = loader.load();
         Stage stage = new Stage();
         stage.setTitle(resourceBundle.getString("new.appointment"));
+        stage.setResizable(false);
         stage.setScene(new Scene(root2));
         stage.showAndWait();
         refreshList();
+    }
+
+    public void bosnianAction(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("bs", "BA"));
+        resourceBundle = ResourceBundle.getBundle("Translation", new Locale("bs", "BA"));
+        setLanguage(new Locale("bs", "BA"));
+    }
+
+    public void englishAction(ActionEvent actionEvent) {
+        Locale.setDefault(new Locale("en", "EN"));
+        resourceBundle = ResourceBundle.getBundle("Translation", new Locale("en", "EN"));
+        setLanguage(new Locale("en", "EN"));
+    }
+
+    private void setLanguage(Locale locale) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient.fxml"), resourceBundle);
+        loader.setController(this);
+        try {
+            patientStage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void aboutAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(resourceBundle.getString("about"));
+        alert.setWidth(700);
+        alert.setHeight(500);
+        alert.setHeaderText("");
+        alert.setContentText("Predmet: Razvoj programskih rješenja\nGithub: kdervic1\nETFUNSA");
+        alert.showAndWait();
     }
 }

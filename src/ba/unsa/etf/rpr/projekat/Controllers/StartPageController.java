@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static ba.unsa.etf.rpr.projekat.Controllers.DoctorController.doctorStage;
+import static ba.unsa.etf.rpr.projekat.Controllers.PatientController.patientStage;
 import static ba.unsa.etf.rpr.projekat.Main.*;
 
 public class StartPageController {
@@ -83,6 +84,7 @@ public class StartPageController {
             Parent root2 = loader.load();
             stage = new Stage();
             stage.setTitle(resourceBundle.getString("register"));
+            stage.setResizable(false);
             stage.setScene(new Scene(root2));
             stage.show();
         } catch (IOException e) {
@@ -114,6 +116,7 @@ public class StartPageController {
             Parent root2 = loader.load();
             stage = new Stage();
             stage.setTitle(resourceBundle.getString("doctor"));
+            stage.setResizable(false);
             stage.setScene(new Scene(root2));
             doctorStage = stage;
             stage.show();
@@ -127,7 +130,9 @@ public class StartPageController {
             Parent root2 = loader.load();
             stage = new Stage();
             stage.setTitle(resourceBundle.getString("patient"));
+            stage.setResizable(false);
             stage.setScene(new Scene(root2));
+            patientStage = stage;
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
