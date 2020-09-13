@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -36,9 +37,6 @@ public class DoctorController {
     public Text txtWelcome;
     public Doctor doctor = new Doctor();
     public TableView tableViewPatients;
-    public MenuItem btnPatient;
-    public MenuItem btnAppointmentDelete;
-    public Button btnLogOut;
     public UserDAO userDAO;
     public TableColumn columnLastName;
     public TableColumn columnDate;
@@ -49,7 +47,7 @@ public class DoctorController {
     public Menu fileMenu2 = new Menu("_File");
     public Menu fileMenu3 = new Menu("_Edit");
     MenuItem btnPrint = new MenuItem("_Print");
-    MenuItem btnExit = new MenuItem("_Exit");
+    MenuItem btnExit = new MenuItem("E_xit");
     MenuItem btnSave = new MenuItem("_Save");
     MenuItem btnAbout = new Menu("_About");
     public static Stage doctorStage;
@@ -61,6 +59,9 @@ public class DoctorController {
     }
 
     private void refresh() {
+        fileMenu1.setMnemonicParsing(true);
+        fileMenu2.setMnemonicParsing(true);
+        fileMenu3.setMnemonicParsing(true);
         tableViewPatients.setItems(appointments);
         Comparator<LocalDate> columnComparator = Comparator.naturalOrder();
         columnDate.setComparator(columnComparator);
@@ -89,6 +90,7 @@ public class DoctorController {
     }
 
     public void logOutAction(ActionEvent actionEvent) {
+        btnExit.setMnemonicParsing(true);
         exitAction(actionEvent);
     }
 
@@ -135,6 +137,8 @@ public class DoctorController {
     }
 
     public void saveAppointmentsAction(ActionEvent actionEvent) {
+        btnSave.setMnemonicParsing(true);
+        btnSave.setAccelerator(KeyCombination.keyCombination("SHORTCUT +  S"));
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
@@ -169,6 +173,7 @@ public class DoctorController {
     }
 
     public void reportAction(ActionEvent actionEvent) {
+        btnPrint.setMnemonicParsing(true);
         try {
             Connection c = userDAO.getConnection();
             new DoctorReport().showReport(c);
@@ -181,6 +186,7 @@ public class DoctorController {
     }
 
     public void aboutAction(ActionEvent actionEvent) {
+        btnAbout.setMnemonicParsing(true);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(resourceBundle.getString("about"));
         alert.setHeaderText("");
