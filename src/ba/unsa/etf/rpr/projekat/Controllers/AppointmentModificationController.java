@@ -40,7 +40,7 @@ public class AppointmentModificationController {
         doctorChoice.setItems(doctors);
 
         doctorChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (isDoctorValid(newVal)) {
+            if (isDoctorValid((Doctor) newVal)) {
                 doctorChoice.getStyleClass().removeAll("incorrectField");
                 doctorChoice.getStyleClass().add("correctField");
             } else {
@@ -60,7 +60,7 @@ public class AppointmentModificationController {
         });
     }
 
-    private boolean isDoctorValid(Object selectedDoctor) {
+    private boolean isDoctorValid(Doctor selectedDoctor) {
         Doctor doctor = (Doctor) selectedDoctor;
         final boolean[] takenDate = {false};
         if(doctor == null) {
@@ -88,11 +88,6 @@ public class AppointmentModificationController {
         return(!takenDate[0]);
     }
 
-    private boolean checkDoctorChoice() {
-        isDoctorValid(doctorChoice.getSelectionModel().getSelectedItem());
-        return doctorChoice.getStyleClass().contains("correctField");
-    }
-
     private boolean checkAppointmentDate() {
         return (newAppointmentDate.getStyleClass().contains("correctField"));
     }
@@ -113,7 +108,7 @@ public class AppointmentModificationController {
     }
 
     public void okClickedAction(ActionEvent actionEvent) {
-        if (checkAppointmentDate() && checkDoctorChoice()) {
+        if (checkAppointmentDate() && isDoctorValid((Doctor) doctorChoice.getSelectionModel().getSelectedItem())) {
             appointmentModification.setDoctor((Doctor) doctorChoice.getSelectionModel().getSelectedItem());
             LocalDate localDate = newAppointmentDate.getValue();
             String date = localDate.getDayOfMonth() + "-" + localDate.getMonthValue() + "-" + localDate.getYear();

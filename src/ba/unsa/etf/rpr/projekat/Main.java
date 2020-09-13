@@ -1,8 +1,11 @@
 package ba.unsa.etf.rpr.projekat;
 
+import ba.unsa.etf.rpr.projekat.Controllers.NewAppointmentController;
 import ba.unsa.etf.rpr.projekat.DAO.AppointmentDAO;
 import ba.unsa.etf.rpr.projekat.DAO.DiseaseDAO;
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

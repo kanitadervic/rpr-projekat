@@ -19,9 +19,9 @@ public class UserDAOTest {
     private UserDAO dao = UserDAO.getInstance();
 
     @BeforeEach
-    public void resetujBazu() throws SQLException {
-        dao.resetBase();
-    }
+//    public void resetujBazu() throws SQLException {
+//        dao.resetBase();
+//    }
 
     @Test
     void regenerateFile() {
@@ -31,7 +31,7 @@ public class UserDAOTest {
         this.dao = UserDAO.getInstance();
         ArrayList<User> users = dao.getAllUsers();
         assertEquals("Kanita", users.get(0).getFirstName());
-        assertEquals("hhimzic@faks.com", users.get(2).getEmail());
+        assertEquals("ttestic@faks.com", users.get(2).getEmail());
     }
 
     @Test

@@ -12,13 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AppointmentDAOTest {
     private AppointmentDAO appointmentDAO = AppointmentDAO.getInstance();
 
-    @BeforeEach
-    public void resetBase() throws SQLException {
-        appointmentDAO.resetBase();
-    }
+//    @BeforeEach
+//    public void resetBase() throws SQLException {
+//        appointmentDAO.importData();
+//    }
 
     @Test
     void testGetAppointments() {
+        appointmentDAO.removeInstance();
+        appointmentDAO = new AppointmentDAO();
         assertEquals(3, appointmentDAO.getAllAppointments().size());
     }
 
@@ -39,6 +41,9 @@ public class AppointmentDAOTest {
 
     @Test
     void testGetAppointmentById() {
+//        appointmentDAO.importData();
+        appointmentDAO.removeInstance();
+        appointmentDAO = new AppointmentDAO();
         assertEquals(appointmentDAO.getAllAppointments().get(2).getId(), 3);
     }
 

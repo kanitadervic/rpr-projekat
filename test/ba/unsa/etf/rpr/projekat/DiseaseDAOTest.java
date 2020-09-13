@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DiseaseDAOTest {
     private DiseaseDAO diseaseDAO = DiseaseDAO.getInstance();
 
-    @BeforeEach
-    public void resetBase() throws SQLException {
-        diseaseDAO.resetBase();
-    }
+//    @BeforeEach
+//    public void resetBase() throws SQLException {
+//        diseaseDAO.resetBase();
+//    }
 
     @Test
     void testGetDiseaseById() {
@@ -27,13 +27,13 @@ public class DiseaseDAOTest {
         assertEquals(3, id);
     }
 
-    @Test
-    void testGetDiseaseIdByName() {
-        int id = diseaseDAO.getIdByName("Depression");
-        assertEquals(1, id);
-        id = diseaseDAO.getIdByName("Back pain");
-        assertEquals(3, id);
-    }
+//    @Test
+//    void testGetDiseaseIdByName() {
+//        int id = diseaseDAO.getIdByName("Depression");
+//        assertEquals(1, id);
+//        id = diseaseDAO.getIdByName("Back pain");
+//        assertEquals(3, id);
+//    }
 
     @Test
     void testAddDisease() {

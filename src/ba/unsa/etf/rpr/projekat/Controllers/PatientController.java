@@ -89,12 +89,12 @@ public class PatientController {
     }
 
     public void changeAppointmentAction(ActionEvent actionEvent) throws IOException {
-        Object selectedItem = tableViewAppointment.getSelectionModel().getSelectedItem();
+        Appointment selectedItem = (Appointment) tableViewAppointment.getSelectionModel().getSelectedItem();
         if (selectedItem == null) return;
         Appointment forModification = new Appointment();
         ArrayList<Appointment> appointments = appointmentDAO.getAllAppointments();
         for (Appointment a : appointments) {
-            if (selectedItem.toString().equals(a.getAppointmentDateString()) && this.patient.getId() == a.getPatient().getId()) {
+            if (selectedItem.toString().equals(a.getAppointmentDateString())) {
                 forModification = a;
                 forModification.setAppointmentDate(a.getAppointmentDateString());
                 forModification.setId(a.getId());
