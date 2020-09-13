@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="708.0" style="-fx-background-color: #ffff66;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.projekat.Controllers.StartPageController">
   <columnConstraints>
@@ -64,17 +54,17 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <RadioButton fx:id="rbBosnian" mnemonicParsing="false" text="Bosanski" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <RadioButton fx:id="rbBosnian" alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" text="Bosanski" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <toggleGroup>
             <ToggleGroup fx:id="group" />
          </toggleGroup>
          <GridPane.margin>
-            <Insets right="20.0" />
+            <Insets left="20.0" />
          </GridPane.margin>
       </RadioButton>
-      <RadioButton fx:id="rbEnglish" mnemonicParsing="false" text="English" textAlignment="RIGHT" toggleGroup="$group" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <RadioButton fx:id="rbEnglish" mnemonicParsing="false" prefHeight="18.0" prefWidth="71.0" text="English" textAlignment="RIGHT" toggleGroup="$group" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <GridPane.margin>
-            <Insets right="30.0" />
+            <Insets left="20.0" right="20.0" />
          </GridPane.margin></RadioButton>
    </children>
 </GridPane>

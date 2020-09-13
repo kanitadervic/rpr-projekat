@@ -177,7 +177,7 @@ public class RegistrationController {
 
     private boolean checkPhoneNumber(String phoneNumber) {
         boolean check = false;
-        if (phoneNumber.length() == 11 || phoneNumber.length() == 12) {
+        if (phoneNumber.length() == 11) {
             if (phoneNumber.charAt(3) == '/' && phoneNumber.charAt(7) == '-') {
                 check = true;
             }
@@ -191,9 +191,6 @@ public class RegistrationController {
         }
         for (int i = 8; i < 11; i++) {
             if (!isDigit(phoneNumber.charAt(i))) return false;
-        }
-        if (phoneNumber.length() == 12) {
-            if (!isDigit(phoneNumber.charAt(11)) || phoneNumber.charAt(2) != '0') return false;
         }
         return true;
     }

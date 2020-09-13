@@ -19,8 +19,6 @@ public class DiseaseDAO {
     private int currentId = 1;
 
     public DiseaseDAO() {
-//        File dbFile = new File("users.db");
-//        if (!dbFile.exists())
         createBase();
     }
 

@@ -21,8 +21,7 @@ public class AppointmentDAO {
     private int currentId = 1;
 
     public AppointmentDAO() {
-//        File dbFile = new File("users.db");
-//        if(!dbFile.exists()) createBase();
+
         createBase();
     }
 
