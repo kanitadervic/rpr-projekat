@@ -89,15 +89,7 @@ public class DoctorController {
     }
 
     public void logOutAction(ActionEvent actionEvent) {
-        Node n = (Node) actionEvent.getSource();
-        Stage stage = (Stage) n.getScene().getWindow();
-        stage.close();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
-        try {
-            mainLogicStage.setScene(new Scene(loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        exitAction(actionEvent);
     }
 
     public void showPatientAction(ActionEvent actionEvent) {
@@ -120,7 +112,6 @@ public class DoctorController {
                 resourceBundle.getString("gender") + gender + "\n" +
                 resourceBundle.getString("disease") + appointment.getDisease());
         alert.showAndWait();
-
     }
 
     public void deleteAppointmentAction(ActionEvent actionEvent) {

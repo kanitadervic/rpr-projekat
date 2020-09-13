@@ -8,12 +8,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`password`	TEXT,
 	`gender`	TEXT,
 	`birthdate`	TEXT,
-	`admin`	TEXT,
+	`doctor`	TEXT,
 	PRIMARY KEY(`id`)
 );
 INSERT INTO `user` VALUES (1,'Kanita', 'Dervić', 'kdervic@faks.com', '062/111/222', 'Test123', 'F', '23-1-1999','admin');
-INSERT INTO `user` VALUES (2,'Sara', 'Sarić', 'ssaric@faks.com', '062/225/883', 'Test123', 'F', '10-10-2003',null);
-INSERT INTO `user` VALUES (3,'Himzo', 'Himzić', 'hhimzic@faks.com', '062/555/222', 'Test123', 'M', '14-6-2009',null);
+INSERT INTO `user` VALUES (2,'Sara', 'Sarić', 'ssaric@faks.com', '062/225/883', 'Test123', 'F', '10-10-2003','user');
+INSERT INTO `user` VALUES (3,'Himzo', 'Himzić', 'hhimzic@faks.com', '062/555/222', 'Test123', 'M', '14-6-2009','user');
 CREATE TABLE IF NOT EXISTS `appointment` (
 	`appointment_id`	INTEGER,
 	`doctor_id`	INTEGER,

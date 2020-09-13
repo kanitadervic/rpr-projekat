@@ -18,7 +18,6 @@ public class AppointmentDAO {
     private Connection connection;
     private PreparedStatement getAllAppointmentsQuery, addAppointmentQuery, deleteAppointmentQuery,
             updateAppointmentQuery, getAppointmentQuery;
-    private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private int currentId = 4;
 
     public void resetBase() throws SQLException {
@@ -109,10 +108,6 @@ public class AppointmentDAO {
         return list;
     }
 
-    public ObservableList<Appointment> getAppointments() {
-        return appointments;
-    }
-
     public void addAppointment(Appointment appointment) {
         try {
             appointment.setId(currentId);
@@ -125,7 +120,6 @@ public class AppointmentDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        appointments.add(appointment);
     }
 
     public void removeAppointment(int id) {

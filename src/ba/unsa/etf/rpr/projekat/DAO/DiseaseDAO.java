@@ -15,7 +15,6 @@ import static ba.unsa.etf.rpr.projekat.Main.diseaseDAO;
 public class DiseaseDAO {
     private Connection connection;
     private PreparedStatement getDiseasesQuery, getAllDiseasesQuery, getDiseaseByNameQuery, addDiseaseQuery, diseaseForPatientQuery, getDiseaseByIdQuery;
-    private ObservableList<Disease> diseases = FXCollections.observableArrayList();
     private int currentId = 4;
 
     public void resetBase() throws SQLException {
@@ -82,12 +81,6 @@ public class DiseaseDAO {
         return diseaseDAO;
     }
 
-
-    public ObservableList<Disease> getDiseases() {
-        return diseases;
-    }
-
-
     public Disease findDiseaseById(int diseaseId) {
         Disease disease = new Disease();
         try {
@@ -117,7 +110,6 @@ public class DiseaseDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.diseases.setAll(list);
         return list;
     }
 
@@ -145,7 +137,6 @@ public class DiseaseDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        diseases.add(disease);
     }
 
     public ArrayList<Disease> getDiseasesForPatient(int id) {

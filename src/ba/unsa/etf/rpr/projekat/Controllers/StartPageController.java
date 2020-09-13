@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
+import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.ObservableList;
@@ -96,7 +97,7 @@ public class StartPageController {
         ArrayList<User> users = userDAO.getAllUsers();
         for (User u : users) {
             if (u.getEmail().equals(fldEmail.getText()) && u.getPassword().equals(fldPassword.getText())) {
-                doctor = userDAO.checkIfDoctor(u);
+                doctor = (u instanceof Doctor);
                 found = true;
                 user = new User(u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhoneNumber(), u.getPassword(), u.getGender(), u.getDateOfBirth());
                 user.setId(u.getId());

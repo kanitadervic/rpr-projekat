@@ -152,12 +152,10 @@ public class RegistrationController {
                 Patient p = new Patient(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(p);
-                userDAO.getUsers().add(p);
             } else {
                 Doctor d = new Doctor(fldName.getText(), fldLastName.getText(), fldEmail.getText(), fldPhoneNumber.getText(),
                         fldPassword.getText(), getGender(), dateOfBirth);
                 userDAO.addUser(d);
-                userDAO.getUsers().add(d);
             }
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();

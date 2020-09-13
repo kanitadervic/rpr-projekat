@@ -133,16 +133,7 @@ public class PatientController {
     }
 
     public void logOutAction(ActionEvent actionEvent) {
-        Node n = (Node) actionEvent.getSource();
-        Stage stage = (Stage) n.getScene().getWindow();
-        stage.close();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/startpage.fxml"), resourceBundle);
-        try {
-            mainLogicStage.setScene(new Scene(loader.load()));
-            mainLogicStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.exit(0);
     }
 
     public void addAppointmentAction(ActionEvent actionEvent) throws IOException {

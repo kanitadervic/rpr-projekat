@@ -22,10 +22,7 @@ public class UserDAO {
     private Connection connection;
     private PreparedStatement getAllUsersQuery, addUserQuery, getAdminQuery, getUserByIdQuery,
             appointmentsForDoctorQuery, appointmentsForPatientQuery;
-    private ObservableList<User> users = FXCollections.observableArrayList();
-    private SimpleObjectProperty<User> currentUser = new SimpleObjectProperty<>();
     private int currentId = 4;
-    AppointmentDAO appDAO;
 
     public UserDAO() {
         try {
@@ -48,12 +45,11 @@ public class UserDAO {
             }
         }
         try {
-            getAllUsersQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user");
-            getAdminQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user WHERE admin= ?");
-            getUserByIdQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, admin from user WHERE id= ?");
+            getAllUsersQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, doctor from user");
+            getAdminQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id from user WHERE doctor= ?");
+            getUserByIdQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, doctor from user WHERE id= ?");
             appointmentsForPatientQuery = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE patient_id = ?");
             appointmentsForDoctorQuery = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE doctor_id = ?");
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -94,17 +90,26 @@ public class UserDAO {
     public ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
         try {
+            getAllUsersQuery = connection.prepareStatement("Select first_name, last_name, email, phone_number, password, gender, birthdate, id, doctor from user");
             ResultSet rs = getAllUsersQuery.executeQuery();
             while (rs.next()) {
-                User u = new User(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
-                u.setId(rs.getInt(8));
-                list.add(u);
+                User u;
+                if(rs.getString(9).equals("admin")) {
+                    u = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
+                            rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                    u.setId(rs.getInt(8));
+                    list.add(u);
+                }
+                else {
+                    u = new Patient(rs.getString(1), rs.getString(2), rs.getString(3),
+                            rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                    u.setId(rs.getInt(8));
+                    list.add(u);
+                }
             }
         } catch (SQLException | IllegalDateException e) {
             e.printStackTrace();
         }
-        this.users.setAll(list);
         return list;
     }
 
@@ -122,18 +127,12 @@ public class UserDAO {
             if (u instanceof Doctor) {
                 addUserQuery.setString(9, "admin");
             } else {
-                addUserQuery.setString(9, null);
+                addUserQuery.setString(9, "user");
             }
-
             addUserQuery.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.users.add(u);
-    }
-
-    public ObservableList<User> getUsers() {
-        return users;
     }
 
     public ObservableList<Doctor> getDoctorUsers() {
@@ -154,8 +153,7 @@ public class UserDAO {
     }
 
     public boolean checkIfDoctor(User u) {
-        Doctor d = findDoctorById(u.getId());
-        if (d != null) return true;
+        if(u instanceof Doctor) return true;
         return false;
     }
 
@@ -165,13 +163,12 @@ public class UserDAO {
         try {
             getUserByIdQuery.setInt(1, doctorId);
             ResultSet rs = getUserByIdQuery.executeQuery();
-            while (rs.next()) {
-                u = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
-                u.setId(rs.getInt(8));
-            }
+            rs.next();
+            u = new Doctor(rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+            u.setId(rs.getInt(doctorId));
         } catch (SQLException | IllegalDateException throwables) {
-            System.out.println("No user was found");
+            throwables.printStackTrace();
         }
         return u;
     }
@@ -184,7 +181,7 @@ public class UserDAO {
             while (rs.next()) {
                 u = new Patient(rs.getString(1), rs.getString(2), rs.getString(3),
                         rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
-                u.setId(rs.getInt(8));
+                u.setId(rs.getInt(patientId));
             }
         } catch (SQLException | IllegalDateException throwables) {
             throwables.printStackTrace();
@@ -214,7 +211,6 @@ public class UserDAO {
     public ObservableList<Appointment> getAppointmentsForDoctor(int id) {
         ObservableList<Appointment> appointmentsForDoctor = FXCollections.observableArrayList();
         try {
-//            appointmentsForDoctorQuery = connection.prepareStatement("SELECT appointment_id FROM appointment WHERE doctor_id = ?");
             appointmentsForDoctorQuery.setInt(1, id);
             ResultSet rs = appointmentsForDoctorQuery.executeQuery();
             while (rs.next()) {
