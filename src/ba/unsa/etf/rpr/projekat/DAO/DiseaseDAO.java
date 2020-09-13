@@ -40,6 +40,7 @@ public class DiseaseDAO {
                     "\t\"patient_id\"\tINTEGER NOT NULL,\n" +
                     "\t\"disease_name\"\tTEXT NOT NULL,\n" +
                     "\tPRIMARY KEY(\"disease_id\")\n" +
+                    "\tFOREIGN KEY(\"patient_id\") REFERENCES user\n" +
                     ");");
             statement.execute("INSERT INTO disease VALUES (1, 2, 'Depression');");
             statement.execute("INSERT INTO disease VALUES (2, 2, 'Common cold');");

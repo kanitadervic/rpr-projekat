@@ -60,6 +60,8 @@ public class AppointmentDAO {
                     "\t\"appointment_date\"\tTEXT NOT NULL,\n" +
                     "\t\"disease_id\"\tINTEGER NOT NULL,\n" +
                     "\tPRIMARY KEY(\"appointment_id\")\n" +
+                    "\tFOREIGN KEY(\"doctor_id\") REFERENCES user\n" +
+                    "\tFOREIGN KEY(\"patient_id\") REFERENCES user\n" +
                     ");");
             statement.execute("INSERT INTO appointment VALUES (1, 1, 2, '3-9-2021', 1);");
             statement.execute("INSERT INTO appointment VALUES (2, 1, 3, '9-9-2021', 2);");
