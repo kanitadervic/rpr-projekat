@@ -183,8 +183,6 @@ public class DoctorController {
     public void aboutAction(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(resourceBundle.getString("about"));
-        alert.setWidth(700);
-        alert.setHeight(500);
         alert.setHeaderText("");
         alert.setContentText("Predmet: Razvoj programskih rješenja\nGithub: kdervic1\nETFUNSA");
         alert.showAndWait();

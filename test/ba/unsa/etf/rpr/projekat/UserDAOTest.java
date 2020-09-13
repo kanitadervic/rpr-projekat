@@ -30,7 +30,7 @@ public class UserDAOTest {
         dbfile.delete();
         this.dao = UserDAO.getInstance();
         ArrayList<User> users = dao.getAllUsers();
-        assertEquals("Kanita", users.get(0).getFirstName());
+        assertEquals("Admin", users.get(0).getFirstName());
         assertEquals("ttestic@faks.com", users.get(2).getEmail());
     }
 

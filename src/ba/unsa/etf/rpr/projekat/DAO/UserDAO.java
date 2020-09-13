@@ -47,9 +47,9 @@ public class UserDAO {
                     "\t\"doctor\"\tTEXT,\n" +
                     "\tPRIMARY KEY(\"id\")\n" +
                     ");");
-            statement.execute("INSERT INTO user VALUES (1, 'Kanita', 'Dervić', 'kdervic@faks.com', '062/062-062', 'test', 'F', '23-1-1999', 'admin');");
-            statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'test', 'F', '10-10-2003', 'user');");
-            statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'test', 'M', '21-11-1998', 'user');");
+            statement.execute("INSERT INTO user VALUES (1, 'Admin', 'Admins', 'admin@faks.com', '062/062-062', 'Test123', 'F', '23-1-1999', 'admin');");
+            statement.execute("INSERT INTO user VALUES (2, 'Sara', 'Sarić', 'ssaric@faks.com', '060/062-0362', 'Test123', 'F', '10-10-2003', 'user');");
+            statement.execute("INSERT INTO user VALUES (3, 'Test', 'Testic', 'ttestic@faks.com', '062/062-063', 'Test123', 'M', '21-11-1998', 'user');");
             currentId = 4;
             connection.close();
         } catch (SQLException throwables) {
@@ -122,7 +122,6 @@ public class UserDAO {
             } else {
                 preparedStatement.setString(9, "user");
             }
-
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
