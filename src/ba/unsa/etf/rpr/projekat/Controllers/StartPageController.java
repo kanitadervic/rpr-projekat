@@ -4,7 +4,6 @@ import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
 import ba.unsa.etf.rpr.projekat.Models.Doctor;
 import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,7 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -23,7 +25,8 @@ import java.util.ResourceBundle;
 
 import static ba.unsa.etf.rpr.projekat.Controllers.DoctorController.doctorStage;
 import static ba.unsa.etf.rpr.projekat.Controllers.PatientController.patientStage;
-import static ba.unsa.etf.rpr.projekat.Main.*;
+import static ba.unsa.etf.rpr.projekat.Main.mainLogicStage;
+import static ba.unsa.etf.rpr.projekat.Main.resourceBundle;
 
 public class StartPageController {
     public RadioButton rbBosnian;

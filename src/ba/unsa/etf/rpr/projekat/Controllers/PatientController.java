@@ -1,15 +1,15 @@
 package ba.unsa.etf.rpr.projekat.Controllers;
 
 import ba.unsa.etf.rpr.projekat.DAO.UserDAO;
-import ba.unsa.etf.rpr.projekat.Models.*;
+import ba.unsa.etf.rpr.projekat.Models.Appointment;
+import ba.unsa.etf.rpr.projekat.Models.Patient;
+import ba.unsa.etf.rpr.projekat.Models.User;
 import ba.unsa.etf.rpr.projekat.Utilities.IllegalDateException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,7 +24,8 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static ba.unsa.etf.rpr.projekat.Main.*;
+import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import static ba.unsa.etf.rpr.projekat.Main.resourceBundle;
 
 public class PatientController {
     private final UserDAO userDAO;

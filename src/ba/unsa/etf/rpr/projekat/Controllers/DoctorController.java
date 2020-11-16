@@ -11,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,14 +23,14 @@ import net.sf.jasperreports.engine.JRException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static ba.unsa.etf.rpr.projekat.Main.*;
+import static ba.unsa.etf.rpr.projekat.Main.appointmentDAO;
+import static ba.unsa.etf.rpr.projekat.Main.resourceBundle;
 
 public class DoctorController {
     public Text txtWelcome;
