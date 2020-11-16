@@ -34,14 +34,6 @@ public class UserDAOTest {
         assertEquals("ttestic@faks.com", users.get(2).getEmail());
     }
 
-    @Test
-    void usersTest() throws IllegalDateException {
-        LocalDate localDate = LocalDate.now();
-        User user = new Doctor("Neko", "Nekic", "neko@neko.com", "333/444-222", "pass1", "M", localDate);
-        assertEquals(3, dao.getAllUsers().size());
-        this.dao.addUser(user);
-        assertEquals(4, dao.getAllUsers().size());
-    }
 
     @Test
     void checkIfDoctorTest() throws IllegalDateException {
